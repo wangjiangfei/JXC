@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+body {
+	margin: 1px !important;
+}
+
+fieldset{
+	border-color: #E7F0FF
+}

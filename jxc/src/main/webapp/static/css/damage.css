@@ -1,0 +1,88 @@
+@CHARSET "UTF-8";
+body {
+	margin: 1px !important;
+	font-size: 14px;
+}
+
+
+fieldset{
+	border-color: #E7F0FF
+}
+
+#damageDate{
+	width: 195px;
+}
+
+#remarks{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 28px;
+    line-height: 28px;
+    width: 800px;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    border: 1px solid #95b8e7;
+ 	resize:	none;
+ 	white-space: normal;
+    outline-style: none;
+}
+
+.northCls{
+	height:115px;
+	padding:10px;
+}
+
+.centerCls{
+	padding:10px;
+}
+
+.selectLayOut{
+	width: 100%;
+	height: 100%;
+}
+
+.selectNorthCls{
+	height: 50px;
+}
+
+#s_name,#name{
+	width: 200px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.selectNorthCls div{
+	padding: 8px;
+	padding-left: 20px;
+}
+
+.goodsTypeButton{
+	text-align: center;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.selectWestCls{
+	width: 200px;
+}
+
+#chooseFm{
+	padding: 5px;
+}
+
+#chooseFm input{
+	width: 120px;
+	border-radius: 4px 4px 4px 4px;
+}
+
+#chooseFm2 input{
+	width: 120px;
+	border-radius: 4px 4px 4px 4px;
+}
+
+#chooseFm2 table{
+	padding-left: 50px;
+}
+
+.readonly{
+	background-color: #dddddd;
+}

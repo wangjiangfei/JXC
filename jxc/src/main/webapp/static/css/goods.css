@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+body{
+	margin: 1px !important;
+}
+
+.westCls{
+	width: 210px;
+}
+
+.goodsTypeButton{
+	text-align: center;
+    margin-top: 40px;
+}
+
+#name,#s_name,#goodsName,#typeName,#code,#model,#unit,#producer,#minNum,#purchasingPrice,#sellingPrice,#unitName{
+	border-radius: 4px 4px 4px 4px;
+}
+
+#typeName,#unit{
+	width: 70px;
+}
+
+#goodsName,#producer{
+	width: 320px;
+}
+
+#code,#model,#minNum,#purchasingPrice,#sellingPrice{
+	width: 100px;
+}
+
+#s_name,#name,#unitName{
+	width: 200px;
+}
+
+#remarks{
+	width:320px;
+	resize:none;
+	border-radius: 4px 4px 4px 4px;
+	font-family:"微软雅黑";
+	border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
+fieldset{
+	border-color: #E7F0FF
+}
+
+#dlgTb3{
+	text-align: center;
+}
+
+#dlg4 .datagrid-row{
+	cursor:pointer;
+}

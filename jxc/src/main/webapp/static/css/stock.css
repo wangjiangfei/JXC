@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+body{
+	margin: 1px !important;
+}
+
+.westCls{
+	width: 45%;
+}
+
+
+#s_nameOrCode,#s_nameOrCode2{
+	width:200px;
+	border-radius: 4px 4px 4px 4px;
+}
+
+#code,#name,#unit,#price,#inventoryQuantity,#purchasingPrice{
+	width:100px;
+	border-radius: 4px 4px 4px 4px;
+}
+
+fieldset{
+	border-color: #E7F0FF
+}
+
+.inventoryQuantityTb{
+	padding-left: 16px;
+}
+
+.readonly{
+	background-color: #dddddd;
+}

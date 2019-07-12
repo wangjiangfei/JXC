@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+body {
+	margin: 1px !important;
+}
+
+#s_roleName{
+	width: 200px;
+	border-radius:4px;
+}
+
+#fm{
+	padding: 10px 20px 10px 20px;
+}
+
+#name{
+	width: 200px;
+	border-radius: 4px 4px 4px 4px;
+}
+
+#remarks{
+	resize:none;
+	width: 280px;
+	border-radius: 4px 4px 4px 4px;
+	font-family:"微软雅黑";
+	border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
+#trueName{
+	width: 200px;
+	border-radius: 4px 4px 4px 4px;
+}
+
+.readonly{
+	background-color: #dddddd;
+}
+
+fieldset{
+	border-color: #E7F0FF
+}

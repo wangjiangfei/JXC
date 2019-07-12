@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+body {
+	margin: 1px !important;
+}
+
+#s_typeName{
+	padding-top: 0px;
+    padding-bottom: 0px;
+    height: 28px;
+    line-height: 28px;
+    width: 100px;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    border: 1px solid #95b8e7;
+ 	resize:	none;
+ 	white-space: normal;
+    outline-style: none;
+}
+
+#s_codeOrName{
+	padding-top: 0px;
+    padding-bottom: 0px;
+    height: 28px;
+    line-height: 28px;
+    width: 200px;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    border: 1px solid #95b8e7;
+ 	resize:	none;
+ 	white-space: normal;
+    outline-style: none;
+}
+
+fieldset{
+	border-color: #E7F0FF
+}
+
+#dlgTb{
+	text-align: center;
+}

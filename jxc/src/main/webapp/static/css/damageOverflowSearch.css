@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+body {
+	margin: 1px !important;
+}
+
+
+fieldset{
+	border-color: #E7F0FF
+}
+
+.northCls{
+	height: 400px;
+	border: 0;
+}
+
+.centerCls{
+	margin-top: 5px;
+	border: 0;
+}
+
+#stime,#etime{
+	width: 150px;
+}
+
+#cc{
+	width: 90px;
+}

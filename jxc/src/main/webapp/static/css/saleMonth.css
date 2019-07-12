@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+body {
+	margin: 1px !important;
+	font-size: 14px;
+}
+
+fieldset{
+	border-color: #E7F0FF
+}
+
+.northCls{
+	height:120px;
+	padding:10px;
+	border: 0px;
+}
+
+.southCls{
+	height: 290px;
+	border: 0px;
+	padding: 10px;
+}
+
+.centerCls{
+	border: 0px;
+}

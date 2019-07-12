@@ -1,0 +1,313 @@
+.icon-blank{
+	background:url('icons/blank.gif') no-repeat center center;
+}
+.icon-add{
+	background:url('icons/edit_add.png') no-repeat center center;
+}
+.icon-edit{
+	background:url('icons/pencil.png') no-repeat center center;
+}
+.icon-remove{
+	background:url('icons/edit_remove.png') no-repeat center center;
+}
+.icon-save{
+	background:url('icons/filesave.png') no-repeat center center;
+}
+.icon-cut{
+	background:url('icons/cut.png') no-repeat center center;
+}
+.icon-ok{
+	background:url('icons/ok.png') no-repeat center center;
+}
+.icon-no{
+	background:url('icons/no.png') no-repeat center center;
+}
+.icon-cancel{
+	background:url('icons/cancel.png') no-repeat center center;
+}
+.icon-reload{
+	background:url('icons/reload.png') no-repeat center center;
+}
+.icon-search{
+	background:url('icons/search.png') no-repeat center center;
+}
+.icon-print{
+	background:url('icons/print.png') no-repeat center center;
+}
+.icon-help{
+	background:url('icons/help.png') no-repeat center center;
+}
+.icon-undo{
+	background:url('icons/undo.png') no-repeat center center;
+}
+.icon-redo{
+	background:url('icons/redo.png') no-repeat center center;
+}
+.icon-back{
+	background:url('icons/back.png') no-repeat center center;
+}
+.icon-sum{
+	background:url('icons/sum.png') no-repeat center center;
+}
+.icon-tip{
+	background:url('icons/tip.png') no-repeat center center;
+}
+
+.icon-mini-add{
+	background:url('icons/mini_add.png') no-repeat center center;
+}
+.icon-mini-edit{
+	background:url('icons/mini_edit.png') no-repeat center center;
+}
+.icon-mini-refresh{
+	background:url('icons/mini_refresh.png') no-repeat center center;
+}
+.icon-navigation{
+	background:url('usericons/navigation.png') no-repeat center center;
+}
+.menu-plugin{
+	background:url('usericons/menu-plugin.png') no-repeat center center;
+}
+.menu-1{
+	background:url('usericons/menu-1.png') no-repeat center center;
+}
+.menu-2{
+	background:url('usericons/menu-2.png') no-repeat center center;
+}
+.menu-3{
+	background:url('usericons/menu-3.png') no-repeat center center;
+}
+.menu-4{
+	background:url('usericons/menu-4.png') no-repeat center center;
+}
+.menu-5{
+	background:url('usericons/menu-5.png') no-repeat center center;
+}
+.menu-6{
+	background:url('usericons/menu-6.png') no-repeat center center;
+}
+.menu-7{
+	background:url('usericons/menu-7.png') no-repeat center center;
+}
+.menu-8{
+	background:url('usericons/menu-8.png') no-repeat center center;
+}
+.menu-9{
+	background:url('usericons/menu-9.png') no-repeat center center;
+}
+.menu-10{
+	background:url('usericons/menu-10.png') no-repeat center center;
+}
+.menu-11{
+	background:url('usericons/menu-11.png') no-repeat center center;
+}
+.menu-12{
+	background:url('usericons/menu-12.png') no-repeat center center;
+}
+.menu-13{
+	background:url('usericons/menu-13.png') no-repeat center center;
+}
+.menu-14{
+	background:url('usericons/menu-14.png') no-repeat center center;
+}
+.menu-15{
+	background:url('usericons/menu-15.png') no-repeat center center;
+}
+.menu-16{
+	background:url('usericons/menu-16.png') no-repeat center center;
+}
+.menu-17{
+	background:url('usericons/menu-17.png') no-repeat center center;
+}
+.menu-18{
+	background:url('usericons/menu-18.png') no-repeat center center;
+}
+.menu-19{
+	background:url('usericons/menu-19.png') no-repeat center center;
+}
+.menu-20{
+	background:url('usericons/menu-20.png') no-repeat center center;
+}
+.menu-21{
+	background:url('usericons/menu-21.png') no-repeat center center;
+}
+.menu-22{
+	background:url('usericons/menu-22.png') no-repeat center center;
+}
+.menu-23{
+	background:url('usericons/menu-23.png') no-repeat center center;
+}
+.menu-24{
+	background:url('usericons/menu-24.png') no-repeat center center;
+}
+.menu-25{
+	background:url('usericons/menu-25.png') no-repeat center center;
+}
+.menu-26{
+	background:url('usericons/menu-26.png') no-repeat center center;
+}
+.menu-27{
+	background:url('usericons/menu-27.png') no-repeat center center;
+}
+.menu-28{
+	background:url('usericons/menu-28.png') no-repeat center center;
+}
+.menu-29{
+	background:url('usericons/menu-29.png') no-repeat center center;
+}
+.menu-30{
+	background:url('usericons/menu-30.png') no-repeat center center;
+}
+.menu-31{
+	background:url('usericons/menu-31.png') no-repeat center center;
+}
+.menu-32{
+	background:url('usericons/menu-32.png') no-repeat center center;
+}
+.menu-33{
+	background:url('usericons/menu-33.png') no-repeat center center;
+}
+.menu-34{
+	background:url('usericons/menu-34.png') no-repeat center center;
+}
+.menu-35{
+	background:url('usericons/menu-35.png') no-repeat center center;
+}
+.menu-36{
+	background:url('usericons/menu-36.png') no-repeat center center;
+}
+.menu-37{
+	background:url('usericons/menu-37.png') no-repeat center center;
+}
+.menu-38{
+	background:url('usericons/menu-38.png') no-repeat center center;
+}
+.menu-39{
+	background:url('usericons/menu-39.png') no-repeat center center;
+}
+.menu-40{
+	background:url('usericons/menu-40.png') no-repeat center center;
+}
+.menu-41{
+	background:url('usericons/menu-41.png') no-repeat center center;
+}
+.menu-42{
+	background:url('usericons/menu-42.png') no-repeat center center;
+}
+.menu-43{
+	background:url('usericons/menu-43.png') no-repeat center center;
+}
+.menu-44{
+	background:url('usericons/menu-44.png') no-repeat center center;
+}
+.menu-45{
+	background:url('usericons/menu-45.png') no-repeat center center;
+}
+.menu-46{
+	background:url('usericons/menu-46.png') no-repeat center center;
+}
+.menu-47{
+	background:url('usericons/menu-47.png') no-repeat center center;
+}
+.menu-48{
+	background:url('usericons/menu-48.png') no-repeat center center;
+}
+.menu-49{
+	background:url('usericons/menu-49.png') no-repeat center center;
+}
+.menu-50{
+	background:url('usericons/menu-50.png') no-repeat center center;
+}
+.menu-51{
+	background:url('usericons/menu-51.png') no-repeat center center;
+}
+.menu-52{
+	background:url('usericons/menu-52.png') no-repeat center center;
+}
+.menu-53{
+	background:url('usericons/menu-53.png') no-repeat center center;
+}
+.menu-54{
+	background:url('usericons/menu-54.png') no-repeat center center;
+}
+.menu-55{
+	background:url('usericons/menu-55.png') no-repeat center center;
+}
+.menu-56{
+	background:url('usericons/menu-56.png') no-repeat center center;
+}
+.menu-57{
+	background:url('usericons/menu-57.png') no-repeat center center;
+}
+.menu-58{
+	background:url('usericons/menu-58.png') no-repeat center center;
+}
+.menu-59{
+	background:url('usericons/menu-59.png') no-repeat center center;
+}
+.menu-60{
+	background:url('usericons/menu-60.png') no-repeat center center;
+}
+.menu-61{
+	background:url('usericons/menu-61.png') no-repeat center center;
+}
+.menu-62{
+	background:url('usericons/menu-62.png') no-repeat center center;
+}
+.menu-63{
+	background:url('usericons/menu-63.png') no-repeat center center;
+}
+.menu-64{
+	background:url('usericons/menu-64.png') no-repeat center center;
+}
+.menu-65{
+	background:url('usericons/menu-65.png') no-repeat center center;
+}
+.icon-home{
+	background:url('usericons/home.png') no-repeat center center;
+}
+.icon-refresh{
+	background:url('usericons/icon-refresh.png') no-repeat center center;
+}
+.icon-closealltab{
+	background:url('usericons/icon-closealltab.png') no-repeat center center;
+}
+.icon-closeothertab{
+	background:url('usericons/icon-closeothertab.png') no-repeat center center;
+}
+.icon-closerighttab{
+	background:url('usericons/icon-closerighttab.png') no-repeat center center;
+}
+.icon-closelefttab{
+	background:url('usericons/icon-closelefttab.png') no-repeat center center;
+}
+.icon-closetab{
+	background:url('usericons/icon-closetab.png') no-repeat center center;
+}
+.add{
+	background:url('usericons/add.png') no-repeat center center;
+}
+.update{
+	background:url('usericons/update.png') no-repeat center center;
+}
+.delete{
+	background:url('usericons/delete.png') no-repeat center center;
+}
+.search{
+	background:url('usericons/search.png') no-repeat center center;
+}
+.save{
+	background:url('usericons/save.png') no-repeat center center;
+}
+.closed{
+	background:url('usericons/closed.png') no-repeat center center;
+}
+.set{
+	background:url('/static/images/setRole.png') no-repeat center center;
+}
+.reset{
+	background:url('usericons/reset.png') no-repeat center center;
+}
+.goods-type{
+	background:url('usericons/goodsType.png') no-repeat center center;
+}

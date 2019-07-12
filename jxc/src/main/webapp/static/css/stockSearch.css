@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+body {
+	margin: 1px !important;
+}
+
+#s_typeName{
+	width: 100px;
+	border-radius:4px;
+}
+
+#s_codeOrName{
+	width: 200px;
+	border-radius:4px;
+}
+
+fieldset{
+	border-color: #E7F0FF
+}
+
+#dlgTb{
+	text-align: center;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>后台登录-进销存管理系统</title>
+    <meta name="author" content="DeathGhost" />
+    <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+    <style>
+        body{
+            height:100%;
+            background:#16a085;
+            overflow:hidden;
+        }
+        canvas{
+            z-index:-1;
+            position:absolute;
+        }
+        .black_overlay{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1001;
+            -moz-opacity: 0.8;
+            opacity:.80;
+            filter: alpha(opacity=80);
+        }
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 37%;
+            width: 25%;
+            height: 15%;
+            padding: 16px;
+            border: 2px solid black;
+            background-color: white;
+            z-index:1002;
+            overflow: auto;
+        }
+    </style>
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/verifyCode.js"></script>
+    <script src="static/js/Particleground.js"></script>
+    <script src="static/js/login.js"></script>
+</head>
+<body>
+<dl class="admin_login">
+    <dt>
+        <strong>进销存管理系统</strong>
+        <em>Invoicing Management System</em>
+    </dt>
+    <dd class="user_icon">
+        <input type="text" id="userName" placeholder="账号" class="login_txtbx"/>
+    </dd>
+    <dd class="pwd_icon">
+        <input type="password" id="password" placeholder="密码" class="login_txtbx"/>
+    </dd>
+    <dd class="val_icon">
+        <div class="checkcode">
+            <input type="text" id="imageCode" name="imageCode" placeholder="验证码" maxlength="4" class="login_txtbx">
+            <img id="imgObj" title="看不清，换一张" src="/drawImage" onclick="changeImg()" />
+        </div>
+    </dd>
+    <dd>
+        <input type="button" id="loginBtn" value="立即登陆" class="submit_btn"/>
+    </dd>
+</dl>
+<div id="light" class="white_content">
+    <h4></h4>
+    <div class="msg"></div>
+    <div class="buttonCls">
+        <input type="button" value="确定" />
+    </div>
+</div>
+<div id="fade" class="black_overlay">
+</div>
+</body>
+</html>

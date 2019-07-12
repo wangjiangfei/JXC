@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+body {
+	margin: 1px !important;
+}
+
+
+fieldset{
+	border-color: #E7F0FF
+}
+
+.northCls{
+	height: 400px;
+	border: 0;
+}
+
+.centerCls{
+	margin-top: 5px;
+	border: 0;
+}
+
+#stime,#etime{
+	width: 150px;
+}
+
+#cc{
+	width: 90px;
+}
+
+#supplier{
+	width: 200px;
+}
+
+#s_returnNumber{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 28px;
+    line-height: 28px;
+    width: 200px;
+    border-radius: 5px 5px 5px 5px;
+    font-size: 14px;
+    border: 1px solid #95b8e7;
+ 	resize:	none;
+ 	white-space: normal;
+    vertical-align: top;
+    outline-style: none;
+}
