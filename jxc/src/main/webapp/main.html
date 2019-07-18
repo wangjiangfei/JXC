@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理-进销存管理系统</title>
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/main.css" />
+    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="static/js/main.js"></script>
+</head>
+<body class="easyui-layout">
+<div region="north" class="northCls" border="0">
+    <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="top_left">
+                <img src="static/images/top_left.png">
+                <div id="userInfo" class="userInfo"></div>
+            </td>
+            <td valign="bottom" class="top_right">
+                <div id="clock" class="clock"></div>
+                <img src='static/images/clock.png' />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div region="center">
+    <div id="tabs" class="easyui-tabs" fit="true" border="false"></div>
+</div>
+
+<div region="west" class="westCls" title="导航菜单" split="true" iconCls="icon-navigation">
+    <ul id="tree" class="easyui-tree"></ul>
+</div>
+
+<div id="menu" class="easyui-menu" >
+    <div id="mm-tabrefresh" data-options="name:1,iconCls:'icon-refresh'"> 刷新当前标签页</div>
+    <div class="menu-sep"></div>
+    <div id="mm-tabclose" data-options="name:2,iconCls:'icon-closetab'">关闭当前标签页</div>
+    <div id="mm-tabcloseall" data-options="name:3,iconCls:'icon-closealltab'">关闭全部标签页</div>
+    <div id="mm-tabcloseother" data-options="name:4,iconCls:'icon-closeothertab'">关闭其他标签页</div>
+    <div id="mm-tabcloseright" data-options="name:5,iconCls:'icon-closerighttab'">关闭右侧标签页</div>
+    <div id="mm-tabcloseleft" data-options="name:6,iconCls:'icon-closelefttab'">关闭左侧标签页</div>
+</div>
+
+<div id="updatePasswordDlg" class="easyui-dialog" closed="true" buttons="#updatePasswordDlgTb">
+    <form method="post" id="updatePassowrdFm">
+        <table cellspacing="8px">
+            <tr>
+                <td>新密码:</td>
+                <td><input id="newPassword" name="newPassword" type="password" /></td>
+            </tr>
+            <tr>
+                <td>确认新密码:</td>
+                <td><input id="reNewPassword" name="reNewPassword" type="password"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="updatePasswordDlgTb">
+    <a href="javascript:saveNewPassword()" class="easyui-linkbutton" iconCls="save">保存</a>
+    <a href="javascript:closeUpdatePassowrdDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+
+</body>
+</html>

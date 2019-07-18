@@ -23,4 +23,17 @@
             t_user_role.user_id = #{userId}
     </select>
 
+    <select id="getRoleByRoleIdUserId" resultMap="BaseResultMap">
+        SELECT
+            t_role.role_id,
+            t_role.role_name,
+            t_role.remarks
+        FROM
+            t_role
+            LEFT JOIN t_user_role ON t_user_role.role_id = t_role.role_id
+        WHERE
+            t_user_role.role_id = #{roleId}
+            AND t_user_role.user_id = #{userId}
+    </select>
+
 </mapper>

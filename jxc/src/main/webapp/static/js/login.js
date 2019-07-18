@@ -46,12 +46,13 @@ function login() {
 					  $.ajax({
 						url:'role/saveRole',
 						type:'post',
-						data:{
+						data: JSON.stringify({
 							'roleId':result.info[0].roleId
-						},
+						}),
 						dataType:'json',
-						success:function(result){
-							if(result.resultCode === 001){
+					  	contentType: 'application/json',
+						success: function(result){
+							if(result.code === 100){
 								window.location.href='main.html';
 							}
 						}
@@ -78,7 +79,7 @@ function login() {
  * model消息窗口
  * @param msg 具体内容
  */
-function modelMsg(msg){
+function modelMsg(msg) {
 	 $('.buttonCls input').click(closeModel);
 	 $('#light h4').html('系统提示');
 	 $('#light .msg').html(msg);
@@ -89,7 +90,7 @@ function modelMsg(msg){
 /**
  * 关闭model窗口
  */
-function closeModel(){
+function closeModel() {
 	 $('#light').hide();
 	 $('#fade').hide();
 }
@@ -98,7 +99,7 @@ function closeModel(){
  * model角色选择窗口
  * @param msg 可选择的角色
  */
-function modelRole(msg){
+function modelRole(msg) {
 	$('.buttonCls input').click(saveRole);
 	$('#light h4').html('请选择登录角色');
 	$('#light .msg').html(msg);
@@ -110,14 +111,17 @@ function modelRole(msg){
  * 保存选中的角色
  */
 function saveRole(){
-	roleId = $('.msg input[name=role]:checked').val();
+	var roleId = $('.msg input[name=role]:checked').val();
 	$.ajax({
-		url:'role/saveRole',
-		type:'post',
-		data:{'roleId':roleId},
+		url: 'role/saveRole',
+		type: 'post',
+		data: JSON.stringify({
+			'roleId': roleId
+		}),
 		dataType:'json',
-		success:function(result){
-			if(result.resultCode==001){
+        contentType: 'application/json',
+		success: function(result) {
+			if(result.code === 100){
 				window.location.href='main.html';
 			}
 		}
