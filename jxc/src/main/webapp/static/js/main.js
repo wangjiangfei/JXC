@@ -1,12 +1,12 @@
 $(document).ready(function() {
 
-	window.setInterval("showTime()",1);
+	window.setInterval("showTime()", 1);
 	// 加载用户信息
 	$.ajax({
-		url:'user/loadUserInfo',
-		type:'get',
-		datType:'json',
-		success:function(result){
+		url: 'user/loadUserInfo',
+		type: 'get',
+		datType: 'json',
+		success: function(result) {
 			$("#userInfo").html('欢迎您：'+result.userName+'&nbsp;[&nbsp;'+result.roleName+'&nbsp;]');
 		}
 	});
@@ -14,38 +14,38 @@ $(document).ready(function() {
 	//加载首页
 	$('#tabs').tabs('add',{
 		title:'首页',
-		closable:false,
-		iconCls:'icon-home',
-		content:'<iframe scrolling="auto" height="99%" width="99.7%" src="common/stockSearch.html"></iframe>'
+		closable: false,
+		iconCls: 'icon-home',
+		content: '<iframe scrolling="auto" height="99%" width="99.7%" src="common/stockSearch.html"></iframe>'
 	});
 	
-	//加载菜单
+	// 加载菜单
 	$('#tree').tree({
-		url:'menu/loadMenu',
-		lines:true,
-		onLoadSuccess:function(){
+		url: 'menu/loadMenu',
+		lines: true,
+		onLoadSuccess: function(){
 			//展开所有节点
 			$('#tree').tree('expandAll');
 		},
-		onClick:function(node){
+		onClick: function(node){
 			openTabs(node);
 		}
 	});
 	
-	//监听右键事件，创建右键菜单
+	// 监听右键事件，创建右键菜单
     $('#tabs').tabs({
         onContextMenu:function(e, title,index){
             e.preventDefault();
-            if(index>0){
-                $('#menu').menu('show', {//打开菜单
+            if(index > 0) {
+                $('#menu').menu('show', {// 打开菜单
                     left: e.pageX,
                     top: e.pageY
-                }).data("tabTitle", title);//将标签页名称绑定属性
+                }).data("tabTitle", title);// 将标签页名称绑定属性
             }
         }
     });
 	
-	 //菜单click
+	 // 菜单click
     $('#menu').menu({
         onClick : function (item) {
         	//传入当前选中的目标对象，以及当前菜单的name属性
@@ -53,7 +53,7 @@ $(document).ready(function() {
         }
     });
     
-    //根据用户的选择来关闭标签
+    // 根据用户的选择来关闭标签
     function closeTab(menu, type) {
         var allTabs = $("#tabs").tabs('tabs');
         var allTabtitle = [];
@@ -102,7 +102,7 @@ $(document).ready(function() {
 	 
 });
 
-//显示当前时间
+// 显示当前时间
 function showTime(){
 	var date = new Date();
 	this.year = date.getFullYear();

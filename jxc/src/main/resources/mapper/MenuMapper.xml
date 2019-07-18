@@ -28,4 +28,22 @@
         WHERE t_role_menu.role_id = #{roleId}
     </select>
 
+
+
+    <select id="getMenuByParentId" resultMap="BaseResultMap">
+        SELECT
+            t_menu.menu_id,
+            t_menu.menu_icon,
+            t_menu.menu_name,
+            t_menu.p_id,
+            t_menu.menu_state,
+            t_menu.menu_url
+        FROM
+          t_role_menu
+        LEFT JOIN t_menu ON t_role_menu.menu_id = t_menu.menu_id
+        WHERE
+          t_menu.p_id = #{parentId}
+        AND t_role_menu.role_id = #{roleId}
+    </select>
+
 </mapper>

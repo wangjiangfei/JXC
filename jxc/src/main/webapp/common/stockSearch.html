@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>当前库存查询</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/stockSearch.css" />
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/stockSearch.js"></script>
+</head>
+<body>
+<table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" pagination="true" rownumbers="true"
+       url="/goods/listInventory" singleSelect="true" pageList="[30,40,50]" pageSize="30" toolbar="#tb" striped="true"
+       title="当前库存查询">
+    <thead>
+    <tr>
+        <th field="code" width="30" align="center">商品编码</th>
+        <th field="name" width="150" align="center">商品名称</th>
+        <th field="type" width="50" align="center" formatter=setGoodsTypeNameFormatter>类别</th>
+        <th field="model" width="50" align="center">型号</th>
+        <th field="inventoryQuantity" width="50" align="center">库存数量</th>
+        <th field="saleTotal" width="50" align="center">销售总数</th>
+        <th field="lastPurchasingPrice" width="50" align="center" formatter=setPriceFormatter>上次进价</th>
+        <th field="purchasingPrice" width="50" align="center" formatter=setPriceFormatter>成本均价</th>
+        <th field="sellingPrice" width="50" align="center" formatter=setPriceFormatter>销售价</th>
+        <th field="inventoryTotalPrice" width="50" align="center" formatter=setInventoryTotalPrice>库存总值</th>
+        <th field="unit" width="30" align="center">单位</th>
+        <th field="producer" width="150" align="center">生产厂商</th>
+    </tr>
+    </thead>
+</table>
+
+<div id="tb">
+    <div>
+        <input type="hidden" id="s_typeId"/>
+        &nbsp;商品类别：&nbsp;<input type="text" id="s_typeName" readonly="readonly" onclick="openGoodsTypeTreeDlg()">
+        &nbsp;商品编码或名称：&nbsp;<input type="text" id="s_codeOrName" onkeydown="if(event.keyCode==13) searchStock()"/>
+        <a href="javascript:searchStock()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" closed="true" buttons="#dlgTb">
+    <ul id="tree" class="easyui-tree"></ul>
+</div>
+
+<div id="dlgTb">
+    <a href="javascript:chooseGoodsType()" class="easyui-linkbutton" plain="true">确定</a>
+    <a href="javascript:closeGoodsTypeTreeDlg()" class="easyui-linkbutton" plain="true">关闭</a>
+</div>
+</body>
+</html>

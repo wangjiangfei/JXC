@@ -19,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -69,5 +71,18 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             return new ServiceVO(ErrorCode.REQ_ERROR_CODE, ErrorCode.REQ_ERROR_MESS);
         }
+    }
+
+    @Override
+    public Map<String, Object> loadUserInfo(HttpSession session) {
+        Map<String,Object> map = new HashMap<>();
+
+        User user = (User)session.getAttribute("currentUser");
+        Role role = (Role) session.getAttribute("currentRole");
+
+        map.put("userName", user.getTrueName());
+        map.put("roleName", role.getRoleName());
+
+        return map;
     }
 }

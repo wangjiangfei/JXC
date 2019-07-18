@@ -4,6 +4,7 @@ import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.UserLogin;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -13,4 +14,6 @@ import javax.servlet.http.HttpSession;
 public interface UserService {
 
     ServiceVO login(UserLogin userLogin, HttpSession session);
+
+    Map<String,Object> loadUserInfo(HttpSession session);
 }
