@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.MenuDao">
+
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.Menu">
+        <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+        <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+        <result column="p_id" property="pId" jdbcType="INTEGER" />
+        <result column="menu_state" property="menuState" jdbcType="VARCHAR" />
+        <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getMenuByRoleId" resultMap="BaseResultMap">
+        SELECT
+            t_menu.menu_id,
+            t_menu.menu_icon,
+            t_menu.menu_name,
+            t_menu.p_id,
+            t_menu.menu_state,
+            t_menu.menu_url
+        FROM
+        t_menu
+        LEFT JOIN t_role_menu ON t_role_menu.menu_id = t_menu.menu_id
+        WHERE t_role_menu.role_id = #{roleId}
+    </select>
+
+</mapper>

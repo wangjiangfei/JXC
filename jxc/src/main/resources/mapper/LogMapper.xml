@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.LogDao">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="logId" parameterType="com.wangjiangfei.entity.Log">
+        INSERT INTO t_log
+        (log_type, content, log_date, user_id)
+        VALUES (#{logType}, #{content}, #{logDate}, #{userId})
+    </insert>
+
+</mapper>

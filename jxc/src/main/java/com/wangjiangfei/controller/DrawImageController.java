@@ -3,7 +3,7 @@ package com.wangjiangfei.controller;
 import com.wangjiangfei.service.DrawImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +20,12 @@ public class DrawImageController {
     private DrawImageService drawImageService;
 
     /**
-     * 生成图片
+     * 生成图片验证码
      * @param request 请求
      * @param response 响应
      */
-    @RequestMapping("/drawImage")
-    public void drawImage(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    @GetMapping("/drawImage")
+    public void drawImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         drawImageService.drawImage(request, response);
     }
 

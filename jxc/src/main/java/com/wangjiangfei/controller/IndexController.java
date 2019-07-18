@@ -1,7 +1,7 @@
 package com.wangjiangfei.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author wangjiangfei
@@ -15,7 +15,7 @@ public class IndexController {
      * 进入登录页面
      * @return 重定向至登录页面
      */
-    @RequestMapping("/")
+    @GetMapping("/")
     public String toIndex(){
         return "redirect:login.html";
     }

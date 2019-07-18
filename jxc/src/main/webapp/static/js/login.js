@@ -2,66 +2,73 @@
  * 页面加载完毕后执行
  */
 $(document).ready(function() {
-	  //粒子背景特效
+	  // 粒子背景特效
 	  $('body').particleground({
 	    dotColor: '#5cbdaa',
 	    lineColor: '#5cbdaa'
 	  });
 	  
-	  //绑定登录按钮事件
+	  // 绑定登录按钮事件
 	  $('#loginBtn').click(login);
 	  
-	  //绑定登录回车事件
+	  // 绑定登录回车事件
 	  $('body').keydown(function(event){
-		  if(event.keyCode==13){
+		  if(event.keyCode === 13){
 			  login();
 		  }
 	  });
 	  
-	  //这里的代码用于解决当系统Session超时iframe的内嵌窗口不能正常的跳回到登录页面，而是将登录页直接嵌套在了iframe里
-	  //所以我们需要找到该iframe的父窗口来进行加载
-	  if(window.parent!=window){//window.parent:如果不存在父窗口，那么该值默认为当前窗口对象
-          window.parent.location.reload(true);
+	  // 这里的代码用于解决当系统Session超时iframe的内嵌窗口不能正常的跳回到登录页面，而是将登录页直接嵌套在了iframe里
+	  // 所以我们需要找到该iframe的父窗口来进行加载
+	  if(window.parent !== window){// window.parent:如果不存在父窗口，那么该值默认为当前窗口对象
+		  window.parent.location.reload(true);
 	  }
 });
 
 /**
  * 提交登录
  */
-function login(){
+function login() {
 	$.ajax({
 		  url:'user/login',
 		  type:'post',
-		  data:{'userName':$('#userName').val(),'password':$('#password').val(),'imageCode':$('#imageCode').val()},
-		  dataType:'json',
-		  success:function(result){
-			  if(result.resultCode==001){
-				  //如果当前用户只有一个角色，则无需选择，直接跳转进主页
-				  if(result.roleList.length==1){
+		  data: JSON.stringify({
+              userName: $('#userName').val(),
+              password: $('#password').val(),
+              imageCode: $('#imageCode').val()
+          }),
+		  dataType: 'json',
+		  contentType: 'application/json',
+		  success: function(result) {
+			  if(result.code === 100){
+				  // 如果当前用户只有一个角色，则无需选择，直接跳转进主页
+				  if(result.info.length === 1){
 					  $.ajax({
-							url:'role/saveRole',
-							type:'post',
-							data:{'roleId':result.roleList[0].id},
-							dataType:'json',
-							success:function(result){
-								if(result.resultCode==001){
-									window.location.href='main.html';
-								}
+						url:'role/saveRole',
+						type:'post',
+						data:{
+							'roleId':result.info[0].roleId
+						},
+						dataType:'json',
+						success:function(result){
+							if(result.resultCode === 001){
+								window.location.href='main.html';
 							}
-						});
-				  }else{//如果当前用户不止一个角色，则需要选择
+						}
+					  });
+				  } else { // 如果当前用户不止一个角色，则需要选择
 					  var roleInput = ''
-					  for(var i=0;i<result.roleList.length;i++){
-						  if(i==0){
-							  roleInput=roleInput+'<input name="role" type="radio" value="'+result.roleList[i].id+'" checked=true />'+result.roleList[i].name+'&nbsp;&nbsp;';
-						  }else{
-							  roleInput=roleInput+'<input name="role" type="radio" value="'+result.roleList[i].id+'" />'+result.roleList[i].name+'&nbsp;&nbsp;';
+					  for(var i = 0;i < result.info.length;i++){
+						  if(i === 0){
+							  roleInput = roleInput+'<input name="role" type="radio" value="'+result.info[i].roleId+'" checked=true />'+result.info[i].roleName+'&nbsp;&nbsp;';
+						  } else {
+							  roleInput = roleInput+'<input name="role" type="radio" value="'+result.info[i].roleId+'" />'+result.info[i].roleName+'&nbsp;&nbsp;';
 						  }
 					  }
 					  modelRole(roleInput);
 				  }
 			  }else{
-				  modelMsg(result.resultContent);
+				  modelMsg(result.msg);
 			  }
 		  }
 	  });
