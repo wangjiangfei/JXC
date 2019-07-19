@@ -11,7 +11,7 @@ function setMenuFormatter(value,row,index){
 /**
  * 根据角色名模糊查询用户信息
  */
-function searchRole(){
+function searchRole() {
 	
 	$('#dg').datagrid('load',{
 		roleName:$('#s_roleName').val()

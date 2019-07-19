@@ -27,7 +27,10 @@ $(document).ready(function() {
 			//展开所有节点
 			$('#tree').tree('expandAll');
 		},
-		onClick: function(node){
+		onClick: function(node) {
+			if (node.attributes.url === '' || node.attributes.url === null) {
+				return;
+			}
 			openTabs(node);
 		}
 	});
@@ -116,10 +119,10 @@ function showTime(){
 	$("#clock").html("现在是:" + this.year + "年" + this.month + "月" + this.date + "日 " + this.hour + ":" + this.minute + ":" + this.second + " " + this.day);
 }
 
-//打开标签页
+// 打开标签页
 function openTabs(node){
-	//如果为修改密码，则打开修改密码的Dialog
-	if(node.id==6040){
+	// 如果为修改密码，则打开修改密码的Dialog
+	if(node.id === 6040){
 		$('#updatePasswordDlg').dialog({
 			title:'修改密码',
 			iconCls:'update',
@@ -132,7 +135,7 @@ function openTabs(node){
 				$('#reNewPassword').val('');
 			}
 		});
-	}else if(node.id==6050){//如果为安全退出，则直接退出系统
+	}else if(node.id === 6050){//如果为安全退出，则直接退出系统
 		$.messager.confirm({
 			title:'系统提示',
 			msg:'您确定要退出系统吗？',
@@ -184,7 +187,7 @@ function saveNewPassword(){
 		},
 		success:function(result){
 			var resultJson = eval('('+result+')');
-			if(resultJson.resultCode==001){
+			if(resultJson.resultCode === 001){
 				$.messager.alert({
 					title:'系统提示',
 					msg:resultJson.resultContent,
