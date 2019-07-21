@@ -1,7 +1,9 @@
 package com.wangjiangfei.service.impl;
 
 import com.wangjiangfei.dao.RoleDao;
+import com.wangjiangfei.dao.RoleMenuDao;
 import com.wangjiangfei.dao.UserDao;
+import com.wangjiangfei.domain.ErrorCode;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.domain.SuccessCode;
 import com.wangjiangfei.entity.*;
@@ -30,6 +32,8 @@ public class RoleServiceImpl implements RoleService {
     private RoleDao roleDao;
     @Autowired
     private LogService logService;
+    @Autowired
+    private RoleMenuDao roleMenuDao;
 
     @Override
     public ServiceVO saveRole(Role role, HttpSession session) {
@@ -56,5 +60,77 @@ public class RoleServiceImpl implements RoleService {
         map.put("rows", roles);
 
         return map;
+    }
+
+    @Override
+    public ServiceVO save(Role role) {
+
+        // 角色ID为空时，说明是新增操作，需要先判断角色名是否存在
+        if(role.getRoleId() == null) {
+
+            Role exRole = roleDao.findRoleByName(role.getRoleName());
+
+            if(exRole != null) {
+
+                return new ServiceVO<>(ErrorCode.ROLE_EXIST_CODE, ErrorCode.ROLE_EXIST_MESS);
+
+            }
+
+            logService.save(new Log(Log.INSERT_ACTION, "新增角色:" + role.getRoleName()));
+
+            roleDao.insertRole(role);
+
+        } else {
+
+            logService.save(new Log(Log.UPDATE_ACTION, "修改角色:"+role.getRoleName()));
+
+            roleDao.updateRole(role);
+
+        }
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+
+    }
+
+    @Override
+    public ServiceVO delete(Integer roleId) {
+        int count = roleDao.countUserByRoleId(roleId);
+        if (count > 0) {
+            return new ServiceVO<>(ErrorCode.ROLE_DEL_ERROR_CODE, ErrorCode.ROLE_DEL_ERROR_MESS);
+        }
+
+        roleMenuDao.deleteRoleMenuByRoleId(roleId);
+
+        logService.save(new Log(Log.DELETE_ACTION,"删除角色:"+roleDao.getRoleById(roleId).getRoleName()));
+
+        roleDao.deleteRole(roleId);
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+
+    }
+
+    @Override
+    public ServiceVO setMenu(Integer roleId, String menus) {
+        // 先删除当前角色的所有菜单
+        roleMenuDao.deleteRoleMenuByRoleId(roleId);
+
+        // 再赋予当前角色新的菜单
+        String[] menuArray = menus.split(",");
+
+        for(String str : menuArray){
+
+            RoleMenu rm = new RoleMenu();
+
+            rm.setRoleId(roleId);
+
+            rm.setMenuId(Integer.parseInt(str));
+
+            roleMenuDao.save(rm);
+
+        }
+
+        logService.save(new Log(Log.UPDATE_ACTION,"设置"+roleDao.getRoleById(roleId).getRoleName()+"角色的菜单权限"));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }
 }

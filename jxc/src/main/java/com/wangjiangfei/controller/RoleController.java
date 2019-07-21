@@ -2,7 +2,6 @@ package com.wangjiangfei.controller;
 
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.Role;
-import com.wangjiangfei.entity.RoleList;
 import com.wangjiangfei.service.RoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +47,39 @@ public class RoleController {
     @RequiresPermissions(value = "角色管理")
     public Map<String, Object> list(Integer page, Integer rows, String roleName) {
         return roleService.list(page, rows, roleName);
+    }
+
+    /**
+     * 添加或修改角色信息
+     * @param role 角色信息实体
+     * @return
+     */
+    @RequestMapping("/save")
+    @RequiresPermissions(value = "角色管理")
+    public ServiceVO save(Role role) {
+        return roleService.save(role);
+    }
+
+    /**
+     * 删除角色
+     * @param roleId 角色ID
+     * @return
+     */
+    @RequestMapping("/delete")
+    @RequiresPermissions(value = "角色管理")
+    public ServiceVO delete(Integer roleId) {
+        return roleService.delete(roleId);
+    }
+
+    /**
+     * 设置菜单权限
+     * @param roleId 角色ID
+     * @param menus 菜单数组字符串，用逗号分割
+     * @return
+     */
+    @RequestMapping("/setMenu")
+    @RequiresPermissions(value = "角色管理")
+    public ServiceVO setMenu(Integer roleId, String menus) {
+        return roleService.setMenu(roleId, menus);
     }
 }

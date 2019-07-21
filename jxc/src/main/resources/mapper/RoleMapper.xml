@@ -63,4 +63,57 @@
         </where>
     </select>
 
+    <select id="findRoleByName" resultMap="BaseResultMap">
+        SELECT
+            t_role.role_id,
+            t_role.role_name,
+            t_role.remarks
+        FROM
+            t_role
+        WHERE
+            t_role.role_name = #{roleName}
+    </select>
+
+    <insert id="insertRole" useGeneratedKeys="true" keyProperty="roleId" parameterType="com.wangjiangfei.entity.Role">
+        INSERT INTO t_role
+        (role_name, remarks)
+        VALUES (#{roleName}, #{remarks})
+    </insert>
+
+    <update id="updateRole" parameterType="com.wangjiangfei.entity.Role">
+        UPDATE t_role
+        SET
+        role_name = #{roleName}
+        <if test="remarks != '' and remarks != null">
+            , remarks = #{remarks}
+        </if>
+        WHERE role_id = #{roleId}
+    </update>
+
+    <select id="countUserByRoleId" resultType="java.lang.Integer">
+        SELECT
+            COUNT( * )
+        FROM
+            t_user_role
+        WHERE
+            role_id = #{roleId}
+    </select>
+
+    <select id="getRoleById" resultMap="BaseResultMap">
+        SELECT
+            t_role.role_id,
+            t_role.role_name,
+            t_role.remarks
+        FROM
+            t_role
+        WHERE
+            role_id = #{roleId}
+    </select>
+
+    <delete id="deleteRole" parameterType="java.lang.Integer">
+        DELETE FROM
+        t_role
+        WHERE role_id = #{roleId}
+    </delete>
+
 </mapper>

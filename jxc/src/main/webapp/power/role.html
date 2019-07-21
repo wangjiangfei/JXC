@@ -29,7 +29,7 @@
         <a href="javascript:openRoleAddDialog()" class="easyui-linkbutton" iconCls="add" plain="true">添加</a>
         <a href="javascript:openRoleModifyDialog()" class="easyui-linkbutton" iconCls="update" plain="true">修改</a>
         <a href="javascript:deleteRole()" class="easyui-linkbutton" iconCls="delete" plain="true">删除</a>
-        &nbsp;角色名：&nbsp;<input type="text" id="s_roleName" onkeydown="if(event.keyCode === 13) searchRole()"/>
+        &nbsp;角色名：&nbsp;<input type="text" id="s_roleName" autocomplete="off" onkeydown="if(event.keyCode === 13) searchRole()"/>
         <a href="javascript:searchRole()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
     </div>
 </div>
@@ -39,7 +39,7 @@
         <table cellspacing="8px">
             <tr>
                 <td>角色名:</td>
-                <td><input id="name" name="name" type="text" /></td>
+                <td><input id="name" name="roleName" type="text" autocomplete="off" /></td>
             </tr>
             <tr>
                 <td valign="top">备注:</td>

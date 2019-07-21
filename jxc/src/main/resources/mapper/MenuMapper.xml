@@ -46,4 +46,18 @@
         AND t_role_menu.role_id = #{roleId}
     </select>
 
+    <select id="getAllMenuByParentId" resultMap="BaseResultMap">
+        SELECT
+            t_menu.menu_id,
+            t_menu.menu_icon,
+            t_menu.menu_name,
+            t_menu.p_id,
+            t_menu.menu_state,
+            t_menu.menu_url
+        FROM
+            t_menu
+        WHERE
+            p_id = #{parentId}
+    </select>
+
 </mapper>
