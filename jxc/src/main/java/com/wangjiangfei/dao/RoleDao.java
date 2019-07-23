@@ -37,4 +37,7 @@ public interface RoleDao {
 
     // 根据角色id删除角色
     Integer deleteRole(Integer roleId);
+
+    // 查询所有角色信息
+    List<Role> findAll();
 }

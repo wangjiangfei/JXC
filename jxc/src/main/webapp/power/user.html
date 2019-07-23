@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/user.css" />
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/user.js"></script>
+</head>
+<body>
+<table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" pagination="true" rownumbers="true"
+       singleSelect="true" url="/user/list" pageList="[30,40,50]" pageSize="30" toolbar="#tb" striped="true" title="用户管理">
+    <thead>
+    <tr>
+        <th field="userId" width="20" align="center">编号</th>
+        <th field="userName" width="50" align="center">用户名</th>
+        <th field="trueName" width="50" align="center">真实姓名</th>
+        <th field="roles" width="80" align="center">拥有角色</th>
+        <th field="remarks" width="150" align="center">备注</th>
+        <th field="cc" width="50" formatter="setRoleFormatter" align="center">设置角色</th>
+    </tr>
+    </thead>
+</table>
+
+<div id="tb">
+    <div>
+        <a href="javascript:openUserAddDialog()" class="easyui-linkbutton" iconCls="add" plain="true">添加</a>
+        <a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" iconCls="update" plain="true">修改</a>
+        <a href="javascript:deleteUser()" class="easyui-linkbutton" iconCls="delete" plain="true">删除</a>
+        &nbsp;用户名：&nbsp;<input type="text" id="s_userName" onkeydown="if(event.keyCode==13) searchUser()"/>
+        <a href="javascript:searchUser()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" closed="true" buttons="#dlgTb">
+    <form method="post" id="fm">
+        <table cellspacing="8px">
+            <tr>
+                <td>用户名:</td>
+                <td><input id="userName" name="userName" type="text" /></td>
+            </tr>
+            <tr>
+                <td>真实姓名:</td>
+                <td><input id="trueName" name="trueName" type="text" /></td>
+            </tr>
+            <tr>
+                <td>密码:</td>
+                <td><input id="password" name="password" type="password" /></td>
+            </tr>
+            <tr>
+                <td>确认密码:</td>
+                <td><input id="repassword" name="repassword" type="password"/></td>
+            </tr>
+            <tr>
+                <td valign="top">备注:</td>
+                <td><textarea id="remarks" name="remarks" rows="5" cols="40"></textarea></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="dlgTb">
+    <a href="javascript:saveData()" class="easyui-linkbutton" iconCls="save">保存</a>
+    <a href="javascript:closeDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+
+<div id="dlg2" class="easyui-dialog" closed="true" buttons="#dlgTb2">
+    <table id="dg2" border="false" class="easyui-datagrid" fit="true" fitColumns="true" url="/role/listAll">
+        <thead>
+        <tr>
+            <th field="roleId" width="20" checkbox="true" align="center">编号</th>
+            <th field="roleName" width="40" align="center">角色名</th>
+            <th field="remarks" width="60" align="center">备注</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="dlgTb2">
+    <a href="javascript:setRole()" class="easyui-linkbutton" iconCls="save">提交</a>
+    <a href="javascript:closeRoleSetDialog()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+</body>
+</html>

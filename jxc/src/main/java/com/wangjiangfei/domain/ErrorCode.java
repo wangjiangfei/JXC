@@ -44,7 +44,7 @@ public interface ErrorCode {
     String ROLE_DEL_ERROR_MESS = "角色删除失败,尚有用户属于此角色";
 
     int ACCOUNT_EXIST_CODE = 10009;
-    String ACCOUNT_EXIST_MESS = "账户已存在";
+    String ACCOUNT_EXIST_MESS = "用户名已存在";
 
     int ROLE_EXIST_CODE = 10010;
     String ROLE_EXIST_MESS = "角色已存在";

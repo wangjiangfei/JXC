@@ -46,6 +46,19 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Map<String, Object> listAll() {
+        Map<String,Object> map = new HashMap<>();
+
+        List<Role> roleList = roleDao.findAll();
+
+        logService.save(new Log(Log.SELECT_ACTION, "查询所有角色信息"));
+
+        map.put("rows", roleList);
+
+        return map;
+    }
+
+    @Override
     public Map<String, Object> list(Integer page, Integer rows, String roleName) {
         Map<String, Object> map = new HashMap<>();
 

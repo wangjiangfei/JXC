@@ -44,7 +44,7 @@
         FROM
           t_role
         <where>
-            <if test="roleName != null">
+            <if test="roleName != null and roleName != ''">
                 t_role.role_name LIKE CONCAT('%', #{roleName} ,'%')
             </if>
         </where>
@@ -112,8 +112,17 @@
 
     <delete id="deleteRole" parameterType="java.lang.Integer">
         DELETE FROM
-        t_role
+          t_role
         WHERE role_id = #{roleId}
     </delete>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+            t_role.role_id,
+            t_role.role_name,
+            t_role.remarks
+        FROM
+            t_role
+    </select>
 
 </mapper>

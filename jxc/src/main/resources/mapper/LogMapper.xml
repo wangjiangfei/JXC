@@ -5,10 +5,77 @@
 
 <mapper namespace="com.wangjiangfei.dao.LogDao">
 
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.Log">
+        <result column="log_id" property="logId" jdbcType="INTEGER" />
+        <result column="log_type" property="logType" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="log_date" property="logDate" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+    </resultMap>
+
     <insert id="save" useGeneratedKeys="true" keyProperty="logId" parameterType="com.wangjiangfei.entity.Log">
         INSERT INTO t_log
         (log_type, content, log_date, user_id)
         VALUES (#{logType}, #{content}, #{logDate}, #{userId})
     </insert>
+
+    <select id="getLogList" resultMap="BaseResultMap">
+        SELECT
+            t_log.log_id,
+            t_log.log_type,
+            t_log.content,
+            t_log.log_date,
+            t_log.user_id
+        FROM
+            t_log
+        LEFT JOIN t_user ON t_log.user_id = t_user.user_id
+        <where>
+            <if test="logType != null and logType != ''">
+                t_log.log_type = #{logType}
+            </if>
+            <if test="trueName != null and trueName != ''">
+                t_user.true_name LIKE CONCAT('%', #{trueName} ,'%')
+            </if>
+            <if test="sTime != null and sTime != ''">
+                t_log.log_date &gt;= #{userName}
+            </if>
+            <if test="eTime != null and eTime != ''">
+                t_log.log_date &lt;= #{eTime}
+            </if>
+        </where>
+        LIMIT #{offSet}, #{pageRow}
+        ORDER BY t_log.log_date DESC
+    </select>
+
+    <select id="getLogCount" resultType="java.lang.Long">
+        SELECT
+          COUNT(*)
+        FROM
+          t_log
+        <where>
+            <if test="logType != null and logType != ''">
+                t_log.log_type = #{logType}
+            </if>
+            <if test="trueName != null and trueName != ''">
+                t_user.true_name LIKE CONCAT('%', #{trueName} ,'%')
+            </if>
+            <if test="sTime != null and sTime != ''">
+                t_log.log_date &gt;= #{userName}
+            </if>
+            <if test="eTime != null and eTime != ''">
+                t_log.log_date &lt;= #{eTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="getTrueNameByLogId" resultType="java.lang.String">
+        SELECT
+            t_user.true_name
+        FROM
+            t_log
+            LEFT JOIN t_user ON t_log.user_id = t_user.user_id
+        WHERE
+            t_log.log_id = #{logId}
+    </select>
 
 </mapper>

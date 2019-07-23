@@ -4,7 +4,7 @@
 function setRoleFormatter(value,row,index){
 	
 	//将当前这行的角色列表和用户ID都绑定至方法中
-	return "<a href=\"javascript:openRoleSetDialog('"+row.roles+"',"+row.id+")\">" +
+	return "<a href=\"javascript:openRoleSetDialog('"+row.roles+"',"+row.userId+")\">" +
 				"<img style='margin-top:4px' src='../static/images/setRole.png'/>" +
 			"</a>";
 }
@@ -26,10 +26,10 @@ var url;
  */
 function openUserAddDialog(){
 	$('#dlg').dialog({
-		title:'添加用户',
-		iconCls:'add',
-		closed:false,
-		top:$(window).height()/4,
+		title: '添加用户',
+		iconCls: 'add',
+		closed: false,
+		top: $(window).height()/4,
 		width: 450,
 		height: 350,
 		onClose:function(){
@@ -82,7 +82,7 @@ function openUserModifyDialog(){
 	//为不可编辑添加样式
 	$('#userName').addClass('readonly');
 	
-	url="/user/save?id="+selections[0].id;
+	url="/user/save?userId="+selections[0].userId;
 }
 
 /**
@@ -124,7 +124,7 @@ $(function(){
 			//为不可编辑添加样式
 			$('#userName').addClass('readonly');
 			
-			url="/user/save?id="+row.id;
+			url="/user/save?userId="+row.userId;
 		}
 	})
 });
@@ -134,44 +134,44 @@ $(function(){
  */
 function saveData(){
 	$('#fm').form('submit',{
-		url:url,
-		onSubmit:function(){
-			if($('#userName').val()==null || $('#userName').val()==''){
+		url: url,
+		onSubmit:function() {
+			if($('#userName').val() === null || $('#userName').val() === ''){
 				$.messager.alert({
-					title:'系统提示',
-					msg:'请输入用户名',
-					icon:'error', 
-					top:$(window).height()/4 
+					title: '系统提示',
+					msg: '请输入用户名',
+					icon: 'error',
+					top: $(window).height()/4
 				});
 				
 				return false;
 			}
-			if($('#trueName').val()==null || $('#trueName').val()==''){
+			if($('#trueName').val() === null || $('#trueName').val() === ''){
 				$.messager.alert({
-					title:'系统提示',
-					msg:'请输入真实姓名',
-					icon:'error', 
-					top:$(window).height()/4 
+					title: '系统提示',
+					msg: '请输入真实姓名',
+					icon: 'error',
+					top: $(window).height()/4
 				});
 				
 				return false;
 			}
-			if($('#password').val()==null || $('#password').val()==''){
+			if($('#password').val() === null || $('#password').val() === ''){
 				$.messager.alert({
-					title:'系统提示',
-					msg:'请输入密码',
-					icon:'error', 
-					top:$(window).height()/4 
+					title: '系统提示',
+					msg: '请输入密码',
+					icon: 'error',
+					top: $(window).height()/4
 				});
 				
 				return false;
 			}
-			if($('#password').val()!=$('#repassword').val()){
+			if($('#password').val() !== $('#repassword').val()){
 				$.messager.alert({
-					title:'系统提示',
-					msg:'两次密码输入不一致',
-					icon:'error', 
-					top:$(window).height()/4 
+					title: '系统提示',
+					msg: '两次密码输入不一致',
+					icon: 'error',
+					top: $(window).height()/4
 				});
 				
 				return false;
@@ -179,23 +179,24 @@ function saveData(){
 			
 			return true;
 		},
-		success:function(result){
+		success: function(result) {
 			var resultJson = eval('('+result+')');
-			if(resultJson.resultCode==001){
+			console.log(result)
+			if(resultJson.code === 100) {
 				$.messager.alert({
-					title:'系统提示',
-					msg:resultJson.resultContent,
-					icon:'info', 
+					title: '系统提示',
+					msg: '保存成功',
+					icon: 'info',
 					top:$(window).height()/4
 				});
 				$('#dlg').dialog('close');
 				$('#dg').datagrid('reload');
 			}else{
 				$.messager.alert({
-					title:'系统提示',
-					msg:resultJson.resultContent,
-					icon:'error', 
-					top:$(window).height()/4 
+					title: '系统提示',
+					msg: resultJson.msg,
+					icon: 'error',
+					top: $(window).height()/4
 				});
 			}
 		}
@@ -207,8 +208,8 @@ function saveData(){
  */
 function deleteUser(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length<1){
-		$.messager.alert({ 
+	if(selections.length < 1) {
+		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条您要删除的记录',
 			icon:'error', 
@@ -226,12 +227,14 @@ function deleteUser(){
 					url:'/user/delete',
 					dataType:'json',
 					type:'post',
-					data:{'userId':selections[0].id},
+					data:{
+						'userId': selections[0].userId
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code === 100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -239,7 +242,7 @@ function deleteUser(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});
@@ -257,27 +260,27 @@ function deleteUser(){
 function openRoleSetDialog(roles,userId){
 	//打开窗口
 	$('#dlg2').dialog({
-		title:'设置角色',
-		iconCls:'set',
-		closed:false,
-		top:$(window).height()/4,
-		left:$(window).width()/2.7,
+		title: '设置角色',
+		iconCls: 'set',
+		closed: false,
+		top: $(window).height()/4,
+		left: $(window).width()/2.7,
 		width: 450,
 		height: 350
 	});
-	//清空所有勾选
+	// 清空所有勾选
 	$('#dg2').datagrid('uncheckAll');
-	//窗口打开后，把当前用户有的角色默认勾选上
+	// 窗口打开后，把当前用户有的角色默认勾选上
 	var rolesArr=roles.split(",");
 	var allRows=$("#dg2").datagrid("getRows");
-	for(var i=0;i<allRows.length;i++){
-		for(var n=0;n<rolesArr.length;n++){
-			if(allRows[i].name==rolesArr[n]){
-				$("#dg2").datagrid("checkRow",i);
+	for(var i = 0;i < allRows.length;i++){
+		for(var n = 0;n < rolesArr.length; n++){
+			if(allRows[i].roleName === rolesArr[n]){
+				$("#dg2").datagrid("checkRow", i);
 			}
 		}
 	}
-	//将所选的这条记录的用户ID存在sessionStorage中
+	// 将所选的这条记录的用户ID存在sessionStorage中
 	sessionStorage.setItem("userId", userId);
 }
 
@@ -291,24 +294,24 @@ function closeRoleSetDialog(){
 /**
  * 设置角色
  */
-function setRole(){
+function setRole() {
 	//获取用户ID
 	var userId = sessionStorage.getItem("userId");
 	var selections = $('#dg2').datagrid('getSelections');
-	if(selections.length<1){
+	if(selections.length < 1) {
 		$.messager.alert({
-			title:'系统提示',
-			msg:'请选择要设置的角色',
-			icon:'info', 
-			top:$(window).height()/4 
+			title: '系统提示',
+			msg: '请选择要设置的角色',
+			icon: 'info',
+			top: $(window).height()/4
 		});
 		
 		return;
 	}
 	
 	var rolesArray = [];
-	for(var i=0;i<selections.length;i++){
-		rolesArray.push(selections[i].id);
+	for(var i = 0;i < selections.length;i++){
+		rolesArray.push(selections[i].roleId);
 	}
 	var roles = rolesArray.join(',');
 	
@@ -316,12 +319,15 @@ function setRole(){
 		url:'/user/setRole',
 		type:'post',
 		dataType:'json',
-		data:{'userId':userId,'roles':roles},
+		data:{
+			'userId':userId,
+			'roles':roles
+		},
 		success:function(result){
-			if(result.resultCode==001){
+			if(result.code === 100){
 				$.messager.alert({
 					title:'系统提示',
-					msg:result.resultContent,
+					msg: '保存成功',
 					icon:'info', 
 					top:$(window).height()/4 
 				});
@@ -330,7 +336,7 @@ function setRole(){
 			}else{
 				$.messager.alert({
 					title:'系统提示',
-					msg:result.resultContent,
+					msg:result.msg,
 					icon:'error', 
 					top:$(window).height()/4 
 				});

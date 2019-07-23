@@ -28,4 +28,82 @@
             t_user.user_name = #{userName}
     </select>
 
+    <select id="getUserList" resultMap="BaseResultMap">
+        SELECT
+            t_user.user_id,
+            t_user.user_name,
+            t_user.`password`,
+            t_user.true_name,
+            t_user.roles,
+            t_user.remarks
+        FROM
+            t_user
+        <where>
+            <if test="userName != null and userName != ''">
+                t_user.user_name LIKE CONCAT('%', #{userName} ,'%')
+            </if>
+        </where>
+        LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <select id="getUserCount" resultType="java.lang.Integer">
+        SELECT
+          COUNT(*)
+        FROM
+        t_user
+        <where>
+            <if test="userName != null and userName != ''">
+                t_user.user_name LIKE CONCAT('%', #{userName} ,'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.wangjiangfei.entity.User">
+        INSERT INTO t_user
+        (user_name, password, true_name, roles, remarks)
+        VALUES (#{userName}, #{password}, #{trueName}, #{roles}, #{remarks})
+    </insert>
+
+    <update id="updateUser" parameterType="com.wangjiangfei.entity.User">
+        UPDATE t_user
+        <set>
+            <if test="userName != '' and userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="password != '' and password != null">
+                password = #{password},
+            </if>
+            <if test="trueName != '' and trueName != null">
+                true_name = #{trueName},
+            </if>
+            <if test="roles != '' and roles != null">
+                roles = #{roles},
+            </if>
+            <if test="remarks != '' and remarks != null">
+                remarks = #{remarks},
+            </if>
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="getUserById" resultMap="BaseResultMap">
+        SELECT
+            t_user.user_id,
+            t_user.user_name,
+            t_user.`password`,
+            t_user.true_name,
+            t_user.roles,
+            t_user.remarks
+        FROM
+            t_user
+        WHERE
+            user_id = #{userId}
+    </select>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        DELETE FROM
+        t_user
+        WHERE user_id = #{userId}
+    </delete>
+
 </mapper>

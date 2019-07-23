@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.UserRoleDao">
+
+    <delete id="deleteUserRoleByUserId" parameterType="java.lang.Integer">
+        DELETE FROM
+          t_user_role
+        WHERE user_id = #{userId}
+    </delete>
+
+    <insert id="addUserRole" useGeneratedKeys="true" keyProperty="userRoleId" parameterType="com.wangjiangfei.entity.UserRole">
+        INSERT INTO
+          t_user_role(role_id, user_id)
+        VALUES
+          (#{roleId}, #{userId})
+    </insert>
+
+</mapper>

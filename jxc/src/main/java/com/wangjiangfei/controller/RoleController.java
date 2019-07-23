@@ -3,6 +3,7 @@ package com.wangjiangfei.controller;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.Role;
 import com.wangjiangfei.service.RoleService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,18 @@ public class RoleController {
     @PostMapping("/saveRole")
     public ServiceVO saveRole(@RequestBody Role role, HttpSession session) {
         return roleService.saveRole(role, session);
+    }
+
+    /**
+     * 查询所有角色信息
+     * @return
+     */
+    // 这里想表达的意思是当前用户拥有用户管理菜单权限或是角色管理菜单权限就可以访问该方法
+    // 但Shiro的该注解默认会把该逻辑表达成'与'的关系，所以我们需要手动指定逻辑关系为'或'
+    @RequestMapping("/listAll")
+    @RequiresPermissions(value = {"用户管理","角色管理"}, logical = Logical.OR)
+    public Map<String,Object> listAll() {
+        return roleService.listAll();
     }
 
     /**

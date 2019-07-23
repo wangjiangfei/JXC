@@ -15,6 +15,8 @@ public interface RoleService {
 
     ServiceVO saveRole(Role role, HttpSession session);
 
+    Map<String,Object> listAll();
+
     Map<String, Object> list(Integer page, Integer rows, String roleName);
 
     ServiceVO save(Role role);

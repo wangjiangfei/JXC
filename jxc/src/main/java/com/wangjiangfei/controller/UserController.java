@@ -54,12 +54,76 @@ public class UserController {
     }
 
     /**
+     * 分页查询用户信息
+     * @param page 当前页数
+     * @param rows 每页显示的记录数
+     * @param userName 用户名
+     * @return
+     */
+    @RequestMapping("/list")
+    @ResponseBody
+    @RequiresPermissions(value = "用户管理")// 有用户管理菜单权限的才给予调用
+    public Map<String, Object> list(Integer page,Integer rows,String userName) {
+        return userService.list(page, rows, userName);
+    }
+
+    /**
+     * 添加或修改用户信息
+     * @param user 用户信息实体
+     * @return
+     */
+    @RequestMapping(value = "/save")
+    @ResponseBody
+    @RequiresPermissions(value = "用户管理")
+    public ServiceVO save(User user) {
+        return userService.save(user);
+    }
+
+    /**
+     * 删除用户信息
+     * @param userId 用户ID
+     * @return
+     */
+    @RequestMapping("/delete")
+    @ResponseBody
+    @RequiresPermissions(value = "用户管理")
+    public ServiceVO delete(Integer userId) {
+        return userService.delete(userId);
+    }
+
+    /**
+     * 设置用户角色
+     * @param userId 用户ID
+     * @param roles 角色ID数组字符串，用逗号分割
+     * @return
+     */
+    @RequestMapping("/setRole")
+    @ResponseBody
+    @RequiresPermissions(value = "用户管理")
+    public ServiceVO setRole(Integer userId, String roles) {
+        return userService.setRole(userId, roles);
+    }
+
+    /**
+     * 修改密码
+     * @param newPassword
+     * @param session
+     * @return
+     */
+    @RequestMapping("/updatePassword")
+    @ResponseBody
+    @RequiresPermissions(value = "修改密码")
+    public ServiceVO updatePassword(String newPassword, HttpSession session) {
+        return userService.updatePassword(newPassword, session);
+    }
+
+    /**
      * 安全退出
      * @return
      */
     @GetMapping("/logOut")
     @RequiresPermissions(value = "安全退出")
-    public String logOut(HttpSession session){
+    public String logOut() {
 
         logService.save(new Log(Log.LOGOUT_ACTION,"用户注销"));
 
