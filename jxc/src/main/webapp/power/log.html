@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>系统日志</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/log.css" />
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/log.js"></script>
+</head>
+<body>
+<table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" pagination="true" rownumbers="true"
+       singleSelect="true" url="/log/list" pageList="[30,40,50]" pageSize="30" toolbar="#tb" striped="true" title="系统日志">
+    <thead>
+    <tr>
+        <th field="id" width="20" align="center">编号</th>
+        <th field="type" width="50" align="center">操作类型</th>
+        <th field="trueName" width="50" align="center">操作人员</th>
+        <th field="date" width="80" align="center">操作时间</th>
+        <th field="content" width="150" align="center">操作内容</th>
+    </tr>
+    </thead>
+</table>
+
+<div id="tb">
+    <div>
+        <fieldset>
+            <legend>查询设置</legend>
+            <select id="cc" class="easyui-combobox" panelHeight="auto" editable="false">
+                <option value="">所有类型</option>
+                <option value="登录操作">登录操作</option>
+                <option value="登录操作">登出操作</option>
+                <option value="查询操作">查询操作</option>
+                <option value="新增操作">新增操作</option>
+                <option value="修改操作">修改操作</option>
+                <option value="删除操作">删除操作</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            操作人员:&nbsp;<input class="easyui-validatebox" type="text" id="s_trueName" name="s_trueName" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            日志开始时间:&nbsp;<input class="easyui-datetimebox" editable="false" id="s_stime"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            日志结束时间:&nbsp;<input class="easyui-datetimebox" editable="false" id="s_etime"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:searchLog()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+            &nbsp;&nbsp;
+            <a href="javascript:reset()" class="easyui-linkbutton" iconCls="reset" plain="true">重置</a>
+        </fieldset>
+    </div>
+</div>
+</body>
+</html>
