@@ -14,7 +14,7 @@ function reset(){
 function searchLog(){
 	
 	$('#dg').datagrid('load',{
-		type:$('#cc').combobox('getValue'),
+		logType:$('#cc').combobox('getValue'),
 		trueName:$('#s_trueName').val(),
 		sTime:$('#s_stime').datetimebox('getValue'),
 		eTime:$('#s_etime').datetimebox('getValue')

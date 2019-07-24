@@ -31,20 +31,20 @@
         LEFT JOIN t_user ON t_log.user_id = t_user.user_id
         <where>
             <if test="logType != null and logType != ''">
-                t_log.log_type = #{logType}
+                AND t_log.log_type = #{logType}
             </if>
             <if test="trueName != null and trueName != ''">
-                t_user.true_name LIKE CONCAT('%', #{trueName} ,'%')
+                AND t_user.true_name LIKE CONCAT('%', #{trueName} ,'%')
             </if>
-            <if test="sTime != null and sTime != ''">
-                t_log.log_date &gt;= #{userName}
+            <if test="sTime != null">
+                AND t_log.log_date &gt;= #{sTime}
             </if>
-            <if test="eTime != null and eTime != ''">
-                t_log.log_date &lt;= #{eTime}
+            <if test="eTime != null">
+                AND t_log.log_date &lt;= #{eTime}
             </if>
         </where>
-        LIMIT #{offSet}, #{pageRow}
         ORDER BY t_log.log_date DESC
+        LIMIT #{offSet}, #{pageRow}
     </select>
 
     <select id="getLogCount" resultType="java.lang.Long">
@@ -52,18 +52,19 @@
           COUNT(*)
         FROM
           t_log
+        LEFT JOIN t_user ON t_log.user_id = t_user.user_id
         <where>
             <if test="logType != null and logType != ''">
-                t_log.log_type = #{logType}
+                AND t_log.log_type = #{logType}
             </if>
             <if test="trueName != null and trueName != ''">
-                t_user.true_name LIKE CONCAT('%', #{trueName} ,'%')
+                AND t_user.true_name LIKE CONCAT('%', #{trueName} ,'%')
             </if>
-            <if test="sTime != null and sTime != ''">
-                t_log.log_date &gt;= #{userName}
+            <if test="sTime != null">
+                AND t_log.log_date &gt;= #{sTime}
             </if>
-            <if test="eTime != null and eTime != ''">
-                t_log.log_date &lt;= #{eTime}
+            <if test="eTime != null">
+                AND t_log.log_date &lt;= #{eTime}
             </if>
         </where>
     </select>

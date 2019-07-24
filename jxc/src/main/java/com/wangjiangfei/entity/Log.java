@@ -1,10 +1,12 @@
 package com.wangjiangfei.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class Log {
 
   private Integer logId;

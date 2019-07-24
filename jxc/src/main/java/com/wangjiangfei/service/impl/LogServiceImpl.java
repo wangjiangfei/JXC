@@ -44,6 +44,9 @@ public class LogServiceImpl implements LogService {
         JsonArray array = new JsonArray();
 
         try {
+            // 测试
+            System.err.println(eTime);
+            System.err.println(DateUtil.StringToDate(eTime, "yyyy-MM-dd HH:mm:ss"));
 
             page = page == 0 ? 1 : page;
             int offSet = (page - 1) * rows;
