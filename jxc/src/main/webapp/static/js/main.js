@@ -28,9 +28,6 @@ $(document).ready(function() {
 			$('#tree').tree('expandAll');
 		},
 		onClick: function(node) {
-			if (node.attributes.url === '' || node.attributes.url === null) {
-				return;
-			}
 			openTabs(node);
 		}
 	});
@@ -81,7 +78,7 @@ $(document).ready(function() {
                 break;
             case 4: // 关闭其他标签页
                 for (var i = 0; i < allTabtitle.length; i++) {
-                    if (curTabTitle != allTabtitle[i])
+                    if (curTabTitle !== allTabtitle[i])
                         $('#tabs').tabs('close', allTabtitle[i]);
                 }
                 $('#tabs').tabs('select', curTabTitle);
@@ -124,34 +121,36 @@ function openTabs(node){
 	// 如果为修改密码，则打开修改密码的Dialog
 	if(node.id === 6040){
 		$('#updatePasswordDlg').dialog({
-			title:'修改密码',
-			iconCls:'update',
-			closed:false,
-			top:$(window).height()/4,
+			title: '修改密码',
+			iconCls: 'update',
+			closed: false,
+			top: $(window).height()/4,
 			width: 350,
 			height: 160,
-			onClose:function(){
+			onClose: function() {
 				$('#newPassword').val('');
 				$('#reNewPassword').val('');
 			}
 		});
-	}else if(node.id === 6050){//如果为安全退出，则直接退出系统
+	}else if(node.id === 6050){// 如果为安全退出，则直接退出系统
 		$.messager.confirm({
-			title:'系统提示',
-			msg:'您确定要退出系统吗？',
-			fn:function(r){
-				if(r){
+			title: '系统提示',
+			msg: '您确定要退出系统吗？',
+			fn: function(r) {
+				if (r) {
 					window.location.href='/user/logOut';
 				}
 			}
 		})
+	} else if (node.attributes.url === '' || node.attributes.url === null) {
+
 	}else if($('#tabs').tabs('exists',node.text)){//如果标签页已存在，则选中
 		$('#tabs').tabs('select',node.text)
 	}else{
-		$('#tabs').tabs('add',{//添加新的标签页
-			title:node.text,
-			closable:true,
-			iconCls:node.iconCls,
+		$('#tabs').tabs('add',{// 添加新的标签页
+			title: node.text,
+			closable: true,
+			iconCls: node.iconCls,
 			content:'<iframe scrolling="auto" height="99%" width="99.5%" src="'+node.attributes.url+'"></iframe>'
 		});
 	}
@@ -171,36 +170,36 @@ function closeUpdatePassowrdDlg(){
  */
 function saveNewPassword(){
 	$('#updatePassowrdFm').form('submit',{
-		url:'/user/updatePassword',
-		onSubmit:function(){
-			if($('#newPassword').val()!=$('#reNewPassword').val()){
+		url: '/user/updatePassword',
+		onSubmit: function() {
+			if($('#newPassword').val() !== $('#reNewPassword').val()){
 				$.messager.alert({
-					title:'系统提示',
-					msg:'两次密码输入不一致',
-					icon:'error', 
-					top:$(window).height()/4 
+					title: '系统提示',
+					msg: '两次密码输入不一致',
+					icon: 'error',
+					top: $(window).height()/4
 				});
 				
 				return false;
 			}
 			return true;
 		},
-		success:function(result){
+		success: function(result) {
 			var resultJson = eval('('+result+')');
-			if(resultJson.resultCode === 001){
+			if(resultJson.code === 100){
 				$.messager.alert({
-					title:'系统提示',
-					msg:resultJson.resultContent,
-					icon:'info', 
-					top:$(window).height()/4
+					title: '系统提示',
+					msg: '修改成功',
+					icon: 'info',
+					top: $(window).height()/4
 				});
 				$('#updatePasswordDlg').dialog('close');
 			}else{
 				$.messager.alert({
-					title:'系统提示',
-					msg:resultJson.resultContent,
-					icon:'error', 
-					top:$(window).height()/4 
+					title: '系统提示',
+					msg: resultJson.msg,
+					icon: 'error',
+					top: $(window).height()/4
 				});
 			}
 		}
