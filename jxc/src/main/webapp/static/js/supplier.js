@@ -4,7 +4,7 @@
 function searchSupplier(){
 	
 	$('#dg').datagrid('load',{
-		name:$('#s_name').val()
+        supplierName: $('#s_name').val()
 	});
 }
 
@@ -66,7 +66,7 @@ function openSupplierModifyDialog(){
 		}
 	});
 	
-	url="/supplier/save?id="+selections[0].id;
+	url="/supplier/save?supplierId="+selections[0].supplierId;
 }
 
 /**
@@ -103,7 +103,7 @@ $(function(){
 				}
 			});
 			
-			url="/supplier/save?id="+row.id;
+			url="/supplier/save?supplierId="+row.supplierId;
 		}
 	})
 });
@@ -114,8 +114,8 @@ $(function(){
 function saveData(){
 	$('#fm').form('submit',{
 		url:url,
-		onSubmit:function(){
-			if($('#name').val()==null || $('#name').val()==''){
+		onSubmit: function() {
+			if($('#name').val() === null || $('#name').val() === ''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入供应商名称',
@@ -125,7 +125,7 @@ function saveData(){
 				
 				return false;
 			}
-			if($('#contacts').val()==null || $('#contacts').val()==''){
+			if($('#contacts').val() === null || $('#contacts').val() === ''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入联系人',
@@ -135,7 +135,7 @@ function saveData(){
 				
 				return false;
 			}
-			if($('#phoneNumber').val()==null || $('#phoneNumber').val()==''){
+			if($('#phoneNumber').val()===null || $('#phoneNumber').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入联系电话',
@@ -145,7 +145,7 @@ function saveData(){
 				
 				return false;
 			}
-			if($('#address').val()==null|| $('#address').val()==''){
+			if($('#address').val()===null|| $('#address').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入供应商地址',
@@ -158,12 +158,12 @@ function saveData(){
 			
 			return true;
 		},
-		success:function(result){
+		success: function(result){
 			var resultJson = eval('('+result+')');
-			if(resultJson.resultCode==001){
+			if(resultJson.code === 100){
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg: '保存成功',
 					icon:'info', 
 					top:$(window).height()/4
 				});
@@ -172,7 +172,7 @@ function saveData(){
 			}else{
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg:resultJson.msg,
 					icon:'error', 
 					top:$(window).height()/4 
 				});
@@ -186,7 +186,7 @@ function saveData(){
  */
 function deleteSupplier(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length<1){
+	if(selections.length < 1) {
 		$.messager.alert({ 
 			title:'系统提示',
 			msg:'请选择您要删除的记录',
@@ -203,19 +203,21 @@ function deleteSupplier(){
 			if(r){
 				var idsAr = [];
 				for(var i=0;i<selections.length;i++){
-					idsAr.push(selections[i].id);
+					idsAr.push(selections[i].supplierId);
 				}
 				var ids = idsAr.join(",");
 				$.ajax({
 					url:'/supplier/delete',
 					dataType:'json',
 					type:'post',
-					data:{'ids':ids},
+					data: {
+						'ids':ids
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code === 100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:'删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -223,7 +225,7 @@ function deleteSupplier(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});

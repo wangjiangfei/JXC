@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.SupplierDao">
+
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.Supplier">
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+        <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+        <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getSupplierList" resultMap="BaseResultMap">
+        SELECT
+            t_supplier.supplier_id,
+            t_supplier.supplier_name,
+            t_supplier.contacts,
+            t_supplier.phone_number,
+            t_supplier.address,
+            t_supplier.remarks
+        FROM
+            t_supplier
+        <where>
+            <if test="supplierName != null and supplierName != ''">
+                t_supplier.supplier_name LIKE CONCAT('%', #{supplierName} ,'%')
+            </if>
+        </where>
+        LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <select id="getSupplierCount" resultType="java.lang.Integer">
+        SELECT
+          COUNT(*)
+        FROM
+        t_supplier
+        <where>
+            <if test="supplierName != null and supplierName != ''">
+                t_supplier.supplier_name LIKE CONCAT('%', #{supplierName} ,'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="saveSupplier" useGeneratedKeys="true" keyProperty="supplierId" parameterType="com.wangjiangfei.entity.Supplier">
+        INSERT INTO t_supplier
+        (supplier_name, contacts, phone_number, address, remarks)
+        VALUES (#{supplierName}, #{contacts}, #{phoneNumber}, #{address}, #{remarks})
+    </insert>
+
+    <update id="updateSupplier" parameterType="com.wangjiangfei.entity.Supplier">
+        UPDATE t_supplier
+        <set>
+            <if test="supplierName != '' and supplierName != null">
+                supplier_name = #{supplierName},
+            </if>
+            <if test="contacts != '' and contacts != null">
+                contacts = #{contacts},
+            </if>
+            <if test="phoneNumber != '' and phoneNumber != null">
+                phone_number = #{phoneNumber},
+            </if>
+            <if test="address != '' and address != null">
+                address = #{address},
+            </if>
+            <if test="remarks != '' and remarks != null">
+                remarks = #{remarks},
+            </if>
+        </set>
+        WHERE supplier_id = #{supplierId}
+    </update>
+
+    <select id="getSupplierById" resultMap="BaseResultMap">
+        SELECT
+            t_supplier.supplier_id,
+            t_supplier.supplier_name,
+            t_supplier.contacts,
+            t_supplier.phone_number,
+            t_supplier.address,
+            t_supplier.remarks
+        FROM
+            t_supplier
+        WHERE supplier_id = #{supplierId}
+    </select>
+
+    <delete id="deleteSupplier" parameterType="java.lang.Integer">
+        DELETE FROM
+        t_supplier
+        WHERE supplier_id = #{supplierId}
+    </delete>
+
+</mapper>
