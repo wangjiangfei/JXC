@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>期初库存管理</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/css/stock.css"></link>
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/stock.js"></script>
+</head>
+<body class="easyui-layout">
+
+<div region="west" class="westCls" split="true" iconCls="icon-navigation">
+    <table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" pagination="true" rownumbers="true" striped="true"
+           singleSelect="true" url="/goods/getNoInventoryQuantity" pageList="[30,40,50]" pageSize="30" toolbar="#tb" border="false"
+           title="无库存商品">
+        <thead>
+        <tr>
+            <th field="id" width="30" align="center">编号</th>
+            <th field="code" width="50" align="center">编码</th>
+            <th field="name" width="250" align="center">名称</th>
+            <th field="model" width="60" align="center">型号</th>
+            <th field="typeName" width="50" align="center"  formatter="setGoodsNameFormatter">类别</th>
+            <th field="unit" width="40" align="center">单位</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="tb">
+    <div>
+        &nbsp;商品名称或编码：&nbsp;<input type="text" id="s_nameOrCode" oninput="searchNoInventoryQuantityGoods()"/>
+        <a href="javascript:openInventoryQuantityDlg(1)" class="easyui-linkbutton" iconCls="add" plain="true">添加库存</a>
+    </div>
+</div>
+
+<div region="center">
+    <table id="dg2" class="easyui-datagrid" fit="true" fitColumns="true" pagination="true" rownumbers="true" striped="true"
+           singleSelect="true" url="/goods/getHasInventoryQuantity" pageList="[30,40,50]" pageSize="30" toolbar="#tb2" border="false"
+           title="有库存商品">
+        <thead>
+        <tr>
+            <th field="id" width="30" align="center">编号</th>
+            <th field="code" width="50" align="center">编码</th>
+            <th field="name" width="220" align="center">名称</th>
+            <th field="model" width="60" align="center">型号</th>
+            <th field="typeName" width="60" align="center"  formatter="setGoodsNameFormatter">类别</th>
+            <th field="unit" width="40" align="center">单位</th>
+            <th field="inventoryQuantity" width="40" align="center">库存</th>
+            <th field="purchasingPrice" width="60" align="center"  formatter="setPriceFormatter">采购价格</th>
+            <th field="inventoryQuantityPrice" width="60" align="center"  formatter="setInventoryQuantityPriceFormatter">库存金额</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="tb2">
+    <div>
+        &nbsp;商品名称或编码：&nbsp;<input type="text" id="s_nameOrCode2" oninput="searchHasInventoryQuantityGoods()"/>
+        <a href="javascript:openInventoryQuantityDlg(2)" class="easyui-linkbutton" iconCls="update" plain="true">修改数量或成本价</a>
+        <a href="javascript:deleteGoodsStock()" class="easyui-linkbutton" iconCls="delete" plain="true">删除</a>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" closed="true" buttons="#dlgTb">
+    <form method="post" id="fm">
+        <fieldset>
+            <legend>商品信息</legend>
+            <table cellspacing="8px">
+                <tr>
+                    <td>商品编号:</td>
+                    <td><input class="readonly" id="code" name="code" type="text" readonly="readonly"/></td>
+                    <td>商品名称:</td>
+                    <td><input class="readonly" id="name" name="name" type="text" readonly="readonly"/></td>
+                </tr>
+                <tr>
+                    <td>商品单位:</td>
+                    <td><input class="readonly" id="unit" name="unit" type="text" readonly="readonly"/></td>
+                    <td align="right">成本价:</td>
+                    <td><input class="readonly" id="price" name="price" type="text" readonly="readonly"/></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+    <form method="post" id="fm2">
+        <table cellspacing="8px" class="inventoryQuantityTb">
+            <tr>
+                <td>期初数量:</td>
+                <td><input id="inventoryQuantity" name="inventoryQuantity" type="text" onkeyup="this.value=this.value.replace(/[^0-9]+/,'');"/></td>
+                <td align="right">&nbsp;&nbsp;&nbsp;成本价:</td>
+                <td><input id="purchasingPrice" name="purchasingPrice" type="text" onkeyup="this.value=this.value.replace(/[^0-9.]+/,'');"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="dlgTb">
+    <a href="javascript:saveData()" class="easyui-linkbutton" iconCls="save">保存</a>
+    <a href="javascript:closeDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+
+</body>
+</html>

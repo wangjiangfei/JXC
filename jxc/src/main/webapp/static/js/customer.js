@@ -4,7 +4,7 @@
 function searchCustomer(){
 	
 	$('#dg').datagrid('load',{
-		name:$('#s_name').val()
+        customerName:$('#s_name').val()
 	});
 }
 
@@ -38,7 +38,7 @@ function openCustomerAddDialog(){
  */
 function openCustomerModifyDialog(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length<1){
+	if(selections.length < 1) {
 		$.messager.alert({ 
 			title:'系统提示',
 			msg:'请选择一条您要修改的记录',
@@ -66,7 +66,7 @@ function openCustomerModifyDialog(){
 		}
 	});
 	
-	url="/customer/save?id="+selections[0].id;
+	url="/customer/save?customerId="+selections[0].customerId;
 }
 
 /**
@@ -103,7 +103,7 @@ $(function(){
 				}
 			});
 			
-			url="/customer/save?id="+row.id;
+			url="/customer/save?customerId="+row.customerId;
 		}
 	})
 });
@@ -115,7 +115,7 @@ function saveData(){
 	$('#fm').form('submit',{
 		url:url,
 		onSubmit:function(){
-			if($('#name').val()==null || $('#name').val()==''){
+			if($('#name').val()===null || $('#name').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入客户名称',
@@ -125,7 +125,7 @@ function saveData(){
 				
 				return false;
 			}
-			if($('#contacts').val()==null || $('#contacts').val()==''){
+			if($('#contacts').val()===null || $('#contacts').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入联系人',
@@ -135,7 +135,7 @@ function saveData(){
 				
 				return false;
 			}
-			if($('#phoneNumber').val()==null || $('#phoneNumber').val()==''){
+			if($('#phoneNumber').val()===null || $('#phoneNumber').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入联系电话',
@@ -145,7 +145,7 @@ function saveData(){
 				
 				return false;
 			}
-			if($('#address').val()==null|| $('#address').val()==''){
+			if($('#address').val()===null|| $('#address').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入客户地址',
@@ -160,10 +160,10 @@ function saveData(){
 		},
 		success:function(result){
 			var resultJson = eval('('+result+')');
-			if(resultJson.resultCode==001){
+			if(resultJson.code===100){
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg: '保存成功',
 					icon:'info', 
 					top:$(window).height()/4
 				});
@@ -203,19 +203,21 @@ function deleteCustomer(){
 			if(r){
 				var idsAr = [];
 				for(var i=0;i<selections.length;i++){
-					idsAr.push(selections[i].id);
+					idsAr.push(selections[i].customerId);
 				}
 				var ids = idsAr.join(",");
 				$.ajax({
 					url:'/customer/delete',
 					dataType:'json',
 					type:'post',
-					data:{'ids':ids},
+					data:{
+						'ids':ids
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code===100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:'删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -223,7 +225,7 @@ function deleteCustomer(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});

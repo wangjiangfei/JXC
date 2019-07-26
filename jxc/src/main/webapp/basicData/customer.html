@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>客户管理</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/customer.css" />
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/customer.js"></script>
+</head>
+<body>
+<table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" pagination="true" rownumbers="true"
+       singleSelect="flase" url="/customer/list" pageList="[30,40,50]" pageSize="30" toolbar="#tb" striped="true"
+       title="客户管理">
+    <thead>
+    <tr>
+        <th field="customerId" width="20" align="center">编号</th>
+        <th field="customerName" width="50" align="center">客户名称</th>
+        <th field="contacts" width="50" align="center">联系人</th>
+        <th field="phoneNumber" width="50" align="center">联系人电话</th>
+        <th field="address" width="100" align="center">客户地址</th>
+        <th field="remarks" width="150" align="center">备注</th>
+    </tr>
+    </thead>
+</table>
+
+<div id="tb">
+    <div>
+        <a href="javascript:openCustomerAddDialog()" class="easyui-linkbutton" iconCls="add" plain="true">添加</a>
+        <a href="javascript:openCustomerModifyDialog()" class="easyui-linkbutton" iconCls="update" plain="true">修改</a>
+        <a href="javascript:deleteCustomer()" class="easyui-linkbutton" iconCls="delete" plain="true">删除</a>
+        &nbsp;客户名称：&nbsp;<input type="text" id="s_name" onkeydown="if(event.keyCode===13) searchCustomer()"/>
+        <a href="javascript:searchCustomer()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" closed="true" buttons="#dlgTb">
+    <form method="post" id="fm">
+        <table cellspacing="8px">
+            <tr>
+                <td>客户名称:</td>
+                <td><input id="name" name="customerName" type="text" /></td>
+            </tr>
+            <tr>
+                <td>联系人:</td>
+                <td><input id="contacts" name="contacts" type="text" /></td>
+            </tr>
+            <tr>
+                <td>联系人电话:</td>
+                <td><input id="phoneNumber" name="phoneNumber" type="text" /></td>
+            </tr>
+            <tr>
+                <td>客户地址:</td>
+                <td><input id="address" name="address" type="text"/></td>
+            </tr>
+            <tr>
+                <td valign="top">备注:</td>
+                <td><textarea id="remarks" name="remarks" rows="5" cols="40"></textarea></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="dlgTb">
+    <a href="javascript:saveData()" class="easyui-linkbutton" iconCls="save">保存</a>
+    <a href="javascript:closeDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+</body>
+</html>

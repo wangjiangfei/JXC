@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/css/goods.css"></link>
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/goods.js"></script>
+</head>
+<body class="easyui-layout">
+
+<div region="west" class="westCls" title="商品类别" split="true" iconCls="icon-navigation">
+    <ul id="tree" class="easyui-tree"></ul>
+    <div class="goodsTypeButton">
+        <a id="addButton" href="javascript:openGoodsTypeAddDialog()" class="easyui-linkbutton" iconCls="add" disabled>添加</a>
+        <a id="deleteButton" href="javascript:deleteGoodsType()" class="easyui-linkbutton" iconCls="delete" disabled>删除</a>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" closed="true" buttons="#dlgTb">
+    <form method="post" id="fm">
+        <table cellspacing="8px">
+            <tr>
+                <td>商品类别名称:</td>
+                <td><input id="name" name="name" type="text" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="dlgTb">
+    <a href="javascript:saveData()" class="easyui-linkbutton" iconCls="save">保存</a>
+    <a href="javascript:closeDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+
+<div region="center">
+    <table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" pagination="true" rownumbers="true"
+           singleSelect="true" url="/goods/list" pageList="[30,40,50]" pageSize="30" toolbar="#tb" border="false" striped="true"
+           title="商品管理">
+        <thead>
+        <tr>
+            <th field="id" width="30" align="center">编号</th>
+            <th field="code" width="50" align="center">商品编码</th>
+            <th field="name" width="250" align="center">商品名称</th>
+            <th field="model" width="60" align="center">商品型号</th>
+            <th field="typeId" width="40" align="center" hidden="true" formatter="setGoodsIdFormatter">商品类别ID</th>
+            <th field="typeName" width="40" align="center"  formatter="setGoodsNameFormatter">商品类别</th>
+            <th field="unit" width="40" align="center">商品单位</th>
+            <th field="purchasingPrice" width="40" align="center"  formatter="setPriceFormatter">采购价格</th>
+            <th field="sellingPrice" width="40" align="center"  formatter="setPriceFormatter">出售价格</th>
+            <th field="minNum" width="40" align="center">库存下限</th>
+            <th field="producer" width="150" align="center">生产厂商</th>
+            <th field="remarks" width="150" align="center" hidden="true">备注</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="tb">
+    <div>
+        <a href="javascript:openGoodsAddDialog()" class="easyui-linkbutton" iconCls="add" plain="true">添加</a>
+        <a href="javascript:openGoodsModifyDialog()" class="easyui-linkbutton" iconCls="update" plain="true">修改</a>
+        <a href="javascript:deleteGoods()" class="easyui-linkbutton" iconCls="delete" plain="true">删除</a>
+        &nbsp;商品名称：&nbsp;<input type="text" id="s_name" onkeydown="if(event.keyCode==13) searchGoods()"/>
+        <a href="javascript:searchGoods()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+    </div>
+</div>
+
+<div id="dlg2" class="easyui-dialog" closed="true" buttons="#dlgTb2">
+    <form method="post" id="fm2">
+        <table cellspacing="8px">
+            <tr>
+                <td>商品类别:</td>
+                <td>
+                    <input id="typeId" name="type.id" type="text" hidden="true"/>
+                    <input id="typeName" name="type.name" type="text" readonly="readonly"/>
+                    <a href="javascript:openGoodsTypeTreeDlg()" class="easyui-linkbutton" iconCls="search" plain="true"	></a>
+                </td>
+                <td>商品编号:</td>
+                <td><input id="code" name="code" type="text" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <td>商品名称:</td>
+                <td colspan="3">
+                    <input id="goodsName" name="name" type="text"/>
+                </td>
+            </tr>
+            <tr>
+                <td>商品型号:</td>
+                <td>
+                    <input id="model" name="model" type="text"/>
+                </td>
+                <td>商品单位:</td>
+                <td>
+                    <input id="unit" name="unit" type="text" readonly="readonly"/>
+                    <a href="javascript:openUnitDlg()" class="easyui-linkbutton" iconCls="search" plain="true"></a>
+                </td>
+            </tr>
+            <tr>
+                <td>采购价格:</td>
+                <td>
+                    <input id="purchasingPrice" name="purchasingPrice" type="text" onkeyup="this.value=this.value.replace(/[^0-9.]+/,'');"/>
+                </td>
+                <td>销售价格:</td>
+                <td>
+                    <input id="sellingPrice" name="sellingPrice" type="text" onkeyup="this.value=this.value.replace(/[^0-9.]+/,'');"/>
+                </td>
+            </tr>
+            <tr>
+                <td>库存下限:</td>
+                <td>
+                    <input id="minNum" name="minNum" type="text" onkeyup="this.value=this.value.replace(/[^0-9]+/,'');"/>
+                </td>
+            </tr>
+            <tr>
+                <td>生产厂商:</td>
+                <td colspan="3">
+                    <input id="producer" name="producer" type="text"/>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">备注:</td>
+                <td colspan="3"><textarea id="remarks" name="remarks" rows="5" cols="40"></textarea></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="dlgTb2">
+    <a id="saveAndAdd" href="javascript:saveGoodsData(1)" class="easyui-linkbutton" iconCls="save">保存并继续新增</a>
+    <a href="javascript:saveGoodsData(2)" class="easyui-linkbutton" iconCls="save">保存</a>
+    <a href="javascript:closeGoodsDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+
+<div id="dlg3" class="easyui-dialog" closed="true" buttons="#dlgTb3">
+    <ul id="tree2" class="easyui-tree"></ul>
+</div>
+
+<div id="dlgTb3">
+    <a href="javascript:chooseGoodsType()" class="easyui-linkbutton" plain="true">确定</a>
+    <a href="javascript:closeGoodsTypeTreeDlg()" class="easyui-linkbutton" plain="true">关闭</a>
+</div>
+
+<div id="dlg4" class="easyui-dialog" closed="true">
+    <table id="unitDg" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true"
+           singleSelect="true" url="/unit/list" toolbar="#tb2" border="false">
+        <thead>
+        <tr>
+            <th field="name" width="50" align="center">单位</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="tb2">
+    <div>
+        <a href="javascript:openUnitAddDialog()" class="easyui-linkbutton" plain="true">添加</a>
+        <a href="javascript:deleteUnit()" class="easyui-linkbutton" plain="true">删除</a>
+        <a href="javascript:chooseUnit()" class="easyui-linkbutton" plain="true">确定</a>
+        <a href="javascript:closeUnitDlg()" class="easyui-linkbutton" plain="true">取消</a>
+    </div>
+</div>
+
+<div id="dlgTb4">
+    <a href="javascript:saveGoodsData()" class="easyui-linkbutton" iconCls="save">保存</a>
+    <a href="javascript:closeGoodsDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+
+<div id="dlg5" class="easyui-dialog" closed="true" buttons="#dlgTb5">
+    <form method="post" id="fm3">
+        <table cellspacing="8px">
+            <tr>
+                <td>单位名称:</td>
+                <td><input id="unitName" name="name" type="text" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="dlgTb5">
+    <a href="javascript:saveUnitData()" class="easyui-linkbutton" iconCls="save">保存</a>
+    <a href="javascript:closeUnitAddDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.CustomerDao">
+
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.Customer">
+        <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+        <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+        <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getCustomerList" resultMap="BaseResultMap">
+        SELECT
+            t_customer.customer_id,
+            t_customer.customer_name,
+            t_customer.contacts,
+            t_customer.phone_number,
+            t_customer.address,
+            t_customer.remarks
+        FROM
+            t_customer
+        <where>
+            <if test="customerName != null and customerName != ''">
+                t_customer.customer_name LIKE CONCAT('%', #{customerName} ,'%')
+            </if>
+        </where>
+        LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <select id="getCustomerCount" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            t_customer
+        <where>
+            <if test="customerName != null and customerName != ''">
+                t_customer.customer_name LIKE CONCAT('%', #{customerName} ,'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="saveCustomer" useGeneratedKeys="true" keyProperty="customerId" parameterType="com.wangjiangfei.entity.Customer">
+        INSERT INTO t_customer
+        (customer_name, contacts, phone_number, address, remarks)
+        VALUES (#{customerName}, #{contacts}, #{phoneNumber}, #{address}, #{remarks})
+    </insert>
+
+    <update id="updateCustomer" parameterType="com.wangjiangfei.entity.Customer">
+        UPDATE t_customer
+        <set>
+            <if test="customerName != '' and customerName != null">
+                customer_name = #{customerName},
+            </if>
+            <if test="contacts != '' and contacts != null">
+                contacts = #{contacts},
+            </if>
+            <if test="phoneNumber != '' and phoneNumber != null">
+                phone_number = #{phoneNumber},
+            </if>
+            <if test="address != '' and address != null">
+                address = #{address},
+            </if>
+            <if test="remarks != '' and remarks != null">
+                remarks = #{remarks},
+            </if>
+        </set>
+        WHERE customer_id = #{customerId}
+    </update>
+
+    <select id="getCustomerById" resultMap="BaseResultMap">
+        SELECT
+            t_customer.customer_id,
+            t_customer.customer_name,
+            t_customer.contacts,
+            t_customer.phone_number,
+            t_customer.address,
+            t_customer.remarks
+        FROM
+            t_customer
+        WHERE
+            customer_id = #{customerId}
+    </select>
+
+    <delete id="deleteCustomer" parameterType="java.lang.Integer">
+        DELETE FROM
+        t_customer
+        WHERE customer_id = #{customerId}
+    </delete>
+
+</mapper>
