@@ -31,6 +31,9 @@ public interface ErrorCode {
     int VERIFY_CODE_ERROR_CODE = 301;
     String VERIFY_CODE_ERROR_MESS = "验证码输入有误";
 
+    int GOODS_TYPE_ERROR_CODE = 302;
+    String GOODS_TYPE_ERROR_MESS = "该商品类别下有商品，无法删除";
+
     int REQ_ERROR_CODE = 400;
     String REQ_ERROR_MESS = "请求处理异常，请稍后再试";
 

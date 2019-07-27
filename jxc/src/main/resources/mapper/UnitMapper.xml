@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.UnitDao">
+
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.Unit">
+        <result column="unit_id" property="unitId" jdbcType="INTEGER" />
+        <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="saveUnit" useGeneratedKeys="true" keyProperty="unitId" parameterType="com.wangjiangfei.entity.Unit">
+        INSERT INTO t_unit
+        (unit_name)
+        VALUES (#{unitName})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM
+        t_unit
+        WHERE unit_id = #{unitId}
+    </delete>
+
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+            t_unit.unit_id,
+            t_unit.unit_name
+        FROM
+            t_unit
+    </select>
+
+    <select id="getUnitByUnitId" resultMap="BaseResultMap">
+        SELECT
+            t_unit.unit_id,
+            t_unit.unit_name
+        FROM
+            t_unit
+        WHERE unit_id = #{unitId}
+    </select>
+
+</mapper>

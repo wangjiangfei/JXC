@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>商品管理</title>
-    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css"></link>
-    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css"></link>
-    <link rel="stylesheet" type="text/css" href="../static/css/goods.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/goods.css" />
     <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
@@ -26,7 +26,7 @@
         <table cellspacing="8px">
             <tr>
                 <td>商品类别名称:</td>
-                <td><input id="name" name="name" type="text" /></td>
+                <td><input id="name" name="goodsTypeName" type="text" /></td>
             </tr>
         </table>
     </form>
@@ -150,7 +150,7 @@
            singleSelect="true" url="/unit/list" toolbar="#tb2" border="false">
         <thead>
         <tr>
-            <th field="name" width="50" align="center">单位</th>
+            <th field="unitName" width="50" align="center">单位</th>
         </tr>
         </thead>
     </table>
@@ -175,7 +175,7 @@
         <table cellspacing="8px">
             <tr>
                 <td>单位名称:</td>
-                <td><input id="unitName" name="name" type="text" /></td>
+                <td><input id="unitName" name="unitName" type="text" /></td>
             </tr>
         </table>
     </form>

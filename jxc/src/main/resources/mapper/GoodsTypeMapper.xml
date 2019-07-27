@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.GoodsTypeDao">
+
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.GoodsType">
+        <result column="goods_type_id" property="goodsTypeId" jdbcType="INTEGER" />
+        <result column="goods_type_name" property="goodsTypeName" jdbcType="VARCHAR" />
+        <result column="p_id" property="pId" jdbcType="INTEGER" />
+        <result column="goods_type_state" property="goodsTypeState" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap02" type="com.wangjiangfei.entity.Goods">
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName" jdbcType="INTEGER" />
+        <result column="inventory_quantity" property="inventoryQuantity" jdbcType="VARCHAR" />
+        <result column="last_purchasing_price" property="lastPurchasingPrice" jdbcType="VARCHAR" />
+        <result column="min_num" property="minNum" jdbcType="VARCHAR" />
+        <result column="goods_model" property="goodsModel" jdbcType="VARCHAR" />
+        <result column="goods_producer" property="goodsProducer" jdbcType="VARCHAR" />
+        <result column="purchasing_price" property="purchasingPrice" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="selling_price" property="sellingPrice" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+        <result column="goods_type_id" property="goodsTypeId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getAllGoodsTypeByParentId" resultMap="BaseResultMap">
+        SELECT
+            t_goods_type.goods_type_id,
+            t_goods_type.goods_type_name,
+            t_goods_type.p_id,
+            t_goods_type.goods_type_state
+        FROM
+            t_goods_type
+        WHERE
+            p_id = #{pId}
+    </select>
+
+    <insert id="saveGoodsType" useGeneratedKeys="true" keyProperty="goodsTypeId" parameterType="com.wangjiangfei.entity.GoodsType">
+        INSERT INTO t_goods_type
+        (goods_type_name, p_id, goods_type_state)
+        VALUES (#{goodsTypeName}, #{pId}, #{goodsTypeState})
+    </insert>
+
+    <select id="getGoodsTypeById" resultMap="BaseResultMap">
+        SELECT
+            t_goods_type.goods_type_id,
+            t_goods_type.goods_type_name,
+            t_goods_type.p_id,
+            t_goods_type.goods_type_state
+        FROM
+            t_goods_type
+        WHERE
+            goods_type_id = #{goodsTypeId}
+    </select>
+
+    <update id="updateGoodsTypeState" parameterType="com.wangjiangfei.entity.GoodsType">
+        UPDATE t_goods_type
+        SET goods_type_state = #{goodsTypeState}
+        WHERE goods_type_id = #{goodsTypeId}
+    </update>
+
+    <select id="getGoodsByTypeId" resultMap="BaseResultMap02">
+        SELECT
+            t_goods.goods_id,
+            t_goods.goods_code,
+            t_goods.goods_name,
+            t_goods.inventory_quantity,
+            t_goods.last_purchasing_price,
+            t_goods.min_num,
+            t_goods.goods_model,
+            t_goods.goods_producer,
+            t_goods.purchasing_price,
+            t_goods.remarks,
+            t_goods.selling_price,
+            t_goods.state,
+            t_goods.goods_unit,
+            t_goods.goods_type_id
+        FROM
+            t_goods
+        WHERE
+            goods_type_id = #{goodsTypeId}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM
+        t_goods_type
+        WHERE goods_type_id = #{goodsTypeId}
+    </delete>
+
+</mapper>

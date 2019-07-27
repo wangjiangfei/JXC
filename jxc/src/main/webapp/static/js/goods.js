@@ -1,21 +1,22 @@
 $(document).ready(function() {
-	//加载商品类别
+	// 加载商品类别
 	$('#tree').tree({
 		url:'/goodsType/loadGoodsType',
 		lines:true,
 		onLoadSuccess:function(){
-			//展开所有节点
+			// 展开所有节点
 			$('#tree').tree('expandAll');
 		},
 		onClick:function(node){
-			if(node.attributes.state==0){
+			if (node.attributes.state === 0) {
 				$('#deleteButton').linkbutton('enable');
+                $("#deleteButton").attr("href","javascript:deleteGoodsType()");
 			}else{
 				$('#deleteButton').linkbutton('disable');
 			}
 			$('#addButton').linkbutton('enable');
 			$('#dg').datagrid('load',{
-				typeId:node.id
+                goodsTypeId: node.id
 			});
 		}
 	});
@@ -51,7 +52,7 @@ function closeDlg(){
  */
 function saveData(){
 	var name = $('#name').val();
-	if(name==null || name==''){
+	if(name===null || name===''){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请输入商品类别名称',
@@ -65,12 +66,15 @@ function saveData(){
 		url:'/goodsType/save',
 		type:'post',
 		dataType:'json',
-		data:{'name':name,'pId':selectNode.id},
+		data:{
+			'goodsTypeName':name,
+			'pId':selectNode.id
+		},
 		success:function(result){
-			if(result.resultCode=='001'){
+			if (result.code === 100) {
 				$.messager.alert({
 					title:'系统提示',
-					msg:result.resultContent,
+					msg:'保存成功',
 					icon:'info', 
 					top:$(window).height()/4
 				});
@@ -94,7 +98,7 @@ function saveData(){
 /**
  * 删除商品类别
  */
-function deleteGoodsType(){
+function deleteGoodsType() {
 	$.messager.confirm({
 		title:'系统提示',
 		msg:'您确定要删除这条记录吗？',
@@ -105,12 +109,14 @@ function deleteGoodsType(){
 					url:'/goodsType/delete',
 					dataType:'json',
 					type:'post',
-					data:{'id':$('#tree').tree('getSelected').id},
+					data:{
+						'goodsTypeId':$('#tree').tree('getSelected').id
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code === 100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -118,7 +124,7 @@ function deleteGoodsType(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});
@@ -206,12 +212,12 @@ function openGoodsAddDialog(){
 	});
 	
 	var selectNode = $('#tree').tree('getSelected');
-	if(selectNode!=null && selectNode.id!=1){
+	if(selectNode !== null && selectNode.id !== 1) {
 		$('#typeId').val(selectNode.id);
 		$('#typeName').val(selectNode.text);
 	}
 	
-	//生成商品编码
+	// 生成商品编码
 	$.ajax({
 		url:'/goods/getCode',
 		dataType:'json',
@@ -589,7 +595,7 @@ function openUnitDlg(){
  */
 function chooseUnit(){
 	var selectTions = $('#unitDg').datagrid('getSelections');
-	if(selectTions.length<1){
+	if(selectTions.length < 1) {
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择单位',
@@ -600,7 +606,7 @@ function chooseUnit(){
 		return;
 	}
 	
-	$('#unit').val(selectTions[0].name);
+	$('#unit').val(selectTions[0].unitName);
 	$('#dlg4').dialog('close');
 
 }
@@ -618,7 +624,7 @@ function closeUnitDlg(){
  */
 function deleteUnit(){
 	var selections = $('#unitDg').datagrid('getSelections');
-	if(selections.length<1){
+	if(selections.length < 1) {
 		$.messager.alert({ 
 			title:'系统提示',
 			msg:'请选择一条您要删除的记录',
@@ -631,18 +637,20 @@ function deleteUnit(){
 		title:'系统提示',
 		msg:'您确定要删除这条记录吗？',
 		top:$(window).height()/4,
-		fn:function(r){
-			if(r){
+		fn: function(r) {
+			if (r) {
 				$.ajax({
 					url:'/unit/delete',
 					dataType:'json',
 					type:'post',
-					data:{'unitId':selections[0].id},
+					data:{
+						'unitId':selections[0].unitId
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code === 100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -650,7 +658,7 @@ function deleteUnit(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});
@@ -694,7 +702,7 @@ function saveUnitData(){
 	$('#fm3').form('submit',{
 		url:'/unit/save',
 		onSubmit:function(){
-			if($('#unitName').val()==null || $('#unitName').val()==''){
+			if($('#unitName').val()===null || $('#unitName').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入单位',
@@ -709,10 +717,10 @@ function saveUnitData(){
 		},
 		success:function(result){
 			var resultJson = eval('('+result+')');
-			if(resultJson.resultCode==001){
+			if(resultJson.code===100){
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg: '保存成功',
 					icon:'info', 
 					top:$(window).height()/4
 				});
@@ -721,7 +729,7 @@ function saveUnitData(){
 			}else{
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg:resultJson.msg,
 					icon:'error', 
 					top:$(window).height()/4 
 				});
