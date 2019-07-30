@@ -141,16 +141,9 @@ function deleteGoodsType() {
  */
 function setGoodsIdFormatter(value,row){
 	
-	return row.type.id;
+	return row.goodsTypeId;
 }
 
-/**
- * 格式化商品名称
- */
-function setGoodsNameFormatter(value,row){
-
-	return row.type.name;
-}
 
 /**
  * 格式价格
@@ -166,15 +159,15 @@ function setPriceFormatter(value,row){
  */
 function searchGoods(){
 	var selectNode = $('#tree').tree('getSelected');
-	//如果是选了类别后的搜索，应该按照当前类别的商品来搜索，而不是在所有的商品中搜索
-	if(selectNode!=null){
+	// 如果是选了类别后的搜索，应该按照当前类别的商品来搜索，而不是在所有的商品中搜索
+	if (selectNode !== null) {
 		$('#dg').datagrid('load',{
-			name:$('#s_name').val(),
-			typeId:selectNode.id
+            goodsName:$('#s_name').val(),
+            goodsTypeId:selectNode.id
 		});
 	}else{
 		$('#dg').datagrid('load',{
-			name:$('#s_name').val(),
+            goodsName:$('#s_name').val(),
 		});
 	}
 	
@@ -212,7 +205,7 @@ function openGoodsAddDialog(){
 	});
 	
 	var selectNode = $('#tree').tree('getSelected');
-	if(selectNode !== null && selectNode.id !== 1) {
+	if(selectNode !== null && selectNode.id !== 1 && selectNode.attributes.state === 0) {
 		$('#typeId').val(selectNode.id);
 		$('#typeName').val(selectNode.text);
 	}
@@ -222,8 +215,8 @@ function openGoodsAddDialog(){
 		url:'/goods/getCode',
 		dataType:'json',
 		type:'post',
-		success:function(result){
-			$('#code').val(result.resultContent);
+		success: function(result) {
+			$('#code').val(result.info);
 		}
 	});
 	$('#saveAndAdd').show();
@@ -237,7 +230,7 @@ function saveGoodsData(type){
 	$('#fm2').form('submit',{
 		url:url,
 		onSubmit:function(){
-			if($('#typeName').val()==null || $('#typeName').val()==''){
+			if ($('#typeName').val()===null || $('#typeName').val()==='') {
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请选择商品类别',
@@ -247,7 +240,7 @@ function saveGoodsData(type){
 				
 				return false;
 			}
-			if($('#goodsName').val()==null || $('#goodsName').val()==''){
+			if($('#goodsName').val()===null || $('#goodsName').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输商品名称',
@@ -257,7 +250,7 @@ function saveGoodsData(type){
 				
 				return false;
 			}
-			if($('#model').val()==null || $('#model').val()==''){
+			if($('#model').val()===null || $('#model').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入商品型号',
@@ -267,7 +260,7 @@ function saveGoodsData(type){
 				
 				return false;
 			}
-			if($('#unit').val()==null || $('#unit').val()==''){
+			if($('#unit').val()===null || $('#unit').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请选择商品单位',
@@ -277,7 +270,7 @@ function saveGoodsData(type){
 				
 				return false;
 			}
-			if($('#purchasingPrice').val()==null || $('#purchasingPrice').val()==''){
+			if ($('#purchasingPrice').val()===null || $('#purchasingPrice').val()==='') {
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入采购价格',
@@ -287,7 +280,7 @@ function saveGoodsData(type){
 				
 				return false;
 			}
-			if($('#sellingPrice').val()==null || $('#sellingPrice').val()==''){
+			if($('#sellingPrice').val()===null || $('#sellingPrice').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入销售价格',
@@ -297,7 +290,7 @@ function saveGoodsData(type){
 				
 				return false;
 			}
-			if($('#minNum').val()==null || $('#minNum').val()==''){
+			if($('#minNum').val()===null || $('#minNum').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入库存下限',
@@ -307,7 +300,7 @@ function saveGoodsData(type){
 				
 				return false;
 			}
-			if($('#producer').val()==null || $('#producer').val()==''){
+			if($('#producer').val()===null || $('#producer').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入生产厂商',
@@ -322,10 +315,10 @@ function saveGoodsData(type){
 		},
 		success:function(result){
 			var resultJson = eval('('+result+')');
-			if(resultJson.resultCode==001){
+			if(resultJson.code === 100){
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg: '保存成功',
 					icon:'info', 
 					top:$(window).height()/4
 				});
@@ -340,22 +333,22 @@ function saveGoodsData(type){
 				$('#minNum').val('');
 				$('#producer').val('');
 				$('#remarks').val('');
-				if(type==1){
+				if (type === 1) {
 					var node=$("#tree").tree("getSelected");
-					if(node!=null && node.id!=1){
+					if(node !== null && node.id !== 1){
 						$("#typeId").val(node.id);
 						$("#typeName").val(node.text);
 					}else{
 						$("#typeId").val("");
 						$("#typeName").val("");
 					}
-					//生成商品编码
+					// 生成商品编码
 					$.ajax({
 						url:'/goods/getCode',
 						dataType:'json',
 						type:'post',
-						success:function(result){
-							$('#code').val(result.resultContent);
+						success:function(result) {
+							$('#code').val(result.info);
 						}
 					});
 				}else{
@@ -365,7 +358,7 @@ function saveGoodsData(type){
 			}else{
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg:resultJson.msg,
 					icon:'error', 
 					top:$(window).height()/4 
 				});
@@ -379,7 +372,7 @@ function saveGoodsData(type){
  */
 function openGoodsModifyDialog(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length!=1){
+	if (selections.length !== 1) {
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条要修改的记录',
@@ -389,8 +382,8 @@ function openGoodsModifyDialog(){
 		return;
 	}
 	$('#fm2').form('load',selections[0]);
-	$('#typeId').val(selections[0].type.id);
-	$('#typeName').val(selections[0].type.name);
+	$('#typeId').val(selections[0].goodsTypeId);
+	$('#typeName').val(selections[0].goodsTypeName);
 	$('#dlg2').dialog({
 		title:'修改商品',
 		iconCls:'update',
@@ -417,7 +410,7 @@ function openGoodsModifyDialog(){
 	});
 	$('#saveAndAdd').hide();
 	
-	url="/goods/save?id="+selections[0].id;
+	url="/goods/save?goodsId="+selections[0].goodsId;
 }
 
 /**
@@ -425,7 +418,7 @@ function openGoodsModifyDialog(){
  */
 function deleteGoods(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length!=1){
+	if (selections.length !== 1) {
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条要删除的记录',
@@ -444,12 +437,14 @@ function deleteGoods(){
 					url:'/goods/delete',
 					dataType:'json',
 					type:'post',
-					data:{'goodsId':selections[0].id},
+					data:{
+						'goodsId':selections[0].goodsId
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code === 100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -457,7 +452,7 @@ function deleteGoods(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});

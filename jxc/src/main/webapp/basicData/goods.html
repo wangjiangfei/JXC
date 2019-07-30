@@ -43,17 +43,17 @@
            title="商品管理">
         <thead>
         <tr>
-            <th field="id" width="30" align="center">编号</th>
-            <th field="code" width="50" align="center">商品编码</th>
-            <th field="name" width="250" align="center">商品名称</th>
-            <th field="model" width="60" align="center">商品型号</th>
-            <th field="typeId" width="40" align="center" hidden="true" formatter="setGoodsIdFormatter">商品类别ID</th>
-            <th field="typeName" width="40" align="center"  formatter="setGoodsNameFormatter">商品类别</th>
-            <th field="unit" width="40" align="center">商品单位</th>
+            <th field="goodsId" width="30" align="center">编号</th>
+            <th field="goodsCode" width="50" align="center">商品编码</th>
+            <th field="goodsName" width="250" align="center">商品名称</th>
+            <th field="goodsModel" width="60" align="center">商品型号</th>
+            <th field="goodsTypeId" width="40" align="center" hidden="true" formatter="setGoodsIdFormatter">商品类别ID</th>
+            <th field="goodsTypeName" width="40" align="center">商品类别</th>
+            <th field="goodsUnit" width="40" align="center">商品单位</th>
             <th field="purchasingPrice" width="40" align="center"  formatter="setPriceFormatter">采购价格</th>
             <th field="sellingPrice" width="40" align="center"  formatter="setPriceFormatter">出售价格</th>
             <th field="minNum" width="40" align="center">库存下限</th>
-            <th field="producer" width="150" align="center">生产厂商</th>
+            <th field="goodsProducer" width="150" align="center">生产厂商</th>
             <th field="remarks" width="150" align="center" hidden="true">备注</th>
         </tr>
         </thead>
@@ -65,7 +65,7 @@
         <a href="javascript:openGoodsAddDialog()" class="easyui-linkbutton" iconCls="add" plain="true">添加</a>
         <a href="javascript:openGoodsModifyDialog()" class="easyui-linkbutton" iconCls="update" plain="true">修改</a>
         <a href="javascript:deleteGoods()" class="easyui-linkbutton" iconCls="delete" plain="true">删除</a>
-        &nbsp;商品名称：&nbsp;<input type="text" id="s_name" onkeydown="if(event.keyCode==13) searchGoods()"/>
+        &nbsp;商品名称：&nbsp;<input type="text" id="s_name" onkeydown="if(event.keyCode===13) searchGoods()"/>
         <a href="javascript:searchGoods()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
     </div>
 </div>
@@ -76,27 +76,27 @@
             <tr>
                 <td>商品类别:</td>
                 <td>
-                    <input id="typeId" name="type.id" type="text" hidden="true"/>
-                    <input id="typeName" name="type.name" type="text" readonly="readonly"/>
+                    <input id="typeId" name="goodsTypeId" type="text" hidden="true"/>
+                    <input id="typeName" type="text" readonly="readonly"/>
                     <a href="javascript:openGoodsTypeTreeDlg()" class="easyui-linkbutton" iconCls="search" plain="true"	></a>
                 </td>
                 <td>商品编号:</td>
-                <td><input id="code" name="code" type="text" readonly="readonly"/></td>
+                <td><input id="code" name="goodsCode" type="text" readonly="readonly"/></td>
             </tr>
             <tr>
                 <td>商品名称:</td>
                 <td colspan="3">
-                    <input id="goodsName" name="name" type="text"/>
+                    <input id="goodsName" name="goodsName" type="text"/>
                 </td>
             </tr>
             <tr>
                 <td>商品型号:</td>
                 <td>
-                    <input id="model" name="model" type="text"/>
+                    <input id="model" name="goodsModel" type="text"/>
                 </td>
                 <td>商品单位:</td>
                 <td>
-                    <input id="unit" name="unit" type="text" readonly="readonly"/>
+                    <input id="unit" name="goodsUnit" type="text" readonly="readonly"/>
                     <a href="javascript:openUnitDlg()" class="easyui-linkbutton" iconCls="search" plain="true"></a>
                 </td>
             </tr>
@@ -119,7 +119,7 @@
             <tr>
                 <td>生产厂商:</td>
                 <td colspan="3">
-                    <input id="producer" name="producer" type="text"/>
+                    <input id="producer" name="goodsProducer" type="text"/>
                 </td>
             </tr>
             <tr>

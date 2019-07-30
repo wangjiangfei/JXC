@@ -35,7 +35,7 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
         // 根据商品类别ID来查询商品信息，如果该类别下有商品信息，则不给予删除
         List<Goods> goodsList = goodsTypeDao.getGoodsByTypeId(goodsTypeId);
 
-        if (goodsList.size() != 0){
+        if (goodsList.size() != 0) {
 
             return new ServiceVO<>(ErrorCode.GOODS_TYPE_ERROR_CODE, ErrorCode.GOODS_TYPE_ERROR_MESS);
         }

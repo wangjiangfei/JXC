@@ -16,8 +16,10 @@ public class Goods {
   private double purchasingPrice;
   private String remarks;
   private double sellingPrice;
-  private Integer state;
+  private Integer state;// 0 初始化状态 1 期初库存入仓库  2  有进货或者销售单据
   private String goodsUnit;
   private Integer goodsTypeId;
+
+  private String goodsTypeName;
 
 }

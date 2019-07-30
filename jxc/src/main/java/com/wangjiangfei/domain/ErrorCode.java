@@ -7,9 +7,6 @@ package com.wangjiangfei.domain;
  */
 public interface ErrorCode {
 
-    int SQL_ERROR_CODE = 112;
-    String SQL_ERROR_MESS = "此操作不被允许，请联系管理员";
-
     int PARA_TYPE_ERROR_CODE = 113;
     String PARA_TYPE_ERROR_MESS = "参数类型不合法";
 
@@ -37,6 +34,12 @@ public interface ErrorCode {
     int REQ_ERROR_CODE = 400;
     String REQ_ERROR_MESS = "请求处理异常，请稍后再试";
 
+    int STORED_ERROR_CODE = 401;
+    String STORED_ERROR_MESS = "该商品已入库，不能删除";
+
+    int HAS_FORM_ERROR_CODE = 402;
+    String HAS_FORM_ERROR_MESS = "该商品有进货或销售单据，不能删除";
+
     int REQ_METHOD_ERR_CODE = 500;
     String REQ_METHOD_ERR_MESS = "请求方式有误,请检查 GET/POST";
 
@@ -58,10 +61,5 @@ public interface ErrorCode {
     int LOGIN_EXPIRE_CODE = 20011;
     String LOGIN_EXPIRE_MESS = "登陆已过期,请重新登陆";
 
-    int LACK_PARA_CODE = 90003;
-    String LACK_PARA_MESS = "缺少必填参数";
-
-    int DATA_SAVE_ERR_CODE = 90004;
-    String DATA_SAVE_ERR_MESS = "数据库存储失败";
 
 }
