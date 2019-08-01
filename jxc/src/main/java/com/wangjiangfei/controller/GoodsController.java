@@ -112,23 +112,11 @@ public class GoodsController {
      * @param nameOrCode 商品名称或商品编码
      * @return
      */
-//    @RequestMapping("/getNoInventoryQuantity")
-//    @RequiresPermissions(value="期初库存")
-//    public Map<String,Object> getNoInventoryQuantity(Integer page,Integer rows,String nameOrCode){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        List<Goods> goodsList = goodsService.getNoInventoryQuantity(page, rows, nameOrCode);
-//
-//        map.put("rows", goodsList);
-//
-//        map.put("total", goodsService.getNoInventoryQuantityCount(nameOrCode));
-//
-//        logService.save(new Log(Log.SELECT_ACTION, "分页查询商品信息（无库存）"));
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/getNoInventoryQuantity")
+    @RequiresPermissions(value = "期初库存")
+    public Map<String,Object> getNoInventoryQuantity(Integer page,Integer rows,String nameOrCode) {
+        return goodsService.getNoInventoryQuantity(page, rows, nameOrCode);
+    }
 
     /**
      * 分页查询有库存商品信息
@@ -137,92 +125,37 @@ public class GoodsController {
      * @param nameOrCode 商品名称或商品编码
      * @return
      */
-//    @RequestMapping("/getHasInventoryQuantity")
-//    @RequiresPermissions(value="期初库存")
-//    public Map<String,Object> getHasInventoryQuantity(Integer page,Integer rows,String nameOrCode){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        List<Goods> goodsList = goodsService.getHasInventoryQuantity(page, rows, nameOrCode);
-//
-//        map.put("rows", goodsList);
-//
-//        map.put("total", goodsService.getHasInventoryQuantityCount(nameOrCode));
-//
-//        logService.save(new Log(Log.SELECT_ACTION, "分页查询商品信息（有库存）"));
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/getHasInventoryQuantity")
+    @RequiresPermissions(value = "期初库存")
+    public Map<String,Object> getHasInventoryQuantity(Integer page,Integer rows,String nameOrCode) {
+        return goodsService.getHasInventoryQuantity(page, rows, nameOrCode);
+    }
 
     /**
      * 添加商品期初库存
-     * @param id 商品ID
+     * @param goodsId 商品ID
      * @param inventoryQuantity 库存
      * @param purchasingPrice 成本价
      * @return
      */
-//    @RequestMapping("/saveStock")
-//    @ResponseBody
-//    @RequiresPermissions(value="期初库存")
-//    public Map<String,Object> saveStock(Integer id,Integer inventoryQuantity,float purchasingPrice){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        Goods goods = goodsService.findByGoodsId(id);
-//
-//        goods.setInventoryQuantity(inventoryQuantity);
-//
-//        goods.setPurchasingPrice(purchasingPrice);
-//
-//        goods.setLastPurchasingPrice(purchasingPrice);
-//
-//        goodsService.saveGoods(goods);
-//
-//        logService.save(new Log(Log.UPDATE_ACTION,goods.getName()+"商品期初入库"));
-//
-//        map.put("resultCode", ResultCode.SUCCESS);
-//
-//        map.put("resultContent", "商品入库成功");
-//
-//        return map;
-//    }
+    @RequestMapping("/saveStock")
+    @ResponseBody
+    @RequiresPermissions(value = "期初库存")
+    public ServiceVO saveStock(Integer goodsId,Integer inventoryQuantity,double purchasingPrice) {
+        return goodsService.saveStock(goodsId, inventoryQuantity, purchasingPrice);
+    }
 
     /**
      * 删除商品库存
-     * @param id 商品ID
+     * @param goodsId 商品ID
      * @return
      */
-//    @RequestMapping("/deleteStock")
-//    @ResponseBody
-//    @RequiresPermissions(value="期初库存")
-//    public Map<String,Object> deleteStock(Integer id){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        Goods goods = goodsService.findByGoodsId(id);
-//
-//        if(goods.getState()==2){
-//
-//            map.put("resultCode", ResultCode.FAIL);
-//
-//            map.put("resultContent", "该商品有进货或销售单据，不能删除");
-//
-//            return map;
-//        }
-//
-//        goods.setInventoryQuantity(0);
-//
-//        goodsService.saveGoods(goods);
-//
-//        logService.save(new Log(Log.UPDATE_ACTION,goods.getName()+"商品清除库存"));
-//
-//        map.put("resultCode", ResultCode.SUCCESS);
-//
-//        map.put("resultContent", "删除商品库存成功");
-//
-//        return map;
-//    }
+    @RequestMapping("/deleteStock")
+    @ResponseBody
+    @RequiresPermissions(value = "期初库存")
+    public ServiceVO deleteStock(Integer goodsId) {
+        return goodsService.deleteStock(goodsId);
+    }
 
     /**
      * 查询库存报警商品信息

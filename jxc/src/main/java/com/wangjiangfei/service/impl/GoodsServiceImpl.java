@@ -113,4 +113,76 @@ public class GoodsServiceImpl implements GoodsService {
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }
+
+    @Override
+    public Map<String, Object> getNoInventoryQuantity(Integer page, Integer rows, String nameOrCode) {
+        Map<String,Object> map = new HashMap<>();
+
+        page = page == 0 ? 1 : page;
+        int offSet = (page - 1) * rows;
+
+        List<Goods> goodsList = goodsDao.getNoInventoryQuantity(offSet, rows, nameOrCode);
+
+        map.put("rows", goodsList);
+
+        map.put("total", goodsDao.getNoInventoryQuantityCount(nameOrCode));
+
+        logService.save(new Log(Log.SELECT_ACTION, "分页查询商品信息（无库存）"));
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getHasInventoryQuantity(Integer page, Integer rows, String nameOrCode) {
+        Map<String,Object> map = new HashMap<>();
+
+        page = page == 0 ? 1 : page;
+        int offSet = (page - 1) * rows;
+
+        List<Goods> goodsList = goodsDao.getHasInventoryQuantity(offSet, rows, nameOrCode);
+
+        map.put("rows", goodsList);
+
+        map.put("total", goodsDao.getHasInventoryQuantityCount(nameOrCode));
+
+        logService.save(new Log(Log.SELECT_ACTION, "分页查询商品信息（有库存）"));
+
+        return map;
+    }
+
+    @Override
+    public ServiceVO saveStock(Integer goodsId, Integer inventoryQuantity, double purchasingPrice) {
+
+        Goods goods = goodsDao.findByGoodsId(goodsId);
+
+        goods.setInventoryQuantity(inventoryQuantity);
+
+        goods.setPurchasingPrice(purchasingPrice);
+
+        goods.setLastPurchasingPrice(purchasingPrice);
+
+        goodsDao.updateGoods(goods);
+
+        logService.save(new Log(Log.UPDATE_ACTION,goods.getGoodsName()+"商品期初入库"));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+    }
+
+    @Override
+    public ServiceVO deleteStock(Integer goodsId) {
+
+        Goods goods = goodsDao.findByGoodsId(goodsId);
+
+        if (goods.getState() == 2) {
+
+            return new ServiceVO<>(ErrorCode.HAS_FORM_ERROR_CODE, ErrorCode.HAS_FORM_ERROR_MESS);
+        }
+
+        goods.setInventoryQuantity(0);
+        goodsDao.updateGoods(goods);
+
+        logService.save(new Log(Log.UPDATE_ACTION,goods.getGoodsName()+"商品清除库存"));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+    }
 }

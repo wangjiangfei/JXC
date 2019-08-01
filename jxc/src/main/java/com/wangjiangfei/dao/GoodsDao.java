@@ -25,4 +25,12 @@ public interface GoodsDao {
     Integer deleteGoods(Integer goodsId);
 
     Goods findByGoodsId(Integer goodsId);
+
+    List<Goods> getNoInventoryQuantity(@Param("offSet") Integer offSet,@Param("pageRow") Integer pageRow,@Param("nameOrCode") String nameOrCode);
+
+    Integer getNoInventoryQuantityCount(@Param("nameOrCode") String nameOrCode);
+
+    List<Goods> getHasInventoryQuantity(@Param("offSet") Integer offSet,@Param("pageRow") Integer pageRow,@Param("nameOrCode") String nameOrCode);
+
+    Integer getHasInventoryQuantityCount(@Param("nameOrCode")String nameOrCode);
 }

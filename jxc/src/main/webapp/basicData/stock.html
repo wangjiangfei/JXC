@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>期初库存管理</title>
-    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css"></link>
-    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css"></link>
-    <link rel="stylesheet" type="text/css" href="../static/css/stock.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/stock.css" />
     <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
@@ -19,12 +19,12 @@
            title="无库存商品">
         <thead>
         <tr>
-            <th field="id" width="30" align="center">编号</th>
-            <th field="code" width="50" align="center">编码</th>
-            <th field="name" width="250" align="center">名称</th>
-            <th field="model" width="60" align="center">型号</th>
-            <th field="typeName" width="50" align="center"  formatter="setGoodsNameFormatter">类别</th>
-            <th field="unit" width="40" align="center">单位</th>
+            <th field="goodsId" width="30" align="center">编号</th>
+            <th field="goodsCode" width="50" align="center">编码</th>
+            <th field="goodsName" width="250" align="center">名称</th>
+            <th field="goodsModel" width="60" align="center">型号</th>
+            <th field="goodsTypeName" width="50" align="center">类别</th>
+            <th field="goodsUnit" width="40" align="center">单位</th>
         </tr>
         </thead>
     </table>
@@ -43,12 +43,12 @@
            title="有库存商品">
         <thead>
         <tr>
-            <th field="id" width="30" align="center">编号</th>
-            <th field="code" width="50" align="center">编码</th>
-            <th field="name" width="220" align="center">名称</th>
-            <th field="model" width="60" align="center">型号</th>
-            <th field="typeName" width="60" align="center"  formatter="setGoodsNameFormatter">类别</th>
-            <th field="unit" width="40" align="center">单位</th>
+            <th field="goodsId" width="30" align="center">编号</th>
+            <th field="goodsCode" width="50" align="center">编码</th>
+            <th field="goodsName" width="220" align="center">名称</th>
+            <th field="goodsModel" width="60" align="center">型号</th>
+            <th field="goodsTypeName" width="60" align="center">类别</th>
+            <th field="goodsUnit" width="40" align="center">单位</th>
             <th field="inventoryQuantity" width="40" align="center">库存</th>
             <th field="purchasingPrice" width="60" align="center"  formatter="setPriceFormatter">采购价格</th>
             <th field="inventoryQuantityPrice" width="60" align="center"  formatter="setInventoryQuantityPriceFormatter">库存金额</th>
@@ -72,13 +72,13 @@
             <table cellspacing="8px">
                 <tr>
                     <td>商品编号:</td>
-                    <td><input class="readonly" id="code" name="code" type="text" readonly="readonly"/></td>
+                    <td><input class="readonly" id="code" name="goodsCode" type="text" readonly="readonly"/></td>
                     <td>商品名称:</td>
-                    <td><input class="readonly" id="name" name="name" type="text" readonly="readonly"/></td>
+                    <td><input class="readonly" id="name" name="goodsName" type="text" readonly="readonly"/></td>
                 </tr>
                 <tr>
                     <td>商品单位:</td>
-                    <td><input class="readonly" id="unit" name="unit" type="text" readonly="readonly"/></td>
+                    <td><input class="readonly" id="unit" name="goodsUnit" type="text" readonly="readonly"/></td>
                     <td align="right">成本价:</td>
                     <td><input class="readonly" id="price" name="price" type="text" readonly="readonly"/></td>
                 </tr>

@@ -1,12 +1,4 @@
 /**
- * 格式化商品名称
- */
-function setGoodsNameFormatter(value,row){
-
-	return row.type.name;
-}
-
-/**
  * 格式价格
  */
 function setPriceFormatter(value,row){
@@ -53,15 +45,15 @@ function openInventoryQuantityDlg(type){
 	$('#purchasingPrice').val('');
 	var selections;
 	var icon;
-	if(type==1){
+	if (type === 1) {
 		selections = $('#dg').datagrid('getSelections');
 		icon = 'add';
-	}else{
+	} else {
 		selections = $('#dg2').datagrid('getSelections');
 		icon = 'update';
 	}
 	
-	if(selections.length!=1){
+	if (selections.length !== 1) {
 		$.messager.alert({ 
 			title:'系统提示',
 			msg:'请选择一条记录',
@@ -86,11 +78,11 @@ function openInventoryQuantityDlg(type){
 	
 	$('#fm').form('load',selections[0]);
 	$('#price').val('￥'+selections[0].purchasingPrice);
-	if(type==2){
+	if (type === 2) {
 		$('#fm2').form('load',selections[0]);
 	}
-	$('#inventoryQuantity').focus();//设置光标
-	url = '/goods/saveStock?id='+selections[0].id;
+	$('#inventoryQuantity').focus();// 设置光标
+	url = '/goods/saveStock?goodsId='+selections[0].goodsId;
 }
 
 /**
@@ -107,9 +99,9 @@ function closeDlg(){
  */
 function saveData(){
 	$('#fm2').form('submit',{
-		url:url,
+		url: url,
 		onSubmit:function(){
-			if($('#inventoryQuantity').val()==null || $('#inventoryQuantity').val()==''){
+			if($('#inventoryQuantity').val()===null || $('#inventoryQuantity').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入库存',
@@ -119,7 +111,7 @@ function saveData(){
 				
 				return false;
 			}
-			if($('#purchasingPrice').val()==null || $('#purchasingPrice').val()==''){
+			if($('#purchasingPrice').val()===null || $('#purchasingPrice').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请输入成本价',
@@ -131,22 +123,22 @@ function saveData(){
 			}
 			return true;
 		},
-		success:function(result){
+		success: function(result){
 			var resultJson = eval('('+result+')');
-			if(resultJson.resultCode==001){
+			if(resultJson.code === 100){
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg: '保存成功',
 					icon:'info', 
 					top:$(window).height()/4
 				});
 				$('#dlg').dialog('close');
 				$('#dg').datagrid('reload');
 				$('#dg2').datagrid('reload');
-			}else{
+			}else {
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultJson.resultContent,
+					msg:resultJson.msg,
 					icon:'error', 
 					top:$(window).height()/4 
 				});
@@ -160,7 +152,7 @@ function saveData(){
  */
 function deleteGoodsStock(){
 	var selections = $('#dg2').datagrid('getSelections');
-	if(selections.length!=1){
+	if (selections.length !== 1) {
 		$.messager.alert({ 
 			title:'系统提示',
 			msg:'请选择您要删除的一条记录',
@@ -179,12 +171,14 @@ function deleteGoodsStock(){
 					url:'/goods/deleteStock',
 					dataType:'json',
 					type:'post',
-					data:{'id':selections[0].id},
-					success:function(result){
-						if(result.resultCode==001){
+					data:{
+						'goodsId':selections[0].goodsId
+					},
+					success:function(result) {
+						if (result.code === 100) {
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -193,7 +187,7 @@ function deleteGoodsStock(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});

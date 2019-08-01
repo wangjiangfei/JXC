@@ -19,4 +19,12 @@ public interface GoodsService {
     ServiceVO save(Goods goods);
 
     ServiceVO delete(Integer goodsId);
+
+    Map<String,Object> getNoInventoryQuantity(Integer page,Integer rows,String nameOrCode);
+
+    ServiceVO deleteStock(Integer goodsId);
+
+    Map<String,Object> getHasInventoryQuantity(Integer page,Integer rows,String nameOrCode);
+
+    ServiceVO saveStock(Integer goodsId,Integer inventoryQuantity,double purchasingPrice);
 }
