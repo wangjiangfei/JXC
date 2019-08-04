@@ -28,6 +28,11 @@ public class SupplierServiceImpl implements SupplierService {
     private SupplierDao supplierDao;
 
     @Override
+    public List<Supplier> getComboboxList(String q) {
+        return supplierDao.getSupplierListByNameLike(q);
+    }
+
+    @Override
     public Map<String, Object> list(Integer page, Integer rows, String supplierName) {
         Map<String,Object> map = new HashMap<>();
 

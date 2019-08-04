@@ -23,4 +23,7 @@ public interface SupplierDao {
     Supplier getSupplierById(Integer supplierId);
 
     Integer deleteSupplier(Integer supplierId);
+
+    List<Supplier> getSupplierListByNameLike(@Param("q") String q);
+
 }

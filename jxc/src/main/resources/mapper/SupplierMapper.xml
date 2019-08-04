@@ -91,4 +91,21 @@
         WHERE supplier_id = #{supplierId}
     </delete>
 
+    <select id="getSupplierListByNameLike" resultMap="BaseResultMap">
+        SELECT
+            t_supplier.supplier_id,
+            t_supplier.supplier_name,
+            t_supplier.contacts,
+            t_supplier.phone_number,
+            t_supplier.address,
+            t_supplier.remarks
+        FROM
+            t_supplier
+        <where>
+            <if test="q != null and q != ''">
+                t_supplier.supplier_name LIKE CONCAT('%', #{q} ,'%')
+            </if>
+        </where>
+    </select>
+
 </mapper>

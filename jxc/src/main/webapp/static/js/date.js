@@ -3,7 +3,7 @@
  */
 function genOddNumbers(type){
 	
-	return type+new Date().getTime();
+	return type + new Date().getTime();
 }
 
 
@@ -32,9 +32,9 @@ function genLastWeekDayStr(){
 }
 
 function formatZero(n){
-	if(n<10){
-		return "0"+n;
-	}else{
+	if (n < 10) {
+		return "0" + n;
+	} else {
 		return n;
 	}
 }

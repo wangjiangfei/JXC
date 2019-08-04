@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.PurchaseListGoodsDao">
+
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.PurchaseList">
+        <result column="purchase_list_id" property="purchaseListId" jdbcType="INTEGER" />
+        <result column="purchase_number" property="purchaseNumber" jdbcType="VARCHAR" />
+        <result column="amount_paid" property="amountPaid" jdbcType="DECIMAL" />
+        <result column="amount_payable" property="amountPayable" jdbcType="DECIMAL" />
+        <result column="purchase_date" property="purchaseDate" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap02" type="com.wangjiangfei.entity.PurchaseListGoods">
+        <result column="purchase_list_goods_id" property="purchaseListGoodsId" jdbcType="INTEGER" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_model" property="goodsModel" jdbcType="VARCHAR" />
+        <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+        <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="total" property="total" jdbcType="DECIMAL" />
+        <result column="purchase_list_id" property="purchaseListId" jdbcType="INTEGER" />
+        <result column="goods_type_id" property="goodsTypeId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <insert id="savePurchaseList" useGeneratedKeys="true" keyProperty="purchaseListId" parameterType="com.wangjiangfei.entity.PurchaseList">
+        INSERT INTO t_purchase_list
+        (
+        purchase_number, amount_paid, amount_payable, purchase_date,
+        remarks, state, supplier_id, user_id
+        )
+        VALUES
+        (
+        #{purchaseNumber}, #{amountPaid}, #{amountPayable}, #{purchaseDate},
+        #{remarks}, #{state}, #{supplierId}, #{userId}
+        )
+    </insert>
+
+    <insert id="savePurchaseListGoods" useGeneratedKeys="true" keyProperty="purchaseListGoodsId" parameterType="com.wangjiangfei.entity.PurchaseListGoods">
+        INSERT INTO t_purchase_list_goods
+        (
+        goods_id, goods_code, goods_name, goods_model, goods_unit,
+        goods_num, price, total, purchase_list_id, goods_type_id
+        )
+        VALUES
+        (
+        #{goodsId}, #{goodsCode}, #{goodsName}, #{goodsModel}, #{goodsUnit},
+        #{goodsNum}, #{price}, #{total}, #{purchaseListId}, #{goodsTypeId}
+        )
+    </insert>
+
+</mapper>

@@ -3,6 +3,7 @@ package com.wangjiangfei.service;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.Supplier;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,6 +12,8 @@ import java.util.Map;
  * @description
  */
 public interface SupplierService {
+
+    List<Supplier> getComboboxList(String q);
 
     Map<String,Object> list(Integer page, Integer rows, String supplierName);
 

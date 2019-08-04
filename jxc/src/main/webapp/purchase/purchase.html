@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>进货入库</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/purchase.css" />
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/date.js"></script>
+    <script type="text/javascript" src="../static/js/purchase.js"></script>
+</head>
+<body class="easyui-layout">
+<div region="north" class="northCls" border="false" title="进货入库" collapsible="false">
+    <form method="post" id="fm">
+        <fieldset>
+            <legend>单号：<span id="purchaseNumber" name="purchaseNumber"></span></legend>
+            <table cellspacing="8px">
+                <tr>
+                    <td>
+                        供应商：
+                        <select class="easyui-combobox" id="supplier" name="supplierId" panelHeight="auto"></select>
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;应付金额：<input id="amountPayable" name="amountPayable" type="text" readonly="readonly"/ value="0"></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;实付金额：<input id="amountPaid" name="amountPaid" type="text" onkeyup="this.value=this.value.replace(/[^0-9.]+/,'');" value="0"/></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;收货日期：<input class="easyui-datebox" editable="false" id="purchaseDate" name="purchaseDate"/></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">备&nbsp;&nbsp;&nbsp;&nbsp;注：<input id="remarks" name="remarks" type="text"/></td>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;是否付款：<select class="easyui-combobox" id="state" name="state" panelHeight="auto" editable="false">
+                        <option value="1">已付</option>
+                        <option value="2">未付</option>
+                    </select>
+                    </td>
+                    <td>
+                        <input type="hidden" id="purchaseListGoodsStr" name="purchaseListGoodsStr"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:savePurchaseData()" class="easyui-linkbutton" iconCls="save">保存</a>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+</div>
+
+<div region="center" class="centerCls" border="false">
+    <table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true" singleSelect="true" toolbar="#tb" striped="true">
+        <thead>
+        <tr>
+            <th field="goodsCode" width="50" align="center">商品编码</th>
+            <th field="goodsName" width="150" align="center">商品名称</th>
+            <th field="goodsModel" width="50" align="center">商品型号</th>
+            <th field="goodsUnit" width="50" align="center">商品单位</th>
+            <th field="price" width="50" align="center" formatter=setPriceFormatter>单价</th>
+            <th field="goodsNum" width="50" align="center">数量</th>
+            <th field="total" width="50" align="center" formatter=setPriceFormatter>总金额</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="tb">
+    <a href="javascript:openPurchaseListGoodsDialog()" class="easyui-linkbutton" iconCls="add" plain="true">添加</a>
+    <a href="javascript:openGoodsChooseModifyDialog()" class="easyui-linkbutton" iconCls="update" plain="true">修改</a>
+    <a href="javascript:deletePurchaseListGoods()" class="easyui-linkbutton" iconCls="delete" plain="true">删除</a>
+</div>
+
+<div id="dlg" class="easyui-dialog" closed="true">
+    <div class="easyui-layout selectLayOut">
+        <div region="north" class="selectNorthCls">
+            <div>
+                商品名称：&nbsp;<input type="text" id="s_name" onkeydown="if(event.keyCode === 13) searchGoods()"/>
+                <a href="javascript:searchGoods()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+            </div>
+        </div>
+
+        <div region="west" class="selectWestCls" title="商品类别">
+            <ul id="tree" class="easyui-tree"></ul>
+            <div class="goodsTypeButton">
+                <a id="addButton" class="easyui-linkbutton" iconCls="add" disabled>添加</a>
+                <a id="deleteButton" class="easyui-linkbutton" iconCls="delete" disabled>删除</a>
+            </div>
+        </div>
+
+        <div id="typeDlg" class="easyui-dialog" closed="true" buttons="#dlgTb">
+            <form method="post" id="fm">
+                <table cellspacing="8px">
+                    <tr>
+                        <td>商品类别名称:</td>
+                        <td><input id="name" name="name" type="text" /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="dlgTb">
+            <a href="javascript:saveData()" class="easyui-linkbutton" iconCls="save">保存</a>
+            <a href="javascript:closeDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+        </div>
+
+        <div region="center" title="商品管理">
+            <table id="dg2" class="easyui-datagrid" fit="true" fitColumns="true" pagination="true" rownumbers="true"
+                   singleSelect="true" url="/goods/list" toolbar="#tb2" pageList="[10,20,30]" pageSize="10" border="false" striped="true">
+                <thead>
+                <tr>
+                    <th field="goodsId" width="30" hidden="true" align="center">编号</th>
+                    <th field="goodsCode" width="40" align="center">商品编码</th>
+                    <th field="goodsName" width="150" align="center">商品名称</th>
+                    <th field="goodsModel" width="50" align="center">商品型号</th>
+                    <th field="goodsUnit" width="30" align="center">单位</th>
+                    <th field="lastPurchasingPrice" width="50" align="center"  formatter="setPriceFormatter">上次进价</th>
+                    <th field="purchasingPrice" width="50" align="center"  formatter="setPriceFormatter">成本均价</th>
+                    <th field="inventoryQuantity" width="50" align="center">库存数量</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div id="tb2">
+            <div>
+                <a href="javascript:openGoodsChooseDialog()" class="easyui-linkbutton" iconCls="save" plain="true">选择</a>
+            </div>
+        </div>
+
+        <div id="chooseDlg" class="easyui-dialog" closed="true" buttons="#chooseDlgTb">
+            <form method="post" id="chooseFm">
+                <fieldset>
+                    <legend>商品信息</legend>
+                    <table cellspacing="6px">
+                        <tr>
+                            <td>商品编号:</td>
+                            <td>&nbsp;<input class="readonly" name="goodsCode" type="text" readonly="readonly"/></td>
+                            <td>商品名称:</td>
+                            <td>&nbsp;<input class="readonly" name="goodsName" type="text" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
+                            <td>商品型号:</td>
+                            <td>&nbsp;<input class="readonly" name="goodsModel" type="text" readonly="readonly"/></td>
+                            <td>商品单位:</td>
+                            <td>&nbsp;<input class="readonly" name="goodsUnit" type="text" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
+                            <td>上次进价:</td>
+                            <td>&nbsp;<input class="readonly" id="lastPurchasingPrice" name="lastPurchasingPrice" type="text" readonly="readonly"/></td>
+                            <td>当前库存:</td>
+                            <td>&nbsp;<input class="readonly" name="inventoryQuantity" type="text" readonly="readonly"/></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+            <form method="post" id="chooseFm2">
+                <table class="inventoryQuantityTb" cellspacing="6px">
+                    <tr>
+                        <td align="right">单价:</td>
+                        <td>&nbsp;<input id="price" name="price" type="text" onkeyup="this.value=this.value.replace(/[^0-9.]+/,'');"/></td>
+                        <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数量:</td>
+                        <td>&nbsp;<input id="num" name="goodsNum" type="text" onkeyup="this.value=this.value.replace(/[^0-9]+/,'');"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="chooseDlgTb">
+            <a href="javascript:saveGoodsData(1)" class="easyui-linkbutton" iconCls="save" id="saveAndAddBtn">保存并继续新增</a>
+            <a href="javascript:saveGoodsData(2)" class="easyui-linkbutton" iconCls="save" id="saveBtn">保存</a>
+            <a href="javascript:updateGoodsData()" class="easyui-linkbutton" iconCls="save" id="updateBtn">修改</a>
+            <a href="javascript:closeGoodsChooseDlg()" class="easyui-linkbutton" iconCls="closed">关闭</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
