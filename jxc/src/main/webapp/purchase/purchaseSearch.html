@@ -18,13 +18,13 @@
            title="进货单据查询">
         <thead>
         <tr>
-            <th field="id" width="20" align="center" hidden="true">编号</th>
+            <th field="purchaseListId" width="20" align="center" hidden="true">编号</th>
             <th field="purchaseNumber" width="60" align="center">进货单号</th>
             <th field="purchaseDate" width="50" align="center">进货日期</th>
-            <th field="supplier" width="100" align="center" formatter=supplierFmt>供应商</th>
-            <th field="amountPayable" width="40" align="center" formatter=amountPayableFmt>进货金额</th>
-            <th field="user" width="40" align="center" formatter=userFmt>操作员</th>
-            <th field="state" width="40" align="center" formatter=stateFmt>是否付款</th>
+            <th field="supplierName" width="100" align="center">供应商</th>
+            <th field="amountPayable" width="40" align="center" formatter="amountPayableFmt">进货金额</th>
+            <th field="trueName" width="40" align="center">操作员</th>
+            <th field="state" width="40" align="center" formatter="stateFmt">是否付款</th>
             <th field="remarks" width="150" align="center">备注</th>
         </tr>
         </thead>
@@ -61,12 +61,12 @@
     <table id="dg2" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true" singleSelect="true" striped="true">
         <thead>
         <tr>
-            <th field="code" width="30" align="center">编号</th>
-            <th field="name" width="150" align="center">商品名称</th>
-            <th field="model" width="80" align="center">商品型号</th>
+            <th field="goodsCode" width="30" align="center">编号</th>
+            <th field="goodsName" width="150" align="center">商品名称</th>
+            <th field="goodsModel" width="80" align="center">商品型号</th>
             <th field="price" width="50" align="center" formatter=amountPayableFmt>单价</th>
-            <th field="num" width="50" align="center">数量</th>
-            <th field="unit" width="50" align="center">单位</th>
+            <th field="goodsNum" width="50" align="center">数量</th>
+            <th field="goodsUnit" width="50" align="center">单位</th>
             <th field="total" width="50" align="center" formatter=amountPayableFmt>总金额</th>
         </tr>
         </thead>

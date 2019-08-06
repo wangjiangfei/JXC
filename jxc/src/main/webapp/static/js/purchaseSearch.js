@@ -1,17 +1,17 @@
 $(function(){
-	//设置默认查询时间
+	// 设置默认查询时间
 	$('#etime').datebox('setValue',genTodayStr());
 	$('#stime').datebox('setValue',genLastMonthDayStr());
 	
-	//设置下拉框
+	// 设置下拉框
 	$('#supplier').combobox({
 		 mode:'remote',
 		 url:'/supplier/getComboboxList',
-		 valueField:'id',
-		 textField:'name'
+		 valueField:'supplierId',
+		 textField:'supplierName'
 	});
 	
-	//按默认查询条件进行首次查询
+	// 按默认查询条件进行首次查询
 	$('#dg').datagrid({
 		url:'/purchaseListGoods/list',
 		queryParams:{
@@ -20,41 +20,27 @@ $(function(){
 		}
 	});
 	
-	//为进货单表格绑定单击事件
+	// 为进货单表格绑定单击事件
 	$('#dg').datagrid({
 		onClickRow:function(index,row){
 			$('#dg2').datagrid({
 				url:'/purchaseListGoods/goodsList',
 				queryParams:{
-					purchaseListId:row.id
+					purchaseListId:row.purchaseListId
 				}
 			});
 		}
 	});
 });
 
-//格式化进货金额
+// 格式化进货金额
 function amountPayableFmt(value,row){
-	
 	return '￥'+value;
 }
 
-//格式化供应商
-function supplierFmt(value,row){
-	
-	return row.supplier.name;
-}
-
-//格式化操作员
-function userFmt(value,row){
-	
-	return row.user.trueName;
-}
-
-//格式化付款状态
+// 格式化付款状态
 function stateFmt(value,row){
-	
-	return value=='1'?'已付':'未付';
+	return value === 1?'已付':'未付';
 }
 
 //重置搜索条件
@@ -66,9 +52,9 @@ function reset(){
 	$('#stime').datebox('setValue',genLastMonthDayStr());
 }
 
-//根据条件查询进货单信息
+// 根据条件查询进货单信息
 function search(){
-	//每次查询时，先清空进货单商品列表
+	// 每次查询时，先清空进货单商品列表
 	$('#dg2').datagrid('loadData',{rows:[]});
 	var sTime = $('#stime').datebox('getValue');
 	var eTime = $('#etime').datebox('getValue');
@@ -98,7 +84,7 @@ function search(){
  */
 function deletePurchaseList(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length!=1){
+	if (selections.length !== 1) {
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条要删除的记录',
@@ -109,7 +95,7 @@ function deletePurchaseList(){
 	}
 	$.messager.confirm({
 		title:'系统提示',
-		msg:'<font color=red>删除进货单据将无法恢复，您确定要删除吗？</font>',
+		msg:'<font color="red">删除进货单据将无法恢复，您确定要删除吗？</font>',
 		top:$(window).height()/4,
 		fn:function(r){
 			if(r){
@@ -117,12 +103,14 @@ function deletePurchaseList(){
 					url:'/purchaseListGoods/delete',
 					dataType:'json',
 					type:'post',
-					data:{'purchaseListId':selections[0].id},
+					data:{
+						'purchaseListId':selections[0].purchaseListId
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if (result.code === 100) {
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -131,7 +119,7 @@ function deletePurchaseList(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});

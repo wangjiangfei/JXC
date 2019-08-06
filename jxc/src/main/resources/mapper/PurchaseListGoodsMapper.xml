@@ -15,6 +15,8 @@
         <result column="state" property="state" jdbcType="INTEGER" />
         <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
         <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+        <result column="true_name" property="trueName" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="BaseResultMap02" type="com.wangjiangfei.entity.PurchaseListGoods">
@@ -67,24 +69,28 @@
             t_purchase_list.remarks,
             t_purchase_list.state,
             t_purchase_list.supplier_id,
-            t_purchase_list.user_id
+            t_purchase_list.user_id,
+            t_supplier.supplier_name,
+            t_user.true_name
         FROM
             t_purchase_list
+        LEFT JOIN t_supplier ON t_purchase_list.supplier_id = t_supplier.supplier_id
+        LEFT JOIN t_user ON t_purchase_list.user_id = t_user.user_id
         <where>
             <if test="purchaseNumber != null and purchaseNumber != ''">
-                AND purchase_number LIKE CONCAT('%', #{purchaseNumber} ,'%')
+                AND t_purchase_list.purchase_number LIKE CONCAT('%', #{purchaseNumber} ,'%')
             </if>
             <if test="supplierId != null">
-                AND supplier_id = #{supplierId}
+                AND t_purchase_list.supplier_id = #{supplierId}
             </if>
             <if test="state != null">
-                AND state = #{state}
+                AND t_purchase_list.state = #{state}
             </if>
             <if test="sTime != null and sTime != ''">
-                AND purchase_date &gt;= #{sTime}
+                AND t_purchase_list.purchase_date &gt;= #{sTime}
             </if>
             <if test="eTime != null and eTime != ''">
-                AND purchase_date &lt;= #{eTime}
+                AND t_purchase_list.purchase_date &lt;= #{eTime}
             </if>
         </where>
     </select>
