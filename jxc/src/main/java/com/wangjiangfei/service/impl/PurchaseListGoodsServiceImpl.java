@@ -110,9 +110,9 @@ public class PurchaseListGoodsServiceImpl implements PurchaseListGoodsService {
 
         logService.save(new Log(Log.DELETE_ACTION, "删除进货单："+purchaseListGoodsDao.getPurchaseListById(purchaseListId).getPurchaseNumber()));
 
-        purchaseListGoodsDao.deletePurchaseListById(purchaseListId);
-
         purchaseListGoodsDao.deletePurchaseListGoodsByPurchaseListId(purchaseListId);
+
+        purchaseListGoodsDao.deletePurchaseListById(purchaseListId);
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }
