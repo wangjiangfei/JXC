@@ -57,4 +57,84 @@
         )
     </insert>
 
+    <select id="getPurchaselist" resultMap="BaseResultMap">
+        SELECT
+            t_purchase_list.purchase_list_id,
+            t_purchase_list.purchase_number,
+            t_purchase_list.amount_paid,
+            t_purchase_list.amount_payable,
+            t_purchase_list.purchase_date,
+            t_purchase_list.remarks,
+            t_purchase_list.state,
+            t_purchase_list.supplier_id,
+            t_purchase_list.user_id
+        FROM
+            t_purchase_list
+        <where>
+            <if test="purchaseNumber != null and purchaseNumber != ''">
+                AND purchase_number LIKE CONCAT('%', #{purchaseNumber} ,'%')
+            </if>
+            <if test="supplierId != null">
+                AND supplier_id = #{supplierId}
+            </if>
+            <if test="state != null">
+                AND state = #{state}
+            </if>
+            <if test="sTime != null and sTime != ''">
+                AND purchase_date &gt;= #{sTime}
+            </if>
+            <if test="eTime != null and eTime != ''">
+                AND purchase_date &lt;= #{eTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="getPurchaseListGoodsByPurchaseListId" resultMap="BaseResultMap02">
+        SELECT
+            t_purchase_list_goods.purchase_list_goods_id,
+            t_purchase_list_goods.goods_id,
+            t_purchase_list_goods.goods_code,
+            t_purchase_list_goods.goods_name,
+            t_purchase_list_goods.goods_model,
+            t_purchase_list_goods.goods_unit,
+            t_purchase_list_goods.goods_num,
+            t_purchase_list_goods.price,
+            t_purchase_list_goods.total,
+            t_purchase_list_goods.purchase_list_id,
+            t_purchase_list_goods.goods_type_id
+        FROM
+            t_purchase_list_goods
+        WHERE
+            purchase_list_id = #{purchaseListId}
+    </select>
+
+    <select id="getPurchaseListById" resultMap="BaseResultMap">
+        SELECT
+            t_purchase_list.purchase_list_id,
+            t_purchase_list.purchase_number,
+            t_purchase_list.amount_paid,
+            t_purchase_list.amount_payable,
+            t_purchase_list.purchase_date,
+            t_purchase_list.remarks,
+            t_purchase_list.state,
+            t_purchase_list.supplier_id,
+            t_purchase_list.user_id
+        FROM
+            t_purchase_list
+        WHERE
+            purchase_list_id = #{purchaseListId}
+    </select>
+
+    <delete id="deletePurchaseListById" parameterType="java.lang.Integer">
+        DELETE FROM
+        t_purchase_list
+        WHERE purchase_list_id = #{purchaseListId}
+    </delete>
+
+    <delete id="deletePurchaseListGoodsByPurchaseListId" parameterType="java.lang.Integer">
+        DELETE FROM
+        t_purchase_list_goods
+        WHERE purchase_list_id = #{purchaseListId}
+    </delete>
+
 </mapper>

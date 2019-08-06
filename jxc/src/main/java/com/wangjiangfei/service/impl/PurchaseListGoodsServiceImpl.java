@@ -15,7 +15,9 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -72,6 +74,45 @@ public class PurchaseListGoodsServiceImpl implements PurchaseListGoodsService {
 
         // 保存日志
         logService.save(new Log(Log.INSERT_ACTION, "新增进货单："+purchaseList.getPurchaseNumber()));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+    }
+
+    @Override
+    public Map<String, Object> list(String purchaseNumber, Integer supplierId, Integer state, String sTime, String eTime) {
+        Map<String,Object> result = new HashMap<>();
+
+
+        List<PurchaseList> purchaseListList = purchaseListGoodsDao.getPurchaselist(purchaseNumber, supplierId, state, sTime, eTime);
+
+        logService.save(new Log(Log.SELECT_ACTION, "进货单据查询"));
+
+        result.put("rows", purchaseListList);
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> goodsList(Integer purchaseListId) {
+        Map<String, Object> map = new HashMap<>();
+
+        List<PurchaseListGoods> purchaseListGoodsList = purchaseListGoodsDao.getPurchaseListGoodsByPurchaseListId(purchaseListId);
+
+        logService.save(new Log(Log.SELECT_ACTION, "进货单商品信息查询"));
+
+        map.put("rows", purchaseListGoodsList);
+
+        return map;
+    }
+
+    @Override
+    public ServiceVO delete(Integer purchaseListId) {
+
+        logService.save(new Log(Log.DELETE_ACTION, "删除进货单："+purchaseListGoodsDao.getPurchaseListById(purchaseListId).getPurchaseNumber()));
+
+        purchaseListGoodsDao.deletePurchaseListById(purchaseListId);
+
+        purchaseListGoodsDao.deletePurchaseListGoodsByPurchaseListId(purchaseListId);
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }

@@ -21,7 +21,7 @@
                 <tr>
                     <td>
                         供应商：
-                        <select class="easyui-combobox" id="supplier" name="supplier.id" panelHeight="auto"></select>
+                        <select class="easyui-combobox" id="supplier" name="supplierId" panelHeight="auto"></select>
                     </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;应退金额：<input id="amountPayable" name="amountPayable" type="text" readonly="readonly"/ value="0"></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;实退金额：<input id="amountPaid" name="amountPaid" type="text" onkeyup="this.value=this.value.replace(/[^0-9.]+/,'');" value="0"/></td>
@@ -50,12 +50,12 @@
     <table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true" singleSelect="true" toolbar="#tb" striped="true">
         <thead>
         <tr>
-            <th field="code" width="50" align="center">商品编码</th>
-            <th field="name" width="150" align="center">商品名称</th>
-            <th field="model" width="50" align="center">商品型号</th>
-            <th field="unit" width="50" align="center">商品单位</th>
+            <th field="goodsCode" width="50" align="center">商品编码</th>
+            <th field="goodsName" width="150" align="center">商品名称</th>
+            <th field="goodsModel" width="50" align="center">商品型号</th>
+            <th field="goodsUnit" width="50" align="center">商品单位</th>
             <th field="price" width="50" align="center" formatter=setPriceFormatter>单价</th>
-            <th field="num" width="50" align="center">数量</th>
+            <th field="goodsNum" width="50" align="center">数量</th>
             <th field="total" width="50" align="center" formatter=setPriceFormatter>总金额</th>
         </tr>
         </thead>
@@ -72,7 +72,7 @@
     <div class="easyui-layout selectLayOut">
         <div region="north" class="selectNorthCls">
             <div>
-                商品名称：&nbsp;<input type="text" id="s_name" onkeydown="if(event.keyCode==13) searchGoods()"/>
+                商品名称：&nbsp;<input type="text" id="s_name" onkeydown="if(event.keyCode===13) searchGoods()"/>
                 <a href="javascript:searchGoods()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
             </div>
         </div>
@@ -90,7 +90,7 @@
                 <table cellspacing="8px">
                     <tr>
                         <td>商品类别名称:</td>
-                        <td><input id="name" name="name" type="text" /></td>
+                        <td><input id="name" name="goodsTypeName" type="text" /></td>
                     </tr>
                 </table>
             </form>
@@ -106,11 +106,11 @@
                    singleSelect="true" url="/goods/list" toolbar="#tb2" pageList="[10,20,30]" pageSize="10" border="false" striped="true">
                 <thead>
                 <tr>
-                    <th field="id" width="30" hidden="true" align="center">编号</th>
-                    <th field="code" width="40" align="center">商品编码</th>
-                    <th field="name" width="150" align="center">商品名称</th>
-                    <th field="model" width="50" align="center">商品型号</th>
-                    <th field="unit" width="30" align="center">单位</th>
+                    <th field="goodsId" width="30" hidden="true" align="center">编号</th>
+                    <th field="goodsCode" width="40" align="center">商品编码</th>
+                    <th field="goodsName" width="150" align="center">商品名称</th>
+                    <th field="goodsModel" width="50" align="center">商品型号</th>
+                    <th field="goodsUnit" width="30" align="center">单位</th>
                     <th field="lastPurchasingPrice" width="50" align="center"  formatter="setPriceFormatter">上次进价</th>
                     <th field="purchasingPrice" width="50" align="center"  formatter="setPriceFormatter">成本均价</th>
                     <th field="inventoryQuantity" width="50" align="center">库存数量</th>
@@ -132,15 +132,15 @@
                     <table cellspacing="6px">
                         <tr>
                             <td>商品编号:</td>
-                            <td>&nbsp;<input class="readonly" name="code" type="text" readonly="readonly"/></td>
+                            <td>&nbsp;<input class="readonly" name="goodsCode" type="text" readonly="readonly"/></td>
                             <td>商品名称:</td>
-                            <td>&nbsp;<input class="readonly" name="name" type="text" readonly="readonly"/></td>
+                            <td>&nbsp;<input class="readonly" name="goodsName" type="text" readonly="readonly"/></td>
                         </tr>
                         <tr>
                             <td>商品型号:</td>
-                            <td>&nbsp;<input class="readonly" name="model" type="text" readonly="readonly"/></td>
+                            <td>&nbsp;<input class="readonly" name="goodsModel" type="text" readonly="readonly"/></td>
                             <td>商品单位:</td>
-                            <td>&nbsp;<input class="readonly" name="unit" type="text" readonly="readonly"/></td>
+                            <td>&nbsp;<input class="readonly" name="goodsUnit" type="text" readonly="readonly"/></td>
                         </tr>
                         <tr>
                             <td>上次进价:</td>
@@ -157,7 +157,7 @@
                         <td align="right">单价:</td>
                         <td>&nbsp;<input id="price" name="price" type="text" onkeyup="this.value=this.value.replace(/[^0-9.]+/,'');"/></td>
                         <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数量:</td>
-                        <td>&nbsp;<input id="num" name="num" type="text" onkeyup="this.value=this.value.replace(/[^0-9]+/,'');"/></td>
+                        <td>&nbsp;<input id="num" name="goodsNum" type="text" onkeyup="this.value=this.value.replace(/[^0-9]+/,'');"/></td>
                     </tr>
                 </table>
             </form>

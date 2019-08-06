@@ -1,29 +1,29 @@
 $(function(){
-	//设置默认收货时间
+	// 设置默认收货时间
 	$('#returnDate').datebox('setValue',genTodayStr());
 	
-	//设置时间组件可选的时间范围（不能小于当前日期）
+	// 设置时间组件可选的时间范围（不能小于当前日期）
 	$('#returnDate').datebox('calendar').calendar({
 		validator: function(date){
 			var now = new Date();
 			var d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-			return d<=date;
+			return d <= date;
 		}
 	});
 	
 	
-	//设置下拉框
+	// 设置下拉框
 	$('#supplier').combobox({
 		 mode:'remote',
 		 url:'/supplier/getComboboxList',
-		 valueField:'id',
-		 textField:'name'
+		 valueField:'supplierId',
+		 textField:'supplierName'
 	});
 	
-	//设置单号
+	// 设置单号
 	$('#returnNumber').html(genOddNumbers('TH'));
 	
-	//绑定双击事件
+	// 绑定双击事件
 	$('#dg2').datagrid({
 		onDblClickRow:function(rowIndex,rowData){
 			$('#chooseDlg').dialog({
@@ -66,13 +66,13 @@ $(function(){
 			$('#chooseFm').form('load',rowData);
 			$('#lastPurchasingPrice').val('￥'+rowData.lastPurchasingPrice);
 			$('#price').val(rowData.price);
-			$('#num').val(rowData.num);
-			//将要修改的行号放于sessionStorage中
+			$('#num').val(rowData.goodsNum);
+			// 将要修改的行号放于sessionStorage中
 			sessionStorage.setItem('rowIndex',rowIndex);
 		}
 	});
 	
-	//为商品类别的添加和删除按钮单独绑定事件，防止按钮禁用后出现事件不可用的BUG
+	// 为商品类别的添加和删除按钮单独绑定事件，防止按钮禁用后出现事件不可用的BUG
 	$('#addButton').bind('click', openGoodsTypeAddDialog);
 	$('#deleteButton').bind('click', deleteGoodsType);
 });
@@ -101,14 +101,14 @@ function openReturnListGoodsDialog(){
 			$('#tree').tree('expandAll');
 		},
 		onClick:function(node){
-			if(node.attributes.state==0){
+			if (node.attributes.state === 0) {
 				$('#deleteButton').linkbutton('enable');
 			}else{
 				$('#deleteButton').linkbutton('disable');
 			}
 			$('#addButton').linkbutton('enable');
 			$('#dg2').datagrid('load',{
-				typeId:node.id
+                goodsTypeId:node.id
 			});
 		}
 	});
@@ -118,8 +118,7 @@ function openReturnListGoodsDialog(){
  * 格式价格
  */
 function setPriceFormatter(value,row){
-	
-	
+
 	return "￥"+value;
 }
 
@@ -153,7 +152,7 @@ function closeDlg(){
  */
 function saveData(){
 	var name = $('#name').val();
-	if(name==null || name==''){
+	if(name===null || name===''){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请输入商品类别名称',
@@ -167,12 +166,15 @@ function saveData(){
 		url:'/goodsType/save',
 		type:'post',
 		dataType:'json',
-		data:{'name':name,'pId':selectNode.id},
+		data:{
+			'goodsTypeName':name,
+			'pId':selectNode.id
+		},
 		success:function(result){
-			if(result.resultCode=='001'){
+			if(result.code === 100){
 				$.messager.alert({
 					title:'系统提示',
-					msg:result.resultContent,
+					msg: '保存成功',
 					icon:'info', 
 					top:$(window).height()/4
 				});
@@ -207,12 +209,14 @@ function deleteGoodsType(){
 					url:'/goodsType/delete',
 					dataType:'json',
 					type:'post',
-					data:{'id':$('#tree').tree('getSelected').id},
+					data:{
+						'goodsTypeId':$('#tree').tree('getSelected').id
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code === 100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -222,7 +226,7 @@ function deleteGoodsType(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});
@@ -239,15 +243,15 @@ function deleteGoodsType(){
  */
 function searchGoods(){
 	var selectNode = $('#tree').tree('getSelected');
-	//如果是选了类别后的搜索，应该按照当前类别的商品来搜索，而不是在所有的商品中搜索
-	if(selectNode!=null){
+	// 如果是选了类别后的搜索，应该按照当前类别的商品来搜索，而不是在所有的商品中搜索
+	if(selectNode !== null){
 		$('#dg2').datagrid('load',{
-			name:$('#s_name').val(),
-			typeId:selectNode.id
+            goodsName:$('#s_name').val(),
+            goodsTypeId:selectNode.id
 		});
-	}else{
+	} else{
 		$('#dg2').datagrid('load',{
-			name:$('#s_name').val(),
+            goodsTypeName:$('#s_name').val(),
 		});
 	}
 	
@@ -258,7 +262,7 @@ function searchGoods(){
  */
 function openGoodsChooseDialog(){
 	var selections = $('#dg2').datagrid('getSelections');
-	if(selections.length!=1){
+	if (selections.length !== 1) {
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条数据',
@@ -305,7 +309,7 @@ function saveGoodsData(type){
 	var num = $('#num').val();
 	var price = $('#price').val();
 	
-	if(num==null || num==''){
+	if(num===null || num===''){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请输出库存',
@@ -314,7 +318,7 @@ function saveGoodsData(type){
 		});
 		return;
 	}
-	if(price==null || price==''){
+	if(price===null || price===''){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请输入单价',
@@ -329,8 +333,8 @@ function saveGoodsData(type){
 	// 如果新增的商品，已经在商品清单列表里存在，那么则不再新增行记录，而是将数量和总金额进行累加
 	var isExist = false;
 	var existRow;
-	for(var i=0;i<rows.length;i++){
-		if(rows[i].code == selections[0].code){
+	for(var i = 0;i < rows.length;i++){
+		if(rows[i].goodsCode === selections[0].goodsCode){
 			isExist = true;
 			existRow = rows[i];
 			break;
@@ -339,7 +343,7 @@ function saveGoodsData(type){
 	
 	if(isExist){
 		// 如果已经存在在商品列表的商品库存数和新增的退货商品数之和大于了总库存，则提示
-		if(Number(existRow.num)+Number($('#num').val())>selections[0].inventoryQuantity){
+		if(Number(existRow.goodsNum)+Number($('#num').val())>selections[0].inventoryQuantity){
 			$.messager.alert({
 				title:'系统提示',
 				msg:'退货数量大于总库存',
@@ -353,19 +357,19 @@ function saveGoodsData(type){
 			row:{
 				goodsId:existRow.goodsId,
 				goodsTypeId:existRow.goodsTypeId,
-				code:existRow.code,
-				name:existRow.name,
-				model:existRow.model,
-				unit:existRow.unit,
+                goodsCode:existRow.goodsCode,
+                goodsName:existRow.goodsName,
+                goodsModel:existRow.goodsModel,
+                goodsUnit:existRow.goodsUnit,
 				lastPurchasingPrice:selections[0].lastPurchasingPrice,
 				price:$('#price').val(),
-				num:Number(existRow.num)+Number($('#num').val()),
+                goodsNum:Number(existRow.goodsNum)+Number($('#num').val()),
 				total:$('#num').val()*$('#price').val()+existRow.total
 			}
 		})
-	}else{
+	} else{
 		// 如果新增的退货商品数之和大于了总库存，则提示
-		if($('#num').val()>selections[0].inventoryQuantity){
+		if($('#num').val() > selections[0].inventoryQuantity){
 			$.messager.alert({
 				title:'系统提示',
 				msg:'退货数量大于总库存',
@@ -375,15 +379,15 @@ function saveGoodsData(type){
 			return;
 		}
 		$('#dg').datagrid('appendRow',{
-			goodsId:selections[0].id,
-			goodsTypeId:selections[0].type.id,
-			code:selections[0].code,
-			name:selections[0].name,
-			model:selections[0].model,
-			unit:selections[0].unit,
+			goodsId:selections[0].goodsId,
+			goodsTypeId:selections[0].goodsTypeId,
+            goodsCode:selections[0].goodsCode,
+            goodsName:selections[0].goodsName,
+            goodsModel:selections[0].goodsModel,
+            goodsUnit:selections[0].goodsUnit,
 			lastPurchasingPrice:selections[0].lastPurchasingPrice,
 			price:$('#price').val(),
-			num:$('#num').val(),
+            goodsNum:$('#num').val(),
 			total:$('#num').val()*$('#price').val()
 		});
 	}
@@ -392,7 +396,7 @@ function saveGoodsData(type){
 	
 	closeGoodsChooseDlg();
 	
-	if(type==2){
+	if (type === 2) {
 		$('#dlg').dialog('close');
 	}
 }
@@ -402,7 +406,7 @@ function saveGoodsData(type){
  */
 function deleteReturnListGoods(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length!=1){
+	if (selections.length !== 1) {
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条要删除数据',
@@ -417,7 +421,7 @@ function deleteReturnListGoods(){
 		top:$(window).height()/4,
 		fn:function(r){
 			if(r){
-				//删除一行数据 通过index来删除
+				// 删除一行数据 通过index来删除
 				$('#dg').datagrid('deleteRow',$('#dg').datagrid('getRowIndex',selections[0]));
 				calculationMount();
 			}
@@ -431,9 +435,10 @@ function deleteReturnListGoods(){
 function calculationMount(){
 	var rows = $('#dg').datagrid('getRows');
 	var payable = 0;
-	for(var i=0;i<rows.length;i++){
+	for(var i = 0;i < rows.length;i++){
 		payable = payable + rows[i].total;
 	}
+	payable = payable.toFixed(2);
 	$('#amountPayable').val(payable);
 	$('#amountPaid').val(payable);
 }
@@ -443,7 +448,7 @@ function calculationMount(){
  */
 function openGoodsChooseModifyDialog(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length!=1){
+	if (selections.length !== 1) {
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条要修改的数据',
@@ -470,8 +475,8 @@ function openGoodsChooseModifyDialog(){
 	$('#chooseFm').form('load',selections[0]);
 	$('#lastPurchasingPrice').val('￥'+selections[0].lastPurchasingPrice);
 	$('#price').val(selections[0].price);
-	$('#num').val(selections[0].num);
-	//将要修改的行号放于sessionStorage中
+	$('#num').val(selections[0].goodsNum);
+	// 将要修改的行号放于sessionStorage中
 	sessionStorage.setItem('rowIndex',$('#dg').datagrid('getRowIndex',selections[0]));
 }
 
@@ -482,7 +487,7 @@ function updateGoodsData(){
 	var num = $('#num').val();
 	var price = $('#price').val();
 	
-	if(num==null || num==''){
+	if(num===null || num===''){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请输入出库数量',
@@ -491,7 +496,7 @@ function updateGoodsData(){
 		});
 		return;
 	}
-	if(price==null || price==''){
+	if(price===null || price===''){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请输入单价',
@@ -500,29 +505,41 @@ function updateGoodsData(){
 		});
 		return;
 	}
+    var selections = $('#dg2').datagrid('getSelections');
+    // 如果新增的退货商品数之和大于了总库存，则提示
+    if($('#num').val() > selections[0].inventoryQuantity){
+        $.messager.alert({
+            title:'系统提示',
+            msg:'退货数量大于总库存',
+            icon:'error',
+            top:$(window).height()/4
+        });
+        return;
+    }
 	$('#dg').datagrid('updateRow',{
 		index:sessionStorage.getItem('rowIndex'),
 		row:{
 			price:$('#price').val(),
-			num:$('#num').val(),
+            goodsNum:$('#num').val(),
 			total:$('#num').val()*$('#price').val()
 		}
 	})
 	sessionStorage.removeItem('rowIndex');
+    calculationMount();
 	closeGoodsChooseDlg();
 }
 
 /**
  * 保存退货清单
  */
-function saveReturnData(){
+function saveReturnData() {
 	$('#returnListGoodsStr').val(JSON.stringify($("#dg").datagrid("getData").rows));
 	var returnNumber = $('#returnNumber').text();
 	$('#fm').form('submit',{
 		url:'/returnListGoods/save?returnNumber='+returnNumber,
 		onSubmit:function(){
 			
-			if($('#dg').datagrid('getRows').length<1){
+			if($('#dg').datagrid('getRows').length < 1) {
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请添加退货商品',
@@ -532,8 +549,10 @@ function saveReturnData(){
 				return false;
 			}
 			
-			if($('#supplier').combobox('getData')==null || $('#supplier').combobox('getData')=='' || 
-					$('#supplier').combobox('getValue')==null || $('#supplier').combobox('getValue')==''){
+			if($('#supplier').combobox('getData') === null
+				|| $('#supplier').combobox('getData') === ''
+				|| $('#supplier').combobox('getValue') === null
+				|| $('#supplier').combobox('getValue') === '') {
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请选择供应商',
@@ -543,7 +562,7 @@ function saveReturnData(){
 				return false;
 			}
 			
-			if($('#amountPaid').val()==null || $('#amountPaid').val()==''){
+			if($('#amountPaid').val()===null || $('#amountPaid').val()===''){
 				$.messager.alert({
 					title:'系统提示',
 					msg:'请填写实付金额',
@@ -553,7 +572,7 @@ function saveReturnData(){
 				return false;
 			}
 			
-			if($('#amountPaid').val()>$('#amountPayable').val()){
+			if ($('#amountPaid').val() > $('#amountPayable').val()) {
 				$.messager.alert({
 					title:'系统提示',
 					msg:'实付金额大于应付金额',
@@ -567,10 +586,10 @@ function saveReturnData(){
 		},
 		success:function(result){
 			var resultObj = eval('('+result+')');
-			if(resultObj.resultCode=='001'){
+			if(resultObj.code === 100){
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultObj.resultContent,
+					msg: '保存成功',
 					icon:'info', 
 					top:$(window).height()/4,
 					fn:function(){
@@ -580,7 +599,7 @@ function saveReturnData(){
 			}else{
 				$.messager.alert({
 					title:'系统提示',
-					msg:resultObj.resultContent,
+					msg:resultObj.msg,
 					icon:'error', 
 					top:$(window).height()/4
 				});

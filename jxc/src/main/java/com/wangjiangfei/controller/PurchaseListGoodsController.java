@@ -3,10 +3,13 @@ package com.wangjiangfei.controller;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.PurchaseList;
 import com.wangjiangfei.service.PurchaseListGoodsService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -41,92 +44,34 @@ public class PurchaseListGoodsController {
      * @param eTime 结束时间
      * @return
      */
-//    @RequestMapping("/list")
-//    @RequiresPermissions(value={"进货单据查询","供应商统计"},logical=Logical.OR)
-//    public Map<String,Object> list(String purchaseNumber, String supplierId, String state, String sTime,
-//                                   String eTime){
-//
-//        Map<String,Object> result = new HashMap<String,Object>();
-//
-//        try {
-//
-//            List<PurchaseList> purchaseListList = purchaseListGoodsService.getPurchaselist(purchaseNumber, supplierId, state, sTime, eTime);
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "进货单据查询"));
-//
-//            result.put("rows", purchaseListList);
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return result;
-//    }
+    @RequestMapping("/list")
+    @RequiresPermissions(value={"进货单据查询","供应商统计"},logical = Logical.OR)
+    public Map<String,Object> list(String purchaseNumber, Integer supplierId, Integer state, String sTime,
+                                   String eTime) {
+        return  purchaseListGoodsService.list(purchaseNumber, supplierId, state, sTime, eTime);
+    }
 
     /**
      * 查询进货单商品信息
      * @param purchaseListId 进货单ID
      * @return
      */
-//    @RequestMapping("/goodsList")
-//    @RequiresPermissions(value={"进货单据查询","供应商统计"},logical=Logical.OR)
-//    public Map<String,Object> goodsList(Integer purchaseListId){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            List<PurchaseListGoods> purchaseListGoodsList = purchaseListGoodsService.getPurchaseListGoodsByPurchaseListId(purchaseListId);
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "进货单商品信息查询"));
-//
-//            map.put("rows", purchaseListGoodsList);
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//    }
+    @RequestMapping("/goodsList")
+    @RequiresPermissions(value={"进货单据查询","供应商统计"},logical = Logical.OR)
+    public Map<String, Object> goodsList(Integer purchaseListId) {
+        return purchaseListGoodsService.goodsList(purchaseListId);
+    }
 
     /**
      * 删除进货单及商品信息
      * @param purchaseListId 进货单ID
      * @return
      */
-//    @RequestMapping("/delete")
-//    @RequiresPermissions(value="进货单据查询")
-//    public Map<String,Object> delete(Integer purchaseListId){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            logService.save(new Log(Log.DELETE_ACTION, "删除进货单："+purchaseListGoodsService.getPurchaseList(purchaseListId).getPurchaseNumber()));
-//
-//            purchaseListGoodsService.delete(purchaseListId);
-//
-//            map.put("resultCode", ResultCode.SUCCESS);
-//
-//            map.put("resultContent", "删除进货单成功");
-//
-//        } catch (Exception e) {
-//
-//            map.put("resultCode", ResultCode.FAIL);
-//
-//            map.put("resultContent", "删除进货单失败");
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/delete")
+    @RequiresPermissions(value = "进货单据查询")
+    public ServiceVO delete(Integer purchaseListId) {
+        return purchaseListGoodsService.delete(purchaseListId);
+    }
 
     /**
      * 修改进货单付款状态
