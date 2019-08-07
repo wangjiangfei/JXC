@@ -1,13 +1,16 @@
 package com.wangjiangfei.service.impl;
 
 import com.wangjiangfei.dao.GoodsDao;
+import com.wangjiangfei.dao.SaleListGoodsDao;
 import com.wangjiangfei.domain.ErrorCode;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.domain.SuccessCode;
 import com.wangjiangfei.entity.Goods;
 import com.wangjiangfei.entity.Log;
+import com.wangjiangfei.service.CustomerReturnListGoodsService;
 import com.wangjiangfei.service.GoodsService;
 import com.wangjiangfei.service.LogService;
+import com.wangjiangfei.service.SaleListGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,10 @@ public class GoodsServiceImpl implements GoodsService {
     private LogService logService;
     @Autowired
     private GoodsDao goodsDao;
+    @Autowired
+    private SaleListGoodsService saleListGoodsService;
+    @Autowired
+    private CustomerReturnListGoodsService customerReturnListGoodsService;
 
     @Override
     public Map<String, Object> list(Integer page, Integer rows, String goodsName, Integer goodsTypeId) {
@@ -43,6 +50,31 @@ public class GoodsServiceImpl implements GoodsService {
         map.put("total", goodsDao.getGoodsCount(goodsName, goodsTypeId));
 
         logService.save(new Log(Log.SELECT_ACTION, "分页查询商品信息"));
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> listInventory(Integer page, Integer rows, String codeOrName, Integer goodsTypeId) {
+        Map<String,Object> map = new HashMap<>();
+
+        page = page == 0 ? 1 : page;
+        int offSet = (page - 1) * rows;
+
+        List<Goods> goodsList = goodsDao.getGoodsInventoryList(offSet, rows, codeOrName, goodsTypeId);
+
+        for (Goods goods : goodsList) {
+            // 销售总量等于销售单据的销售数据减去退货单据的退货数据
+            goods.setSaleTotal(saleListGoodsService.getSaleTotalByGoodsId(goods.getGoodsId())
+                    - customerReturnListGoodsService.getCustomerReturnTotalByGoodsId(goods.getGoodsId()));
+
+        }
+
+        map.put("rows", goodsList);
+
+        map.put("total", goodsDao.getGoodsInventoryCount(codeOrName, goodsTypeId));
+
+        logService.save(new Log(Log.SELECT_ACTION, "分页查询商品库存信息"));
 
         return map;
     }

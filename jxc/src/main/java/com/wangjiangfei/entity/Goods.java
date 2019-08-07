@@ -22,4 +22,6 @@ public class Goods {
 
   private String goodsTypeName;
 
+  private Integer saleTotal;// 销售总量
+
 }

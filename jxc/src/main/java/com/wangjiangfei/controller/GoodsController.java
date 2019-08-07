@@ -29,33 +29,14 @@ public class GoodsController {
      * @param page 当前页
      * @param rows 每页显示条数
      * @param codeOrName 商品编码或名称
-     * @param typeId 商品类别ID
+     * @param goodsTypeId 商品类别ID
      * @return
      */
-//    @RequestMapping("/listInventory")
-//    @RequiresPermissions(value="当前库存查询")
-//    public Map<String,Object> listInventory(Integer page, Integer rows, String codeOrName, Integer typeId){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        List<Goods> goodsList = goodsService.getGoodsInventoryList(page, rows, codeOrName, typeId);
-//
-//        for(Goods goods : goodsList){
-//            // 销售总量等于销售单据的销售数据减去退货单据的退货数据
-//            goods.setSaleTotal(saleListGoodsService.getSaleTotalByGoodsId(goods.getId())
-//                    - customerReturnListGoodsService.getCustomerReturnTotalByGoodsId(goods.getId()));
-//
-//        }
-//
-//        map.put("rows", goodsList);
-//
-//        map.put("total", goodsService.getGoodsInventoryCount(codeOrName, typeId));
-//
-//        logService.save(new Log(Log.SELECT_ACTION, "分页查询商品库存信息"));
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/listInventory")
+    @RequiresPermissions(value="当前库存查询")
+    public Map<String,Object> listInventory(Integer page, Integer rows, String codeOrName, Integer goodsTypeId) {
+        return goodsService.listInventory(page, rows, codeOrName, goodsTypeId);
+    }
 
     /**
      * 分页查询商品信息

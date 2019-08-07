@@ -1,12 +1,4 @@
 /**
- * 格式化商品类别名称
- */
-function setGoodsTypeNameFormatter(value,row){
-
-	return row.type.name;
-}
-
-/**
  * 格式价格
  */
 function setPriceFormatter(value,row){
@@ -32,11 +24,11 @@ function openGoodsTypeTreeDlg(){
 		url:'/goodsType/loadGoodsType',
 		lines:true,
 		onLoadSuccess:function(){
-			//展开所有节点
+			// 展开所有节点
 			$('#tree').tree('expandAll');
 		},
 		onDblClick:function(node){
-			if(node.id==1){
+			if(node.id === 1){
 				$('#s_typeName').val('');
 				$('#s_typeId').val('');
 			}else{
@@ -70,7 +62,7 @@ function closeGoodsTypeTreeDlg(){
  */
 function chooseGoodsType(){
 	var selectNode = $('#tree').tree('getSelected');
-	if(selectNode==null){
+	if(selectNode === null){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择商品类别',
@@ -80,7 +72,7 @@ function chooseGoodsType(){
 		
 		return;
 	}
-	if(selectNode.id==1){
+	if(selectNode.id === 1){
 		$('#s_typeName').val('');
 		$('#s_typeId').val('');
 	}else{
@@ -98,6 +90,6 @@ function chooseGoodsType(){
 function searchStock(){
 	$('#dg').datagrid('load',{
 		codeOrName:$('#s_codeOrName').val(),
-		typeId:$('#s_typeId').val()
+		goodsTypeId:$('#s_typeId').val()
 	});
 }

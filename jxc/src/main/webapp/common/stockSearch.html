@@ -17,18 +17,18 @@
        title="当前库存查询">
     <thead>
     <tr>
-        <th field="code" width="30" align="center">商品编码</th>
-        <th field="name" width="150" align="center">商品名称</th>
-        <th field="type" width="50" align="center" formatter=setGoodsTypeNameFormatter>类别</th>
-        <th field="model" width="50" align="center">型号</th>
+        <th field="goodsCode" width="30" align="center">商品编码</th>
+        <th field="goodsName" width="150" align="center">商品名称</th>
+        <th field="goodsTypeName" width="50" align="center">类别</th>
+        <th field="goodsModel" width="50" align="center">型号</th>
         <th field="inventoryQuantity" width="50" align="center">库存数量</th>
         <th field="saleTotal" width="50" align="center">销售总数</th>
         <th field="lastPurchasingPrice" width="50" align="center" formatter=setPriceFormatter>上次进价</th>
         <th field="purchasingPrice" width="50" align="center" formatter=setPriceFormatter>成本均价</th>
         <th field="sellingPrice" width="50" align="center" formatter=setPriceFormatter>销售价</th>
         <th field="inventoryTotalPrice" width="50" align="center" formatter=setInventoryTotalPrice>库存总值</th>
-        <th field="unit" width="30" align="center">单位</th>
-        <th field="producer" width="150" align="center">生产厂商</th>
+        <th field="goodsUnit" width="30" align="center">单位</th>
+        <th field="goodsProducer" width="150" align="center">生产厂商</th>
     </tr>
     </thead>
 </table>
@@ -37,7 +37,7 @@
     <div>
         <input type="hidden" id="s_typeId"/>
         &nbsp;商品类别：&nbsp;<input type="text" id="s_typeName" readonly="readonly" onclick="openGoodsTypeTreeDlg()">
-        &nbsp;商品编码或名称：&nbsp;<input type="text" id="s_codeOrName" onkeydown="if(event.keyCode==13) searchStock()"/>
+        &nbsp;商品编码或名称：&nbsp;<input type="text" id="s_codeOrName" onkeydown="if(event.keyCode===13) searchStock()"/>
         <a href="javascript:searchStock()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
     </div>
 </div>

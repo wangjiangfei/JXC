@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.SaleListGoodsDao">
+
+    <select id="getSaleTotalByGoodsId" resultType="java.lang.Integer">
+        SELECT
+            SUM(t_sale_list_goods.goods_num)
+        FROM
+            t_sale_list_goods
+        WHERE goods_id = #{goodsId}
+    </select>
+
+</mapper>
