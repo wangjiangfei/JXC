@@ -14,7 +14,9 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -71,6 +73,44 @@ public class ReturnListGoodsServiceImpl implements ReturnListGoodsService {
 
         // 保存日志
         logService.save(new Log(Log.INSERT_ACTION, "新增退货单："+returnList.getReturnNumber()));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+    }
+
+    @Override
+    public Map<String, Object> list(String returnNumber, Integer supplierId, Integer state, String sTime, String eTime) {
+        Map<String,Object> result = new HashMap<>();
+
+        List<ReturnList> returnListList = returnListGoodsDao.getReturnlist(returnNumber, supplierId, state, sTime, eTime);
+
+        logService.save(new Log(Log.SELECT_ACTION, "退货单据查询"));
+
+        result.put("rows", returnListList);
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> goodsList(Integer returnListId) {
+        Map<String,Object> map = new HashMap<>();
+
+        List<ReturnListGoods> returnListGoodsList = returnListGoodsDao.getReturnListGoodsByReturnListId(returnListId);
+
+        logService.save(new Log(Log.SELECT_ACTION, "退货单商品信息查询"));
+
+        map.put("rows", returnListGoodsList);
+
+        return map;
+    }
+
+    @Override
+    public ServiceVO delete(Integer returnListId) {
+
+        logService.save(new Log(Log.DELETE_ACTION, "删除退货单："+returnListGoodsDao.getReturnList(returnListId).getReturnNumber()));
+
+        returnListGoodsDao.deleteReturnListGoodsByReturnListId(returnListId);
+
+        returnListGoodsDao.deleteReturnListById(returnListId);
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }

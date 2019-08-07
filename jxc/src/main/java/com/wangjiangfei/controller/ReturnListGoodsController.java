@@ -3,10 +3,13 @@ package com.wangjiangfei.controller;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.ReturnList;
 import com.wangjiangfei.service.ReturnListGoodsService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -42,92 +45,37 @@ public class ReturnListGoodsController {
      * @param eTime 结束时间
      * @return
      */
-//    @RequestMapping("/list")
-//    @RequiresPermissions(value={"退货单据查询","供应商统计"},logical=Logical.OR)
-//    public Map<String,Object> list(String returnNumber, String supplierId, String state, String sTime,
-//                                   String eTime){
-//
-//        Map<String,Object> result = new HashMap<String,Object>();
-//
-//        try {
-//
-//            List<ReturnList> returnListList = returnListGoodsService.getReturnlist(returnNumber, supplierId, state, sTime, eTime);
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "退货单据查询"));
-//
-//            result.put("rows", returnListList);
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return result;
-//    }
+    @RequestMapping("/list")
+    @RequiresPermissions(value={"退货单据查询","供应商统计"},logical= Logical.OR)
+    public Map<String,Object> list(String returnNumber,
+                                   Integer supplierId,
+                                   Integer state,
+                                   String sTime,
+                                   String eTime) {
+        return returnListGoodsService.list(returnNumber, supplierId, state, sTime, eTime);
+    }
 
     /**
      * 查询退货单商品信息
      * @param returnListId 退货单ID
      * @return
      */
-//    @RequestMapping("/goodsList")
-//    @RequiresPermissions(value={"退货单据查询","供应商统计"},logical=Logical.OR)
-//    public Map<String,Object> goodsList(Integer returnListId){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            List<ReturnListGoods> returnListGoodsList = returnListGoodsService.getReturnListGoodsByReturnListId(returnListId);
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "退货单商品信息查询"));
-//
-//            map.put("rows", returnListGoodsList);
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//    }
+    @RequestMapping("/goodsList")
+    @RequiresPermissions(value={"退货单据查询","供应商统计"},logical = Logical.OR)
+    public Map<String,Object> goodsList(Integer returnListId) {
+        return returnListGoodsService.goodsList(returnListId);
+    }
 
     /**
      * 删除退货单及商品信息
      * @param returnListId 退货单ID
      * @return
      */
-//    @RequestMapping("/delete")
-//    @RequiresPermissions(value="退货单据查询")
-//    public Map<String,Object> delete(Integer returnListId){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            logService.save(new Log(Log.DELETE_ACTION, "删除退货单："+returnListGoodsService.getReturnList(returnListId).getReturnNumber()));
-//
-//            returnListGoodsService.delete(returnListId);
-//
-//            map.put("resultCode", ResultCode.SUCCESS);
-//
-//            map.put("resultContent", "删除退货单成功");
-//
-//        } catch (Exception e) {
-//
-//            map.put("resultCode", ResultCode.FAIL);
-//
-//            map.put("resultContent", "删除退货单失败");
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/delete")
+    @RequiresPermissions(value = "退货单据查询")
+    public ServiceVO delete(Integer returnListId) {
+        return returnListGoodsService.delete(returnListId);
+    }
 
     /**
      * 修改进货单付款状态
