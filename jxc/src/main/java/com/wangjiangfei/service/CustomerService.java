@@ -3,6 +3,7 @@ package com.wangjiangfei.service;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.Customer;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,4 +18,6 @@ public interface CustomerService {
     ServiceVO save(Customer customer);
 
     ServiceVO delete(String ids);
+
+    List<Customer> getComboboxList(String q);
 }

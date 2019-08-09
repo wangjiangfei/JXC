@@ -3,12 +3,13 @@ package com.wangjiangfei.controller;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.Customer;
 import com.wangjiangfei.service.CustomerService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,6 +23,17 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    /**
+     * 查询下拉框客户信息
+     * @param q 客户名称
+     * @return
+     */
+    @RequestMapping("/getComboboxList")
+    @RequiresPermissions(value={"销售出库","客户退货","销售单据查询","客户退货查询","客户统计"},logical= Logical.OR)
+    public List<Customer> getComboboxList(String q) {
+        return customerService.getComboboxList(q);
+    }
 
     /**
      * 分页查询客户

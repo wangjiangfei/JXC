@@ -23,4 +23,6 @@ public interface CustomerDao {
     Customer getCustomerById(Integer customerId);
 
     Integer deleteCustomer(Integer customerId);
+
+    List<Customer> getCustomerListByNameLike(@Param("q") String q);
 }

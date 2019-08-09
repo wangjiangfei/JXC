@@ -5,6 +5,34 @@
 
 <mapper namespace="com.wangjiangfei.dao.SaleListGoodsDao">
 
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.SaleList">
+        <result column="sale_list_id" property="saleListId" jdbcType="INTEGER" />
+        <result column="sale_number" property="saleNumber" jdbcType="VARCHAR" />
+        <result column="amount_paid" property="amountPaid" jdbcType="DECIMAL" />
+        <result column="amount_payable" property="amountPayable" jdbcType="DECIMAL" />
+        <result column="sale_date" property="saleDate" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+        <result column="true_name" property="trueName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap02" type="com.wangjiangfei.entity.SaleListGoods">
+        <result column="sale_list_goods_id" property="saleListGoodsId" jdbcType="INTEGER" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_model" property="goodsModel" jdbcType="VARCHAR" />
+        <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+        <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="total" property="total" jdbcType="DECIMAL" />
+        <result column="sale_list_id" property="saleListId" jdbcType="INTEGER" />
+        <result column="goods_type_id" property="goodsTypeId" jdbcType="INTEGER" />
+    </resultMap>
+
     <select id="getSaleTotalByGoodsId" resultType="java.lang.Integer">
         SELECT
             SUM(t_sale_list_goods.goods_num)
@@ -12,5 +40,31 @@
             t_sale_list_goods
         WHERE goods_id = #{goodsId}
     </select>
+
+    <insert id="saveSaleList" useGeneratedKeys="true" keyProperty="saleListId" parameterType="com.wangjiangfei.entity.SaleList">
+        INSERT INTO t_sale_list
+        (
+        sale_number, sale_date, amount_paid, amount_payable,
+        remarks, state, customer_id, user_id
+        )
+        VALUES
+        (
+        #{saleNumber}, #{saleDate}, #{amountPaid}, #{amountPayable},
+        #{remarks}, #{state}, #{customerId}, #{userId}
+        )
+    </insert>
+
+    <insert id="saveSaleListGoods" useGeneratedKeys="true" keyProperty="saleListGoodsId" parameterType="com.wangjiangfei.entity.SaleListGoods">
+        INSERT INTO t_sale_list_goods
+        (
+        goods_id, goods_code, goods_name, goods_model, goods_unit,
+        goods_num, price, total, sale_list_id, goods_type_id
+        )
+        VALUES
+        (
+        #{goodsId}, #{goodsCode}, #{goodsName}, #{goodsModel}, #{goodsUnit},
+        #{goodsNum}, #{price}, #{total}, #{saleListId}, #{goodsTypeId}
+        )
+    </insert>
 
 </mapper>
