@@ -1,9 +1,9 @@
 $(function(){
-	//设置默认查询时间
+	// 设置默认查询时间
 	$('#etime').datebox('setValue',genTodayStr());
 	$('#stime').datebox('setValue',genLastMonthDayStr());
 	
-	//设置下拉框
+	// 设置下拉框
 	$('#customer').combobox({
 		 mode:'remote',
 		 url:'/customer/getComboboxList',
@@ -11,7 +11,7 @@ $(function(){
 		 textField:'customerName'
 	});
 	
-	//按默认查询条件进行首次查询
+	// 按默认查询条件进行首次查询
 	$('#dg').datagrid({
 		url:'/customerReturnListGoods/list',
 		queryParams:{
@@ -20,35 +20,23 @@ $(function(){
 		}
 	});
 	
-	//为客户退货单表格绑定单击事件
+	// 为客户退货单表格绑定单击事件
 	$('#dg').datagrid({
 		onClickRow:function(index,row){
 			$('#dg2').datagrid({
 				url:'/customerReturnListGoods/goodsList',
 				queryParams:{
-					customerReturnListId:row.id
+					customerReturnListId:row.customerReturnListId
 				}
 			});
 		}
 	});
 });
 
-//格式化客户退货金额
+// 格式化客户退货金额
 function amountPayableFmt(value,row){
 	
 	return '￥'+value;
-}
-
-//格式化客户
-function customerFmt(value,row){
-	
-	return row.customer.name;
-}
-
-//格式化操作员
-function userFmt(value,row){
-	
-	return row.user.trueName;
 }
 
 //格式化付款状态
@@ -84,7 +72,7 @@ function search(){
 	$('#dg').datagrid({
 		url:'/customerReturnListGoods/list',
 		queryParams:{
-			customerReturnNumber:$('#s_customerReturnNumber').val(),
+            returnNumber:$('#s_customerReturnNumber').val(),
 			customerId:$('#customer').combobox('getValue'),
 			state:$('#cc').combobox('getValue'),
 			sTime:sTime,
@@ -98,7 +86,7 @@ function search(){
  */
 function deleteCustomerReturnList(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length!=1){
+	if(selections.length!==1){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条要删除的记录',
@@ -109,7 +97,7 @@ function deleteCustomerReturnList(){
 	}
 	$.messager.confirm({
 		title:'系统提示',
-		msg:'<font color=red>删除客户退货单据将无法恢复，您确定要删除吗？</font>',
+		msg:'<font color="red">删除客户退货单据将无法恢复，您确定要删除吗？</font>',
 		top:$(window).height()/4,
 		fn:function(r){
 			if(r){
@@ -117,12 +105,14 @@ function deleteCustomerReturnList(){
 					url:'/customerReturnListGoods/delete',
 					dataType:'json',
 					type:'post',
-					data:{'customerReturnListId':selections[0].id},
+					data:{
+						'customerReturnListId':selections[0].customerReturnListId
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code===100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -131,7 +121,7 @@ function deleteCustomerReturnList(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});

@@ -18,13 +18,13 @@
            title="客户退货查询">
         <thead>
         <tr>
-            <th field="id" width="20" align="center" hidden="true">编号</th>
-            <th field="customerReturnNumber" width="60" align="center">退货单号</th>
-            <th field="customerReturnDate" width="50" align="center">退货日期</th>
-            <th field="customer" width="100" align="center" formatter=customerFmt>客户</th>
-            <th field="amountPayable" width="40" align="center" formatter=amountPayableFmt>退货金额</th>
-            <th field="user" width="40" align="center" formatter=userFmt>操作员</th>
-            <th field="state" width="40" align="center" formatter=stateFmt>是否付款</th>
+            <th field="customerReturnListId" width="20" align="center" hidden="true">编号</th>
+            <th field="returnNumber" width="60" align="center">退货单号</th>
+            <th field="returnDate" width="50" align="center">退货日期</th>
+            <th field="customerName" width="100" align="center">客户</th>
+            <th field="amountPayable" width="40" align="center" formatter="amountPayableFmt">退货金额</th>
+            <th field="trueName" width="40" align="center">操作员</th>
+            <th field="state" width="40" align="center" formatter="stateFmt">是否付款</th>
             <th field="remarks" width="150" align="center">备注</th>
         </tr>
         </thead>
@@ -61,12 +61,12 @@
     <table id="dg2" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true" singleSelect="true" striped="true">
         <thead>
         <tr>
-            <th field="code" width="30" align="center">编号</th>
-            <th field="name" width="150" align="center">商品名称</th>
-            <th field="model" width="80" align="center">商品型号</th>
-            <th field="price" width="50" align="center" formatter=amountPayableFmt>单价</th>
-            <th field="num" width="50" align="center">数量</th>
-            <th field="unit" width="50" align="center">单位</th>
+            <th field="goodsCode" width="30" align="center">编号</th>
+            <th field="goodsName" width="150" align="center">商品名称</th>
+            <th field="goodsModel" width="80" align="center">商品型号</th>
+            <th field="price" width="50" align="center" formatter="amountPayableFmt">单价</th>
+            <th field="goodsNum" width="50" align="center">数量</th>
+            <th field="goodsUnit" width="50" align="center">单位</th>
             <th field="total" width="50" align="center" formatter=amountPayableFmt>总金额</th>
         </tr>
         </thead>
