@@ -14,7 +14,9 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -75,6 +77,59 @@ public class SaleListGoodsServiceImpl implements SaleListGoodsService {
 
         // 保存日志
         logService.save(new Log(Log.INSERT_ACTION, "新增销售单："+saleList.getSaleNumber()));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+    }
+
+    @Override
+    public Map<String, Object> list(String saleNumber, Integer customerId, Integer state, String sTime, String eTime) {
+        Map<String,Object> result = new HashMap<>();
+
+        try {
+
+            List<SaleList> saleListList = saleListGoodsDao.getSalelist(saleNumber, customerId, state, sTime, eTime);
+
+            logService.save(new Log(Log.SELECT_ACTION, "销售单据查询"));
+
+            result.put("rows", saleListList);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> goodsList(Integer saleListId) {
+        Map<String,Object> map = new HashMap<>();
+
+        try {
+
+            List<SaleListGoods> saleListGoodsList = saleListGoodsDao.getSaleListGoodsBySaleListId(saleListId);
+
+            logService.save(new Log(Log.SELECT_ACTION, "销售单商品信息查询"));
+
+            map.put("rows", saleListGoodsList);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return map;
+    }
+
+    @Override
+    public ServiceVO delete(Integer saleListId) {
+
+        logService.save(new Log(Log.DELETE_ACTION, "删除销售单："+saleListGoodsDao.getSaleList(saleListId).getSaleNumber()));
+
+        saleListGoodsDao.deleteSaleListGoodsBySaleListId(saleListId);
+
+        saleListGoodsDao.deleteSaleListById(saleListId);
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }

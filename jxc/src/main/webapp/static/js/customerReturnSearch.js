@@ -7,8 +7,8 @@ $(function(){
 	$('#customer').combobox({
 		 mode:'remote',
 		 url:'/customer/getComboboxList',
-		 valueField:'id',
-		 textField:'name'
+		 valueField:'customerId',
+		 textField:'customerName'
 	});
 	
 	//按默认查询条件进行首次查询

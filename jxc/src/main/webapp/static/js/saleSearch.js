@@ -1,17 +1,17 @@
 $(function(){
-	//设置默认查询时间
+	// 设置默认查询时间
 	$('#etime').datebox('setValue',genTodayStr());
 	$('#stime').datebox('setValue',genLastMonthDayStr());
 	
-	//设置下拉框
+	// 设置下拉框
 	$('#customer').combobox({
 		 mode:'remote',
 		 url:'/customer/getComboboxList',
-		 valueField:'id',
-		 textField:'name'
+		 valueField:'customerId',
+		 textField:'customerName'
 	});
 	
-	//按默认查询条件进行首次查询
+	// 按默认查询条件进行首次查询
 	$('#dg').datagrid({
 		url:'/saleListGoods/list',
 		queryParams:{
@@ -20,13 +20,13 @@ $(function(){
 		}
 	});
 	
-	//为销售单表格绑定单击事件
+	// 为销售单表格绑定单击事件
 	$('#dg').datagrid({
 		onClickRow:function(index,row){
 			$('#dg2').datagrid({
 				url:'/saleListGoods/goodsList',
 				queryParams:{
-					saleListId:row.id
+					saleListId:row.saleListId
 				}
 			});
 		}
@@ -39,25 +39,14 @@ function amountPayableFmt(value,row){
 	return '￥'+value;
 }
 
-//格式化客户
-function customerFmt(value,row){
-	
-	return row.customer.name;
-}
 
-//格式化操作员
-function userFmt(value,row){
-	
-	return row.user.trueName;
-}
-
-//格式化付款状态
+// 格式化付款状态
 function stateFmt(value,row){
 	
-	return value=='1'?'已付':'未付';
+	return value === 1?'已付':'未付';
 }
 
-//重置搜索条件
+// 重置搜索条件
 function reset(){
 	$('#s_saleNumber').val('');
 	$('#customer').combobox('setValue','');
@@ -66,7 +55,7 @@ function reset(){
 	$('#stime').datebox('setValue',genLastMonthDayStr());
 }
 
-//根据条件查询销售单信息
+// 根据条件查询销售单信息
 function search(){
 	//每次查询时，先清空销售单商品列表
 	$('#dg2').datagrid('loadData',{rows:[]});
@@ -98,7 +87,7 @@ function search(){
  */
 function deleteSaleList(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length!=1){
+	if(selections.length!==1){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条要删除的记录',
@@ -109,7 +98,7 @@ function deleteSaleList(){
 	}
 	$.messager.confirm({
 		title:'系统提示',
-		msg:'<font color=red>删除销售单据将无法恢复，您确定要删除吗？</font>',
+		msg:'<font color="red">删除销售单据将无法恢复，您确定要删除吗？</font>',
 		top:$(window).height()/4,
 		fn:function(r){
 			if(r){
@@ -117,12 +106,14 @@ function deleteSaleList(){
 					url:'/saleListGoods/delete',
 					dataType:'json',
 					type:'post',
-					data:{'saleListId':selections[0].id},
+					data:{
+						'saleListId':selections[0].saleListId
+					},
 					success:function(result){
-						if(result.resultCode==001){
+						if(result.code===100){
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg: '删除成功',
 								icon:'info', 
 								top:$(window).height()/4 
 							});
@@ -131,7 +122,7 @@ function deleteSaleList(){
 						}else{
 							$.messager.alert({
 								title:'系统提示',
-								msg:result.resultContent,
+								msg:result.msg,
 								icon:'error', 
 								top:$(window).height()/4 
 							});

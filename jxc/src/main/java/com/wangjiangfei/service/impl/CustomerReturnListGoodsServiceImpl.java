@@ -14,7 +14,9 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -75,6 +77,60 @@ public class CustomerReturnListGoodsServiceImpl implements CustomerReturnListGoo
 
         // 保存日志
         logService.save(new Log(Log.INSERT_ACTION, "新增客户退货单："+customerReturnList.getReturnNumber()));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+    }
+
+    @Override
+    public Map<String, Object> list(String returnNumber, Integer customerId, Integer state, String sTime, String eTime) {
+        Map<String,Object> result = new HashMap<>();
+
+        try {
+
+            List<CustomerReturnList> customerReturnListList = customerReturnListGoodsDao.getCustomerReturnlist(returnNumber, customerId, state, sTime, eTime);
+
+            logService.save(new Log(Log.SELECT_ACTION, "客户退货单据查询"));
+
+            result.put("rows", customerReturnListList);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> goodsList(Integer customerReturnListId) {
+        Map<String,Object> map = new HashMap<>();
+
+        try {
+
+            List<CustomerReturnListGoods> customerReturnListGoodsList = customerReturnListGoodsDao.getCustomerReturnListGoodsByCustomerReturnListId(customerReturnListId);
+
+            logService.save(new Log(Log.SELECT_ACTION, "客户退货单商品信息查询"));
+
+            map.put("rows", customerReturnListGoodsList);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return map;
+    }
+
+    @Override
+    public ServiceVO delete(Integer customerReturnListId) {
+
+        logService.save(new Log(Log.DELETE_ACTION, "删除客户退货单："+customerReturnListGoodsDao.getCustomerReturnList(customerReturnListId).getReturnNumber()));
+
+        customerReturnListGoodsDao.deleteCustomerReturnListGoodsByCustomerReturnListId(customerReturnListId);
+
+        customerReturnListGoodsDao.deleteCustomerReturnListById(customerReturnListId);
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }

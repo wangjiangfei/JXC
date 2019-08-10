@@ -3,10 +3,13 @@ package com.wangjiangfei.controller;
 import com.wangjiangfei.domain.ServiceVO;
 import com.wangjiangfei.entity.CustomerReturnList;
 import com.wangjiangfei.service.CustomerReturnListGoodsService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @author wangjiangfei
@@ -34,99 +37,41 @@ public class CustomerReturnListGoodsController {
 
     /**
      * 查询客户退货单
-     * @param customerReturnNumber 单号
-     * @param customerId 供应商ID
+     * @param returnNumber 单号
+     * @param customerId 客户ID
      * @param state 付款状态
      * @param sTime 开始时间
      * @param eTime 结束时间
      * @return
      */
-//    @RequestMapping("/list")
-//    @RequiresPermissions(value={"客户退货查询","客户统计"},logical=Logical.OR)
-//    public Map<String,Object> list(String customerReturnNumber, String customerId, String state, String sTime,
-//                                   String eTime){
-//
-//        Map<String,Object> result = new HashMap<String,Object>();
-//
-//        try {
-//
-//            List<CustomerReturnList> customerReturnListList = customerReturnListGoodsService.getCustomerReturnlist(customerReturnNumber, customerId, state, sTime, eTime);
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "客户退货单据查询"));
-//
-//            result.put("rows", customerReturnListList);
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return result;
-//    }
+    @RequestMapping("/list")
+    @RequiresPermissions(value={"客户退货查询","客户统计"},logical= Logical.OR)
+    public Map<String,Object> list(String returnNumber, Integer customerId, Integer state, String sTime,
+                                   String eTime) {
+        return customerReturnListGoodsService.list(returnNumber, customerId, state, sTime, eTime);
+    }
 
     /**
      * 查询客户退货单商品信息
      * @param customerReturnListId 客户退货单ID
      * @return
      */
-//    @RequestMapping("/goodsList")
-//    @RequiresPermissions(value={"客户退货查询","客户统计"},logical=Logical.OR)
-//    public Map<String,Object> goodsList(Integer customerReturnListId){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            List<CustomerReturnListGoods> customerReturnListGoodsList = customerReturnListGoodsService.getCustomerReturnListGoodsByCustomerReturnListId(customerReturnListId);
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "客户退货单商品信息查询"));
-//
-//            map.put("rows", customerReturnListGoodsList);
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//    }
+    @RequestMapping("/goodsList")
+    @RequiresPermissions(value={"客户退货查询","客户统计"},logical=Logical.OR)
+    public Map<String,Object> goodsList(Integer customerReturnListId) {
+        return customerReturnListGoodsService.goodsList(customerReturnListId);
+    }
 
     /**
      * 删除客户退货单及商品信息
      * @param customerReturnListId 客户退货单ID
      * @return
      */
-//    @RequestMapping("/delete")
-//    @RequiresPermissions(value="客户退货查询")
-//    public Map<String,Object> delete(Integer customerReturnListId){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            logService.save(new Log(Log.DELETE_ACTION, "删除客户退货单："+customerReturnListGoodsService.getCustomerReturnList(customerReturnListId).getCustomerReturnNumber()));
-//
-//            customerReturnListGoodsService.delete(customerReturnListId);
-//
-//            map.put("resultCode", ResultCode.SUCCESS);
-//
-//            map.put("resultContent", "删除客户退货单成功");
-//
-//        } catch (Exception e) {
-//
-//            map.put("resultCode", ResultCode.FAIL);
-//
-//            map.put("resultContent", "删除客户退货单失败");
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/delete")
+    @RequiresPermissions(value="客户退货查询")
+    public ServiceVO delete(Integer customerReturnListId) {
+        return customerReturnListGoodsService.delete(customerReturnListId);
+    }
 
     /**
      * 修改进货单付款状态

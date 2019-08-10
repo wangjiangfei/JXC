@@ -2,6 +2,9 @@ package com.wangjiangfei.dao;
 
 import com.wangjiangfei.entity.SaleList;
 import com.wangjiangfei.entity.SaleListGoods;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author wangjiangfei
@@ -15,4 +18,18 @@ public interface SaleListGoodsDao {
     Integer saveSaleList(SaleList saleList);
 
     Integer saveSaleListGoods(SaleListGoods saleListGoods);
+
+    List<SaleList> getSalelist(@Param("saleNumber") String saleNumber,
+                               @Param("customerId") Integer customerId,
+                               @Param("state") Integer state,
+                               @Param("sTime") String sTime,
+                               @Param("eTime") String eTime);
+
+    List<SaleListGoods> getSaleListGoodsBySaleListId(Integer saleListId);
+
+    SaleList getSaleList(Integer saleListId);
+
+    Integer deleteSaleListById(Integer saleListId);
+
+    Integer deleteSaleListGoodsBySaleListId(Integer saleListId);
 }
