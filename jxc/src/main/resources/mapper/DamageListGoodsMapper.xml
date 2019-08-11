@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangjiangfei.dao.DamageListGoodsDao">
+
+    <resultMap id="BaseResultMap" type="com.wangjiangfei.entity.DamageList">
+        <result column="damage_list_id" property="damageListId" jdbcType="INTEGER" />
+        <result column="damage_number" property="damageNumber" jdbcType="VARCHAR" />
+        <result column="damage_date" property="damageDate" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="true_name" property="trueName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap02" type="com.wangjiangfei.entity.DamageListGoods">
+        <result column="damage_list_goods_id" property="damageListGoodsId" jdbcType="INTEGER" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_model" property="goodsModel" jdbcType="VARCHAR" />
+        <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+        <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="total" property="total" jdbcType="DECIMAL" />
+        <result column="damage_list_id" property="damageListId" jdbcType="INTEGER" />
+        <result column="goods_type_id" property="goodsTypeId" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <insert id="saveDamageList" useGeneratedKeys="true" keyProperty="damageListId" parameterType="com.wangjiangfei.entity.DamageList">
+        INSERT INTO t_damage_list
+        (
+        damage_number, damage_date, remarks, user_id
+        )
+        VALUES
+        (
+        #{damageNumber}, #{damageDate}, #{remarks}, #{userId}
+        )
+    </insert>
+
+    <insert id="saveDamageListGoods" useGeneratedKeys="true" keyProperty="damageListGoodsId" parameterType="com.wangjiangfei.entity.DamageListGoods">
+        INSERT INTO t_damage_list_goods
+        (
+        goods_id, goods_code, goods_name, goods_model, goods_unit,
+        goods_num, price, total, damage_list_id, goods_type_id
+        )
+        VALUES
+        (
+        #{goodsId}, #{goodsCode}, #{goodsName}, #{goodsModel}, #{goodsUnit},
+        #{goodsNum}, #{price}, #{total}, #{damageListId}, #{goodsTypeId}
+        )
+    </insert>
+
+    <select id="getDamagelist" resultMap="BaseResultMap">
+        SELECT
+            t_damage_list.damage_list_id,
+            t_damage_list.damage_number,
+            t_damage_list.damage_date,
+            t_damage_list.remarks,
+            t_damage_list.user_id,
+            t_user.true_name
+        FROM
+            t_damage_list
+        LEFT JOIN t_user ON t_damage_list.user_id = t_user.user_id
+        <where>
+            <if test="sTime != null and sTime != ''">
+                AND t_damage_list.damage_date &gt;= #{sTime}
+            </if>
+            <if test="eTime != null and eTime != ''">
+                AND t_damage_list.damage_date &lt;= #{eTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="getDamageListGoodsByDamageListId" resultMap="BaseResultMap02">
+        SELECT
+            t_damage_list_goods.damage_list_goods_id,
+            t_damage_list_goods.goods_id,
+            t_damage_list_goods.goods_code,
+            t_damage_list_goods.goods_name,
+            t_damage_list_goods.goods_model,
+            t_damage_list_goods.goods_unit,
+            t_damage_list_goods.goods_num,
+            t_damage_list_goods.price,
+            t_damage_list_goods.total,
+            t_damage_list_goods.damage_list_id,
+            t_damage_list_goods.goods_type_id
+        FROM
+            t_damage_list_goods
+        WHERE
+            damage_list_id = #{damageListId}
+    </select>
+
+</mapper>
