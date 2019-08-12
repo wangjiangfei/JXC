@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>供应商统计</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/supplierSearch.css" />
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/date.js"></script>
+    <script type="text/javascript" src="../static/js/supplierSearch.js"></script>
+</head>
+<body class="easyui-layout">
+<div region="north" class="northCls">
+    <table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true" singleSelect="true" toolbar="#tb" striped="true"
+           title="供应商统计">
+        <thead>
+        <tr>
+            <th field="id" width="20" align="center" hidden="true">编号</th>
+            <th field="supplierName" width="150" align="center">供应商</th>
+            <th field="date" width="50" align="center">日期</th>
+            <th field="number" width="50" align="center">单号</th>
+            <th field="type" width="50" align="center">类型</th>
+            <th field="amountPayable" width="50" align="center">总金额</th>
+            <th field="state" width="50" align="center">付(退)款状态</th>
+            <th field="user" width="50" align="center">操作员</th>
+            <th field="remarks" width="150" align="center">备注</th>
+        </tr>
+        </thead>
+    </table>
+
+    <div id="tb">
+        <div>
+            <fieldset>
+                <legend>统计设置</legend>
+                日期:&nbsp;<input class="easyui-datebox" editable="false" id="stime"/>
+                &nbsp;-&nbsp;&nbsp;<input class="easyui-datebox" editable="false" id="etime"/>
+                &nbsp;&nbsp;&nbsp;
+                供应商:&nbsp;<select class="easyui-combobox" id="supplier" panelHeight="auto"></select>
+                &nbsp;&nbsp;&nbsp;
+                是否付(退)款:&nbsp;<select id="cc" class="easyui-combobox" panelHeight="auto" editable="false">
+                <option value="">全部</option>
+                <option value="1">已付(退)</option>
+                <option value="2">未付(退)</option>
+            </select>
+                &nbsp;&nbsp;&nbsp;
+                <a href="javascript:search()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+                &nbsp;&nbsp;
+                <a href="javascript:settlement()" class="easyui-linkbutton" iconCls="save" plain="true">支付结算</a>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<div region="center" class="centerCls">
+    <table id="dg2" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true" singleSelect="true" striped="true">
+        <thead>
+        <tr>
+            <th field="goodsCode" width="30" align="center">商品编码</th>
+            <th field="goodsName" width="150" align="center">商品名称</th>
+            <th field="goodsModel" width="80" align="center">商品型号</th>
+            <th field="price" width="50" align="center" formatter="amountPayableFmt">单价</th>
+            <th field="goodsNum" width="50" align="center">数量</th>
+            <th field="goodsUnit" width="50" align="center">单位</th>
+            <th field="total" width="50" align="center" formatter="amountPayableFmt">总金额</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+</body>
+</html>

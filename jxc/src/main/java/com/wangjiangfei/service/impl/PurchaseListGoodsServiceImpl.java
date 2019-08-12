@@ -116,4 +116,13 @@ public class PurchaseListGoodsServiceImpl implements PurchaseListGoodsService {
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }
+
+    @Override
+    public ServiceVO updateState(Integer purchaseListId) {
+        purchaseListGoodsDao.updateState( purchaseListId);
+
+        logService.save(new Log(Log.DELETE_ACTION, "支付结算进货单："+purchaseListGoodsDao.getPurchaseListById(purchaseListId).getPurchaseNumber()));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+    }
 }

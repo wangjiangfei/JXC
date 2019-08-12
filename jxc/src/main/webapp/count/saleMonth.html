@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>商品采购统计</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/css/saleMonth.css"></link>
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/echarts.js"></script>
+    <script type="text/javascript" src="../static/js/date.js"></script>
+    <script type="text/javascript" src="../static/js/saleMonth.js"></script>
+</head>
+<body class="easyui-layout">
+<div region="north" class="northCls" title="按月统计分析" collapsible="false">
+    <fieldset>
+        <legend>统计设置</legend>
+        &nbsp;&nbsp;&nbsp;
+        日期:&nbsp;<input class="easyui-datebox" editable="false" id="stime"/>
+        &nbsp;-&nbsp;&nbsp;<input class="easyui-datebox" editable="false" id="etime"/>
+        <a href="javascript:search()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+    </fieldset>
+</div>
+
+<div region="center" id="main" class="centerCls">
+
+</div>
+
+<div region="south" class="southCls">
+    <table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true" singleSelect="true" striped="true">
+        <thead>
+        <tr>
+            <th field="date" width="30" align="center">日期</th>
+            <th field="saleTotal" width="50" align="center">销售总额</th>
+            <th field="purchasingTotal" width="50" align="center">成本总额</th>
+            <th field="profit" width="50" align="center">盈利总额</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script type="text/javascript">
+    $('.datebox-button .datebox-button-a').text('本月');
+</script>
+</body>
+</html>

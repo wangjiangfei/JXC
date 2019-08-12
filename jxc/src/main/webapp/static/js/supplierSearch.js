@@ -1,5 +1,5 @@
 $(function(){
-	//设置默认查询时间
+	// 设置默认查询时间
 	$('#etime').datebox('setValue',genTodayStr());
 	$('#stime').datebox('setValue',genLastMonthDayStr());
 	
@@ -7,27 +7,30 @@ $(function(){
 	$('#supplier').combobox({
 		 mode:'remote',
 		 url:'/supplier/getComboboxList',
-		 valueField:'id',
-		 textField:'name'
+		 valueField:'supplierId',
+		 textField:'supplierName'
 	});
 	
 	$.ajax({
 		url:'/purchaseListGoods/list',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':genLastMonthDayStr(),'eTime':genTodayStr()},
+		data:{
+			'sTime':genLastMonthDayStr(),
+			'eTime':genTodayStr()
+		},
 		success:function(result){
 			var rows = result.rows;
-			for(var i=0;i<rows.length;i++){
+			for(var i = 0;i < rows.length;i++){
 				$('#dg').datagrid('appendRow',{
-					id:rows[i].id,
-					supplierName:rows[i].supplier.name,
+					id:rows[i].purchaseListId,
+					supplierName:rows[i].supplierName,
 					number:rows[i].purchaseNumber,
 					date:rows[i].purchaseDate,
 					type:'进货单',
 					amountPayable:rows[i].amountPayable,
-					state:rows[i].state==1?'已付款':'未付款',
-					user:rows[i].user.trueName,
+					state:rows[i].state===1?'已付款':'未付款',
+					user:rows[i].trueName,
 					remarks:rows[i].remarks
 				});
 			}
@@ -37,28 +40,31 @@ $(function(){
 		url:'/returnListGoods/list',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':genLastMonthDayStr(),'eTime':genTodayStr()},
+		data:{
+			'sTime':genLastMonthDayStr(),
+			'eTime':genTodayStr()
+		},
 		success:function(result){
 			var rows = result.rows;
-			for(var i=0;i<rows.length;i++){
+			for(var i = 0;i < rows.length;i++){
 				$('#dg').datagrid('appendRow',{
-					id:rows[i].id,
-					supplierName:rows[i].supplier.name,
+					id:rows[i].returnListId,
+					supplierName:rows[i].supplierName,
 					number:rows[i].returnNumber,
 					date:rows[i].returnDate,
 					type:'退货单',
 					amountPayable:rows[i].amountPayable,
-					state:rows[i].state==1?'已退款':'未退款',
-					user:rows[i].user.trueName,
+					state:rows[i].state===1?'已退款':'未退款',
+					user:rows[i].trueName,
 					remarks:rows[i].remarks
 				});
 			}
 		}
 	});
-	//为表格绑定单击事件
+	// 为表格绑定单击事件
 	$('#dg').datagrid({
 		onClickRow:function(index,row){
-			if(row.type=='进货单'){
+			if(row.type==='进货单'){
 				$('#dg2').datagrid({
 					url:'/purchaseListGoods/goodsList',
 					queryParams:{
@@ -83,9 +89,9 @@ function amountPayableFmt(value,row){
 	return '￥'+value;
 }
 
-//根据条件查询供应商统计信息
+// 根据条件查询供应商统计信息
 function search(){
-	//每次查询时，先清列表
+	// 每次查询时，先清列表
 	$('#dg').datagrid('loadData',{rows:[]});
 	$('#dg2').datagrid('loadData',{rows:[]});
 	var supplierId = $('#supplier').combobox('getValue');
@@ -105,19 +111,24 @@ function search(){
 		url:'/purchaseListGoods/list',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':sTime,'eTime':eTime,'state':state,'supplierId':supplierId},
+		data:{
+			'sTime':sTime,
+			'eTime':eTime,
+			'state':state,
+			'supplierId':supplierId
+		},
 		success:function(result){
 			var rows = result.rows;
-			for(var i=0;i<rows.length;i++){
+			for(var i = 0;i < rows.length;i++){
 				$('#dg').datagrid('appendRow',{
-					id:rows[i].id,
-					supplierName:rows[i].supplier.name,
+					id:rows[i].purchaseListId,
+					supplierName:rows[i].supplierName,
 					number:rows[i].purchaseNumber,
 					date:rows[i].purchaseDate,
 					type:'进货单',
 					amountPayable:rows[i].amountPayable,
-					state:rows[i].state==1?'已付款':'未付款',
-					user:rows[i].user.trueName,
+					state:rows[i].state===1?'已付款':'未付款',
+					user:rows[i].trueName,
 					remarks:rows[i].remarks
 				});
 			}
@@ -127,28 +138,33 @@ function search(){
 		url:'/returnListGoods/list',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':sTime,'eTime':eTime,'state':state,'supplierId':supplierId},
+		data:{
+			'sTime':sTime,
+			'eTime':eTime,
+			'state':state,
+			'supplierId':supplierId
+		},
 		success:function(result){
 			var rows = result.rows;
-			for(var i=0;i<rows.length;i++){
+			for(var i = 0;i < rows.length;i++){
 				$('#dg').datagrid('appendRow',{
-					id:rows[i].id,
-					supplierName:rows[i].supplier.name,
+					id:rows[i].returnListId,
+					supplierName:rows[i].supplierName,
 					number:rows[i].returnNumber,
 					date:rows[i].returnDate,
 					type:'退货单',
 					amountPayable:rows[i].amountPayable,
-					state:rows[i].state==1?'已退款':'未退款',
-					user:rows[i].user.trueName,
+					state:rows[i].state===1?'已退款':'未退款',
+					user:rows[i].trueName,
 					remarks:rows[i].remarks
 				});
 			}
 		}
 	});
-	//为表格绑定单击事件
+	// 为表格绑定单击事件
 	$('#dg').datagrid({
 		onClickRow:function(index,row){
-			if(row.type=='进货单'){
+			if(row.type==='进货单'){
 				$('#dg2').datagrid({
 					url:'/purchaseListGoods/goodsList',
 					queryParams:{
@@ -172,7 +188,7 @@ function search(){
  */
 function settlement(){
 	var selections = $('#dg').datagrid('getSelections');
-	if(selections.length!=1){
+	if(selections.length !== 1){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择一条要结算的记录',
@@ -182,7 +198,7 @@ function settlement(){
 		return;
 	}
 	
-	if(selections[0].state=='已付款' || selections[0].state=='已退款'){
+	if(selections[0].state==='已付款' || selections[0].state==='已退款'){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'该单据已结算，请选择未结算的单据',
@@ -198,17 +214,19 @@ function settlement(){
 		top:$(window).height()/4,
 		fn:function(r){
 			if(r){
-				if(selections[0].type=='进货单'){
+				if(selections[0].type==='进货单'){
 					$.ajax({
 						url:'/purchaseListGoods/updateState',
 						dataType:'json',
 						type:'post',
-						data:{'id':selections[0].id},
+						data:{
+							'purchaseListId':selections[0].id
+						},
 						success:function(result){
-							if(result.resultCode=='001'){
+							if(result.code === 100){
 								$.messager.alert({
 									title:'系统提示',
-									msg:result.resultContent,
+									msg: '进货单结算成功',
 									icon:'info', 
 									top:$(window).height()/4
 								});
@@ -216,7 +234,7 @@ function settlement(){
 							}else{
 								$.messager.alert({
 									title:'系统提示',
-									msg:result.resultContent,
+									msg:result.msg,
 									icon:'error', 
 									top:$(window).height()/4
 								});
@@ -228,12 +246,12 @@ function settlement(){
 						url:'/returnListGoods/updateState',
 						dataType:'json',
 						type:'post',
-						data:{'id':selections[0].id},
+						data:{'returnListId':selections[0].id},
 						success:function(result){
-							if(result.resultCode=='001'){
+							if(result.code === 100){
 								$.messager.alert({
 									title:'系统提示',
-									msg:result.resultContent,
+									msg: '退货单结算成功',
 									icon:'info', 
 									top:$(window).height()/4
 								});
@@ -241,7 +259,7 @@ function settlement(){
 							}else{
 								$.messager.alert({
 									title:'系统提示',
-									msg:result.resultContent,
+									msg:result.msg,
 									icon:'error', 
 									top:$(window).height()/4
 								});

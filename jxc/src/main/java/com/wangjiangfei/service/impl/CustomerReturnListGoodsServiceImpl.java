@@ -134,4 +134,15 @@ public class CustomerReturnListGoodsServiceImpl implements CustomerReturnListGoo
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }
+
+    @Override
+    public ServiceVO updateState(Integer customerReturnListId) {
+
+        customerReturnListGoodsDao.updateState(customerReturnListId);
+
+        logService.save(new Log(Log.DELETE_ACTION, "支付结算客户退货单："+customerReturnListGoodsDao.getCustomerReturnList(customerReturnListId).getReturnNumber()));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+
+    }
 }

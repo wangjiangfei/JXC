@@ -143,4 +143,10 @@
         WHERE purchase_list_id = #{purchaseListId}
     </delete>
 
+    <update id="updateState" parameterType="java.lang.Integer">
+        UPDATE t_purchase_list
+        SET state = 1
+        WHERE purchase_list_id = #{purchaseListId}
+    </update>
+
 </mapper>

@@ -75,38 +75,14 @@ public class SaleListGoodsController {
 
     /**
      * 修改销售单付款状态
-     * @param id 销售单ID
+     * @param saleListId 销售单ID
      * @return
      */
-//    @RequestMapping("/updateState")
-//    @RequiresPermissions(value="供应商统计")
-//    public Map<String,Object> updateState(Integer id){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            saleListGoodsService.updateState(1, id);
-//
-//            logService.save(new Log(Log.DELETE_ACTION, "支付结算销售单："+saleListGoodsService.getSaleList(id).getSaleNumber()));
-//
-//            map.put("resultCode", ResultCode.SUCCESS);
-//
-//            map.put("resultContent", "销售单结算成功");
-//
-//        } catch (Exception e) {
-//
-//            map.put("resultCode", ResultCode.FAIL);
-//
-//            map.put("resultContent", "销售单结算失败");
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/updateState")
+    @RequiresPermissions(value = "供应商统计")
+    public ServiceVO updateState(Integer saleListId) {
+        return saleListGoodsService.updateState(saleListId);
+    }
 
     /**
      * 销售商品统计

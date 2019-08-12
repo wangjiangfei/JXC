@@ -151,4 +151,10 @@
         WHERE customer_return_list_id = #{customerReturnListId}
     </delete>
 
+    <update id="updateState" parameterType="java.lang.Integer">
+        UPDATE t_customer_return_list
+        SET state = 1
+        WHERE customer_return_list_id = #{customerReturnListId}
+    </update>
+
 </mapper>

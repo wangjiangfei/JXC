@@ -32,4 +32,6 @@ public interface CustomerReturnListGoodsDao {
     Integer deleteCustomerReturnListById(Integer customerReturnListId);
 
     Integer deleteCustomerReturnListGoodsByCustomerReturnListId(Integer customerReturnListId);
+
+    Integer updateState(Integer customerReturnListId);
 }

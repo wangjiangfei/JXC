@@ -143,4 +143,10 @@
         WHERE return_list_id = #{returnListId}
     </delete>
 
+    <update id="updateState" parameterType="java.lang.Integer">
+        UPDATE t_return_list
+        SET state = 1
+        WHERE return_list_id = #{returnListId}
+    </update>
+
 </mapper>

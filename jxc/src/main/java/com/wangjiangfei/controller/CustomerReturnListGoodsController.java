@@ -74,39 +74,15 @@ public class CustomerReturnListGoodsController {
     }
 
     /**
-     * 修改进货单付款状态
-     * @param id 进货单ID
+     * 修改客户退货单付款状态
+     * @param customerReturnListId 客户退货单ID
      * @return
      */
-//    @RequestMapping("/updateState")
-//    @RequiresPermissions(value="供应商统计")
-//    public Map<String,Object> updateState(Integer id){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            customerReturnListGoodsService.updateState(1, id);
-//
-//            logService.save(new Log(Log.DELETE_ACTION, "支付结算客户退货单："+customerReturnListGoodsService.getCustomerReturnList(id).getCustomerReturnNumber()));
-//
-//            map.put("resultCode", ResultCode.SUCCESS);
-//
-//            map.put("resultContent", "退货单结算成功");
-//
-//        } catch (Exception e) {
-//
-//            map.put("resultCode", ResultCode.FAIL);
-//
-//            map.put("resultContent", "退货单结算失败");
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/updateState")
+    @RequiresPermissions(value = "供应商统计")
+    public ServiceVO updateState(Integer customerReturnListId) {
+        return customerReturnListGoodsService.updateState(customerReturnListId);
+    }
 
     /**
      * 客户退货商品统计

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>商品采购统计</title>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/default/easyui.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css"></link>
+    <link rel="stylesheet" type="text/css" href="../static/css/saleCount.css"></link>
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/date.js"></script>
+    <script type="text/javascript" src="../static/js/saleCount.js"></script>
+</head>
+<body>
+<table id="dg" class="easyui-datagrid" fit="true" fitColumns="true" rownumbers="true" singleSelect="true" toolbar="#tb" striped="true"
+       title="商品销售统计">
+    <thead>
+    <tr>
+        <th field="number" width="60" align="center">单号</th>
+        <th field="type" width="30" align="center">类型</th>
+        <th field="date" width="40" align="center">日期</th>
+        <th field="supplierName" width="150" align="center">客户</th>
+        <th field="code" width="30" align="center">商品编号</th>
+        <th field="name" width="150" align="center">商品名称</th>
+        <th field="model" width="40" align="center">商品型号</th>
+        <th field="goodsType" width="40" align="center">商品类别</th>
+        <th field="unit" width="30" align="center">单位</th>
+        <th field="price" width="40" align="center">单价</th>
+        <th field="num" width="40" align="center">数量</th>
+        <th field="total" width="40" align="center">总金额</th>
+    </tr>
+    </thead>
+</table>
+
+<div id="tb">
+    <div>
+        <fieldset>
+            <legend>统计设置</legend>
+            &nbsp;&nbsp;&nbsp;
+            日期:&nbsp;<input class="easyui-datebox" editable="false" id="stime"/>
+            &nbsp;-&nbsp;&nbsp;<input class="easyui-datebox" editable="false" id="etime"/>
+            <input type="hidden" id="s_typeId"/>
+            &nbsp;&nbsp;&nbsp;商品类别：&nbsp;<input type="text" id="s_typeName" readonly="readonly" onclick="openGoodsTypeTreeDlg()">
+            &nbsp;&nbsp;&nbsp;商品编码或名称：&nbsp;<input type="text" id="s_codeOrName"/>
+            <a href="javascript:search()" class="easyui-linkbutton" iconCls="search" plain="true">搜索</a>
+        </fieldset>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" closed="true" buttons="#dlgTb">
+    <ul id="tree" class="easyui-tree"></ul>
+</div>
+
+<div id="dlgTb">
+    <a href="javascript:chooseGoodsType()" class="easyui-linkbutton" plain="true">确定</a>
+    <a href="javascript:closeGoodsTypeTreeDlg()" class="easyui-linkbutton" plain="true">关闭</a>
+</div>
+</body>
+</html>

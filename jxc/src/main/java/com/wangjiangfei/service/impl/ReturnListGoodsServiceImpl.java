@@ -114,4 +114,15 @@ public class ReturnListGoodsServiceImpl implements ReturnListGoodsService {
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }
+
+    @Override
+    public ServiceVO updateState(Integer returnListId) {
+
+        returnListGoodsDao.updateState(returnListId);
+
+        logService.save(new Log(Log.DELETE_ACTION, "支付结算退货单：" + returnListGoodsDao.getReturnList(returnListId).getReturnNumber()));
+
+        return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
+    }
+
 }

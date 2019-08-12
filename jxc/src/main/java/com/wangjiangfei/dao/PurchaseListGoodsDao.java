@@ -30,4 +30,6 @@ public interface PurchaseListGoodsDao {
     Integer deletePurchaseListById(Integer purchaseListId);
 
     Integer deletePurchaseListGoodsByPurchaseListId(Integer purchaseListId);
+
+    Integer updateState(Integer purchaseListId);
 }

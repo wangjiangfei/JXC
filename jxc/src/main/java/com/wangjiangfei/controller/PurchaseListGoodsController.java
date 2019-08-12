@@ -75,38 +75,14 @@ public class PurchaseListGoodsController {
 
     /**
      * 修改进货单付款状态
-     * @param id 进货单ID
+     * @param purchaseListId 进货单ID
      * @return
      */
-//    @RequestMapping("/updateState")
-//    @RequiresPermissions(value="供应商统计")
-//    public Map<String,Object> updateState(Integer id){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        try {
-//
-//            purchaseListGoodsService.updateState(1, id);
-//
-//            logService.save(new Log(Log.DELETE_ACTION, "支付结算进货单："+purchaseListGoodsService.getPurchaseList(id).getPurchaseNumber()));
-//
-//            map.put("resultCode", ResultCode.SUCCESS);
-//
-//            map.put("resultContent", "进货单结算成功");
-//
-//        } catch (Exception e) {
-//
-//            map.put("resultCode", ResultCode.FAIL);
-//
-//            map.put("resultContent", "进货单结算失败");
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/updateState")
+    @RequiresPermissions(value = "供应商统计")
+    public ServiceVO updateState(Integer purchaseListId) {
+        return purchaseListGoodsService.updateState(purchaseListId);
+    }
 
     /**
      * 进货商品统计

@@ -23,4 +23,6 @@ public interface ReturnListGoodsService {
     Map<String,Object> goodsList(Integer returnListId);
 
     ServiceVO delete(Integer returnListId);
+
+    ServiceVO updateState(Integer returnListId);
 }

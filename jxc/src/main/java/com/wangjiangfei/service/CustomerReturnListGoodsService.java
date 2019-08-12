@@ -22,4 +22,6 @@ public interface CustomerReturnListGoodsService {
     Map<String,Object> goodsList(Integer customerReturnListId);
 
     ServiceVO delete(Integer customerReturnListId);
+
+    ServiceVO updateState(Integer customerReturnListId);
 }

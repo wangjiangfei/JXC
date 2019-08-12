@@ -32,4 +32,6 @@ public interface SaleListGoodsDao {
     Integer deleteSaleListById(Integer saleListId);
 
     Integer deleteSaleListGoodsBySaleListId(Integer saleListId);
+
+    Integer updateState(Integer saleListId);
 }
