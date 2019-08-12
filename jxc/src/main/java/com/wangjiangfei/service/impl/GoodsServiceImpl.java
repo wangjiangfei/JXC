@@ -217,4 +217,17 @@ public class GoodsServiceImpl implements GoodsService {
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }
+
+    @Override
+    public Map<String, Object> listAlarm() {
+        Map<String,Object> map = new HashMap<>();
+
+        List<Goods> goodsList = goodsDao.getGoodsAlarm();
+
+        map.put("rows", goodsList);
+
+        logService.save(new Log(Log.SELECT_ACTION, "查询库存报警商品信息"));
+
+        return map;
+    }
 }

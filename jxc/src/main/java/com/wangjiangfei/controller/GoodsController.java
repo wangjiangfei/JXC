@@ -142,19 +142,9 @@ public class GoodsController {
      * 查询库存报警商品信息
      * @return
      */
-//    @RequestMapping("/listAlarm")
-//    @RequiresPermissions(value="库存报警")
-//    public Map<String,Object> listAlarm(){
-//
-//        Map<String,Object> map = new HashMap<String,Object>();
-//
-//        List<Goods> goodsList = goodsService.getGoodsAlarm();
-//
-//        map.put("rows", goodsList);
-//
-//        logService.save(new Log(Log.SELECT_ACTION, "查询库存报警商品信息"));
-//
-//        return map;
-//
-//    }
+    @RequestMapping("/listAlarm")
+    @RequiresPermissions(value = "库存报警")
+    public Map<String,Object> listAlarm() {
+        return goodsService.listAlarm();
+    }
 }

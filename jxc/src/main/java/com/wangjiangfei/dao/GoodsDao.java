@@ -37,4 +37,7 @@ public interface GoodsDao {
     List<Goods> getGoodsInventoryList(@Param("offSet") Integer offSet,@Param("pageRow") Integer pageRow, @Param("codeOrName") String codeOrName,@Param("goodsTypeId") Integer goodsTypeId);
 
     Integer getGoodsInventoryCount(@Param("codeOrName") String codeOrName,@Param("goodsTypeId") Integer goodsTypeId);
+
+    // 查询当前库存小于最小库存的商品
+    List<Goods> getGoodsAlarm();
 }
