@@ -1,27 +1,30 @@
 $(function(){
-	//设置默认查询时间
+	// 设置默认查询时间
 	$('#etime').datebox('setValue',genTodayStr());
 	$('#stime').datebox('setValue',genLastMonthDayStr());
 	
-	//默认加载报损单查询
+	// 默认加载报损单查询
 	$.ajax({
 		url:'/damageListGoods/list',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':genLastMonthDayStr(),'eTime':genTodayStr()},
+		data:{
+			'sTime':genLastMonthDayStr(),
+			'eTime':genTodayStr()
+		},
 		success:function(result){
 			var rows = result.rows;
-			for(var i=0;i<rows.length;i++){
+			for(var i = 0;i < rows.length;i++){
 				$('#dg').datagrid('appendRow',{
-					id:rows[i].id,
+					id:rows[i].damageListId,
 					number:rows[i].damageNumber,
 					date:rows[i].damageDate,
 					type:'报损单',
-					user:rows[i].user.trueName,
+					user:rows[i].trueName,
 					remarks:rows[i].remarks
 				});
 			}
-			//为报损报溢单表格绑定单击事件
+			// 为报损报溢单表格绑定单击事件
 			$('#dg').datagrid({
 				onClickRow:function(index,row){
 					$('#dg2').datagrid({
@@ -42,9 +45,9 @@ function amountPayableFmt(value,row){
 	return '￥'+value;
 }
 
-//根据条件查询报损报溢单信息
+// 根据条件查询报损报溢单信息
 function search(){
-	//每次查询时，先清空报损报溢单商品列表
+	// 每次查询时，先清空报损报溢单商品列表
 	$('#dg').datagrid('loadData',{rows:[]});
 	$('#dg2').datagrid('loadData',{rows:[]});
 	var type = $('#cc').combobox('getValue');
@@ -59,21 +62,24 @@ function search(){
 		});
 		return;
 	}
-	if(type=='1'){//如果为报损单查询
+	if(type==='1'){//如果为报损单查询
 		$.ajax({
 			url:'/damageListGoods/list',
 			dataType:'json',
 			type:'post',
-			data:{'sTime':sTime,'eTime':eTime},
+			data:{
+				'sTime':sTime,
+				'eTime':eTime
+			},
 			success:function(result){
 				var rows = result.rows;
-				for(var i=0;i<rows.length;i++){
+				for(var i = 0;i < rows.length;i++){
 					$('#dg').datagrid('appendRow',{
-						id:rows[i].id,
+						id:rows[i].damageListId,
 						number:rows[i].damageNumber,
 						date:rows[i].damageDate,
 						type:'报损单',
-						user:rows[i].user.trueName,
+						user:rows[i].trueName,
 						remarks:rows[i].remarks
 					});
 				}
@@ -90,25 +96,28 @@ function search(){
 				});
 			}
 		});
-	}else{//如果为报溢单查询
+	}else{// 如果为报溢单查询
 		$.ajax({
 			url:'/overflowListGoods/list',
 			dataType:'json',
 			type:'post',
-			data:{'sTime':sTime,'eTime':eTime},
+			data:{
+				'sTime':sTime,
+				'eTime':eTime
+			},
 			success:function(result){
 				var rows = result.rows;
-				for(var i=0;i<rows.length;i++){
+				for(var i = 0;i < rows.length;i++){
 					$('#dg').datagrid('appendRow',{
-						id:rows[i].id,
+						id:rows[i].overflowListId,
 						number:rows[i].overflowNumber,
 						date:rows[i].overflowDate,
 						type:'报溢单',
-						user:rows[i].user.trueName,
+						user:rows[i].trueName,
 						remarks:rows[i].remarks
 					});
 				}
-				//为报损报溢单表格绑定单击事件
+				// 为报损报溢单表格绑定单击事件
 				$('#dg').datagrid({
 					onClickRow:function(index,row){
 						$('#dg2').datagrid({

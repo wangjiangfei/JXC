@@ -11,4 +11,6 @@ public class DamageList {
   private String remarks;
   private Integer userId;
 
+  private String trueName;
+
 }

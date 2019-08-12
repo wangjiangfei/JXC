@@ -11,4 +11,6 @@ public class OverflowList {
   private String remarks;
   private Integer userId;
 
+  private String trueName;
+
 }
