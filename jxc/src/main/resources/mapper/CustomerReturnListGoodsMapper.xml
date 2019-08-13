@@ -157,7 +157,7 @@
         WHERE customer_return_list_id = #{customerReturnListId}
     </update>
 
-    <select id="getReturnListGoods" resultMap="BaseResultMap02">
+    <select id="getCustomerReturnListGoods" resultMap="BaseResultMap02">
         SELECT
             t_customer_return_list_goods.customer_return_list_goods_id,
             t_customer_return_list_goods.goods_id,

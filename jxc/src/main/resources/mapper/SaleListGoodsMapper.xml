@@ -157,7 +157,7 @@
         WHERE sale_list_id = #{saleListId}
     </update>
 
-    <select id="getReturnListGoods" resultMap="BaseResultMap02">
+    <select id="getSaleListGoods" resultMap="BaseResultMap02">
         SELECT
             t_sale_list_goods.sale_list_goods_id,
             t_sale_list_goods.goods_id,
@@ -175,7 +175,7 @@
             t_sale_list_goods
         LEFT JOIN t_goods_type ON t_sale_list_goods.goods_type_id = t_goods_type.goods_type_id
         <where>
-            <if test="returnListId != null">
+            <if test="saleListId != null">
                 AND t_sale_list_goods.sale_list_id = #{saleListId}
             </if>
             <if test="goodsTypeId != null and goodsTypeId != 1">

@@ -1,5 +1,5 @@
 $(function(){
-	//设置默认查询时间
+	// 设置默认查询时间
 	$('#etime').datebox('setValue',genTodayStr());
 	$('#stime').datebox('setValue',genLastMonthDayStr());
 	
@@ -7,14 +7,17 @@ $(function(){
 		url:'/saleListGoods/count',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':genLastMonthDayStr(),'eTime':genTodayStr()},
+		data:{
+			'sTime':genLastMonthDayStr(),
+			'eTime':genTodayStr()
+		},
 		success:function(result){
-			for(var i=0;i<result.length;i++){
+			for(var i = 0;i < result.length;i++){
 				$('#dg').datagrid('appendRow',{
 					number:result[i].number,
 					type:'销售',
 					date:result[i].date,
-					supplierName:result[i].supplierName,
+					customerName:result[i].customerName,
 					code:result[i].code,
 					name:result[i].name,
 					model:result[i].model,
@@ -31,14 +34,17 @@ $(function(){
 		url:'/customerReturnListGoods/count',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':genLastMonthDayStr(),'eTime':genTodayStr()},
+		data:{
+			'sTime':genLastMonthDayStr(),
+			'eTime':genTodayStr()
+		},
 		success:function(result){
-			for(var i=0;i<result.length;i++){
+			for(var i = 0;i < result.length;i++){
 				$('#dg').datagrid('appendRow',{
 					number:result[i].number,
 					type:'退货',
 					date:result[i].date,
-					supplierName:result[i].supplierName,
+                    customerName:result[i].customerName,
 					code:result[i].code,
 					name:result[i].name,
 					model:result[i].model,
@@ -61,11 +67,11 @@ function openGoodsTypeTreeDlg(){
 		url:'/goodsType/loadGoodsType',
 		lines:true,
 		onLoadSuccess:function(){
-			//展开所有节点
+			// 展开所有节点
 			$('#tree').tree('expandAll');
 		},
 		onDblClick:function(node){
-			if(node.id==1){
+			if(node.id===1){
 				$('#s_typeName').val('');
 				$('#s_typeId').val('');
 			}else{
@@ -98,7 +104,7 @@ function closeGoodsTypeTreeDlg(){
  */
 function chooseGoodsType(){
 	var selectNode = $('#tree').tree('getSelected');
-	if(selectNode==null){
+	if(selectNode===null){
 		$.messager.alert({
 			title:'系统提示',
 			msg:'请选择商品类别',
@@ -108,7 +114,7 @@ function chooseGoodsType(){
 		
 		return;
 	}
-	if(selectNode.id==1){
+	if(selectNode.id===1){
 		$('#s_typeName').val('');
 		$('#s_typeId').val('');
 	}else{
@@ -119,7 +125,7 @@ function chooseGoodsType(){
 	$('#dlg').dialog('close');
 }
 
-//查询采购统计
+// 查询采购统计
 function search(){
 	$('#dg').datagrid('loadData',{rows:[]});
 	var codeOrName = $('#s_codeOrName').val();
@@ -139,14 +145,19 @@ function search(){
 		url:'/saleListGoods/count',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':sTime,'eTime':eTime,'goodsTypeId':goodsTypeId,'codeOrName':codeOrName},
+		data:{
+			'sTime':sTime,
+			'eTime':eTime,
+			'goodsTypeId':goodsTypeId,
+			'codeOrName':codeOrName
+		},
 		success:function(result){
-			for(var i=0;i<result.length;i++){
+			for(var i = 0;i < result.length;i++){
 				$('#dg').datagrid('appendRow',{
 					number:result[i].number,
 					type:'销售',
 					date:result[i].date,
-					supplierName:result[i].supplierName,
+                    customerName:result[i].customerName,
 					code:result[i].code,
 					name:result[i].name,
 					model:result[i].model,
@@ -163,14 +174,19 @@ function search(){
 		url:'/customerReturnListGoods/count',
 		dataType:'json',
 		type:'post',
-		data:{'sTime':sTime,'eTime':eTime,'goodsTypeId':goodsTypeId,'codeOrName':codeOrName},
+		data:{
+			'sTime':sTime,
+			'eTime':eTime,
+			'goodsTypeId':goodsTypeId,
+			'codeOrName':codeOrName
+		},
 		success:function(result){
-			for(var i=0;i<result.length;i++){
+			for(var i = 0;i < result.length;i++){
 				$('#dg').datagrid('appendRow',{
 					number:result[i].number,
 					type:'退货',
 					date:result[i].date,
-					supplierName:result[i].supplierName,
+                    customerName:result[i].customerName,
 					code:result[i].code,
 					name:result[i].name,
 					model:result[i].model,
