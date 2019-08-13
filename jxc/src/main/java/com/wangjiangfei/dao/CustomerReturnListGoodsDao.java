@@ -34,4 +34,8 @@ public interface CustomerReturnListGoodsDao {
     Integer deleteCustomerReturnListGoodsByCustomerReturnListId(Integer customerReturnListId);
 
     Integer updateState(Integer customerReturnListId);
+
+    List<CustomerReturnListGoods> getCustomerReturnListGoods(@Param("customerReturnListId") Integer customerReturnListId,
+                                                             @Param("goodsTypeId") Integer goodsTypeId,
+                                                             @Param("codeOrName") String codeOrName);
 }

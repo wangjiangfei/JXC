@@ -92,62 +92,10 @@ public class CustomerReturnListGoodsController {
      * @param codeOrName 编号或商品名称
      * @return
      */
-//    @RequestMapping("/count")
-//    @RequiresPermissions(value="商品销售统计")
-//    public String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName){
-//
-//        JsonArray result = new JsonArray();
-//
-//        try {
-//
-//            List<CustomerReturnList> customerReturnListList = customerReturnListGoodsService.getCustomerReturnlist(null, null, null, sTime, eTime);
-//
-//            for(CustomerReturnList pl : customerReturnListList){
-//
-//                List<CustomerReturnListGoods> customerReturnListGoodsList = customerReturnListGoodsService
-//                        .getCustomerReturnListGoodsByCustomerReturnListId(pl.getId(), goodsTypeId, codeOrName);
-//
-//                for(CustomerReturnListGoods pg : customerReturnListGoodsList){
-//
-//                    JsonObject obj = new JsonObject();
-//
-//                    obj.addProperty("number", pl.getCustomerReturnNumber());
-//
-//                    obj.addProperty("date", pl.getCustomerReturnDate());
-//
-//                    obj.addProperty("supplierName", pl.getCustomer().getName());
-//
-//                    obj.addProperty("code", pg.getCode());
-//
-//                    obj.addProperty("name", pg.getName());
-//
-//                    obj.addProperty("model", pg.getModel());
-//
-//                    obj.addProperty("goodsType", pg.getType().getName());
-//
-//                    obj.addProperty("unit", pg.getUnit());
-//
-//                    obj.addProperty("price", pg.getPrice());
-//
-//                    obj.addProperty("num", pg.getNum());
-//
-//                    obj.addProperty("total", pg.getTotal());
-//
-//                    result.add(obj);
-//
-//                }
-//            }
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "客户退货商品统计查询"));
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return result.toString();
-//
-//    }
+    @RequestMapping("/count")
+    @RequiresPermissions(value = "商品销售统计")
+    public String count(String sTime, String eTime, Integer goodsTypeId, String codeOrName) {
+        return customerReturnListGoodsService.count(sTime, eTime, goodsTypeId, codeOrName);
+    }
 
 }

@@ -24,4 +24,6 @@ public interface CustomerReturnListGoodsService {
     ServiceVO delete(Integer customerReturnListId);
 
     ServiceVO updateState(Integer customerReturnListId);
+
+    String count(String sTime, String eTime, Integer goodsTypeId, String codeOrName);
 }

@@ -92,63 +92,11 @@ public class SaleListGoodsController {
      * @param codeOrName 编号或商品名称
      * @return
      */
-//    @RequestMapping("/count")
-//    @RequiresPermissions(value="商品销售统计")
-//    public String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName){
-//
-//        JsonArray result = new JsonArray();
-//
-//        try {
-//
-//            List<SaleList> saleListList = saleListGoodsService.getSalelist(null, null, null, sTime, eTime);
-//
-//            for(SaleList pl : saleListList){
-//
-//                List<SaleListGoods> saleListGoodsList = saleListGoodsService
-//                        .getSaleListGoodsBySaleListId(pl.getId(), goodsTypeId, codeOrName);
-//
-//                for(SaleListGoods pg : saleListGoodsList){
-//
-//                    JsonObject obj = new JsonObject();
-//
-//                    obj.addProperty("number", pl.getSaleNumber());
-//
-//                    obj.addProperty("date", pl.getSaleDate());
-//
-//                    obj.addProperty("supplierName", pl.getCustomer().getName());
-//
-//                    obj.addProperty("code", pg.getCode());
-//
-//                    obj.addProperty("name", pg.getName());
-//
-//                    obj.addProperty("model", pg.getModel());
-//
-//                    obj.addProperty("goodsType", pg.getType().getName());
-//
-//                    obj.addProperty("unit", pg.getUnit());
-//
-//                    obj.addProperty("price", pg.getPrice());
-//
-//                    obj.addProperty("num", pg.getNum());
-//
-//                    obj.addProperty("total", pg.getTotal());
-//
-//                    result.add(obj);
-//
-//                }
-//            }
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "销售商品统计查询"));
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return result.toString();
-//
-//    }
+    @RequestMapping("/count")
+    @RequiresPermissions(value="商品销售统计")
+    public String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName) {
+        return saleListGoodsService.count(sTime, eTime, goodsTypeId, codeOrName);
+    }
 
     /**
      * 按日统计销售情况

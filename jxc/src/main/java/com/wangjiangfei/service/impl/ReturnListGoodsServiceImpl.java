@@ -1,8 +1,11 @@
 package com.wangjiangfei.service.impl;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.wangjiangfei.dao.GoodsDao;
+import com.wangjiangfei.dao.GoodsTypeDao;
 import com.wangjiangfei.dao.ReturnListGoodsDao;
 import com.wangjiangfei.dao.UserDao;
 import com.wangjiangfei.domain.ServiceVO;
@@ -34,6 +37,8 @@ public class ReturnListGoodsServiceImpl implements ReturnListGoodsService {
     private ReturnListGoodsDao returnListGoodsDao;
     @Autowired
     private GoodsDao goodsDao;
+    @Autowired
+    private GoodsTypeDao goodsTypeDao;
 
     @Override
     public ServiceVO save(ReturnList returnList, String returnListGoodsStr) {
@@ -125,4 +130,59 @@ public class ReturnListGoodsServiceImpl implements ReturnListGoodsService {
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
     }
 
+    @Override
+    public String count(String sTime, String eTime, Integer goodsTypeId, String codeOrName) {
+
+        JsonArray result = new JsonArray();
+
+        try {
+
+            List<ReturnList> returnListList = returnListGoodsDao.getReturnlist(null, null, null, sTime, eTime);
+
+            for(ReturnList pl : returnListList){
+
+                List<ReturnListGoods> returnListGoodsList = returnListGoodsDao
+                        .getReturnListGoods(pl.getReturnListId(), goodsTypeId, codeOrName);
+
+                for(ReturnListGoods pg : returnListGoodsList){
+
+                    JsonObject obj = new JsonObject();
+
+                    obj.addProperty("number", pl.getReturnNumber());
+
+                    obj.addProperty("date", pl.getReturnDate());
+
+                    obj.addProperty("supplierName", pl.getSupplierName());
+
+                    obj.addProperty("code", pg.getGoodsCode());
+
+                    obj.addProperty("name", pg.getGoodsName());
+
+                    obj.addProperty("model", pg.getGoodsModel());
+
+                    obj.addProperty("goodsType", goodsTypeDao.getGoodsTypeById(pg.getGoodsTypeId()).getGoodsTypeName());
+
+                    obj.addProperty("unit", pg.getGoodsUnit());
+
+                    obj.addProperty("price", pg.getPrice());
+
+                    obj.addProperty("num", pg.getGoodsNum());
+
+                    obj.addProperty("total", pg.getTotal());
+
+                    result.add(obj);
+
+                }
+            }
+
+            logService.save(new Log(Log.SELECT_ACTION, "退货商品统计查询"));
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return result.toString();
+    }
 }

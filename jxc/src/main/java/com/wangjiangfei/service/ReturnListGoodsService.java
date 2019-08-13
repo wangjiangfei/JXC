@@ -25,4 +25,6 @@ public interface ReturnListGoodsService {
     ServiceVO delete(Integer returnListId);
 
     ServiceVO updateState(Integer returnListId);
+
+    String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName);
 }

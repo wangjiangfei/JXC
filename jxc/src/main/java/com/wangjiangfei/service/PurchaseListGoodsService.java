@@ -25,4 +25,6 @@ public interface PurchaseListGoodsService {
     ServiceVO delete(Integer purchaseListId);
 
     ServiceVO updateState(Integer purchaseListId);
+
+    String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName);
 }

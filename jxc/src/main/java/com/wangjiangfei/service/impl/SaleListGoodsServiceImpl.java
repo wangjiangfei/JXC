@@ -1,8 +1,11 @@
 package com.wangjiangfei.service.impl;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.wangjiangfei.dao.GoodsDao;
+import com.wangjiangfei.dao.GoodsTypeDao;
 import com.wangjiangfei.dao.SaleListGoodsDao;
 import com.wangjiangfei.dao.UserDao;
 import com.wangjiangfei.domain.ServiceVO;
@@ -34,6 +37,8 @@ public class SaleListGoodsServiceImpl implements SaleListGoodsService {
     private LogService logService;
     @Autowired
     private GoodsDao goodsDao;
+    @Autowired
+    private GoodsTypeDao goodsTypeDao;
 
     @Override
     public Integer getSaleTotalByGoodsId(Integer goodsId) {
@@ -143,5 +148,61 @@ public class SaleListGoodsServiceImpl implements SaleListGoodsService {
 
         return new ServiceVO<>(SuccessCode.SUCCESS_CODE, SuccessCode.SUCCESS_MESS);
 
+    }
+
+    @Override
+    public String count(String sTime, String eTime, Integer goodsTypeId, String codeOrName) {
+
+        JsonArray result = new JsonArray();
+
+        try {
+
+            List<SaleList> saleListList = saleListGoodsDao.getSalelist(null, null, null, sTime, eTime);
+
+            for(SaleList pl : saleListList){
+
+                List<SaleListGoods> saleListGoodsList = saleListGoodsDao
+                        .getSaleListGoods(pl.getSaleListId(), goodsTypeId, codeOrName);
+
+                for(SaleListGoods pg : saleListGoodsList){
+
+                    JsonObject obj = new JsonObject();
+
+                    obj.addProperty("number", pl.getSaleNumber());
+
+                    obj.addProperty("date", pl.getSaleDate());
+
+                    obj.addProperty("customerName", pl.getCustomerName());
+
+                    obj.addProperty("code", pg.getGoodsCode());
+
+                    obj.addProperty("name", pg.getGoodsName());
+
+                    obj.addProperty("model", pg.getGoodsModel());
+
+                    obj.addProperty("goodsType", goodsTypeDao.getGoodsTypeById(pg.getGoodsTypeId()).getGoodsTypeName());
+
+                    obj.addProperty("unit", pg.getGoodsUnit());
+
+                    obj.addProperty("price", pg.getPrice());
+
+                    obj.addProperty("num", pg.getGoodsNum());
+
+                    obj.addProperty("total", pg.getTotal());
+
+                    result.add(obj);
+
+                }
+            }
+
+            logService.save(new Log(Log.SELECT_ACTION, "销售商品统计查询"));
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return result.toString();
     }
 }

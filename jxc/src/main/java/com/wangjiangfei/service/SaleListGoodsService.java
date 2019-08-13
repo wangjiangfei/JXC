@@ -24,4 +24,6 @@ public interface SaleListGoodsService {
     ServiceVO delete(Integer saleListId);
 
     ServiceVO updateState(Integer saleListId);
+
+    String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName);
 }

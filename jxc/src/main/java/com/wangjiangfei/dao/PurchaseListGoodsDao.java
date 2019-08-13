@@ -32,4 +32,8 @@ public interface PurchaseListGoodsDao {
     Integer deletePurchaseListGoodsByPurchaseListId(Integer purchaseListId);
 
     Integer updateState(Integer purchaseListId);
+
+    List<PurchaseListGoods> getPurchaseListGoods(@Param("purchaseListId") Integer purchaseListId,
+                                                 @Param("goodsTypeId") Integer goodsTypeId,
+                                                 @Param("codeOrName") String codeOrName);
 }

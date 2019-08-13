@@ -149,4 +149,42 @@
         WHERE purchase_list_id = #{purchaseListId}
     </update>
 
+    <select id="getPurchaseListGoods" resultMap="BaseResultMap02">
+        SELECT
+            t_purchase_list_goods.purchase_list_goods_id,
+            t_purchase_list_goods.goods_id,
+            t_purchase_list_goods.goods_code,
+            t_purchase_list_goods.goods_name,
+            t_purchase_list_goods.goods_model,
+            t_purchase_list_goods.goods_unit,
+            t_purchase_list_goods.goods_num,
+            t_purchase_list_goods.price,
+            t_purchase_list_goods.total,
+            t_purchase_list_goods.purchase_list_id,
+            t_purchase_list_goods.goods_type_id,
+            t_goods_type.p_id
+        FROM
+            t_purchase_list_goods
+        LEFT JOIN t_goods_type ON t_purchase_list_goods.goods_type_id = t_goods_type.goods_type_id
+        <where>
+            <if test="purchaseListId != null">
+                AND t_purchase_list_goods.purchase_list_id = #{purchaseListId}
+            </if>
+            <if test="goodsTypeId != null and goodsTypeId != 1">
+                AND
+                (
+                t_purchase_list_goods.goods_type_id = #{goodsTypeId} OR
+                t_goods_type.p_id = #{goodsTypeId}
+                )
+            </if>
+            <if test="codeOrName != null and codeOrName != ''">
+                AND
+                (
+                t_purchase_list_goods.goods_name LIKE CONCAT('%', #{codeOrName} ,'%') OR
+                t_purchase_list_goods.goods_code LIKE CONCAT('%', #{codeOrName} ,'%')
+                )
+            </if>
+        </where>
+    </select>
+
 </mapper>

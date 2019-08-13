@@ -34,4 +34,8 @@ public interface SaleListGoodsDao {
     Integer deleteSaleListGoodsBySaleListId(Integer saleListId);
 
     Integer updateState(Integer saleListId);
+
+    List<SaleListGoods> getSaleListGoods(@Param("saleListId") Integer saleListId,
+                                         @Param("goodsTypeId") Integer goodsTypeId,
+                                         @Param("codeOrName") String codeOrName);
 }

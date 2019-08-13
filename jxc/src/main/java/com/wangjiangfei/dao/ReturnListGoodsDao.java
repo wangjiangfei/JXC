@@ -33,4 +33,8 @@ public interface ReturnListGoodsDao {
     Integer deleteReturnListGoodsByReturnListId(Integer returnListId);
 
     Integer updateState(Integer returnListId);
+
+    List<ReturnListGoods> getReturnListGoods(@Param("returnListId") Integer returnListId,
+                                             @Param("goodsTypeId") Integer goodsTypeId,
+                                             @Param("codeOrName") String codeOrName);
 }

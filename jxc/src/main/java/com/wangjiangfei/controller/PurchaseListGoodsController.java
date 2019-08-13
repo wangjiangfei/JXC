@@ -92,62 +92,10 @@ public class PurchaseListGoodsController {
      * @param codeOrName 编号或商品名称
      * @return
      */
-//    @RequestMapping("/count")
-//    @RequiresPermissions(value="商品采购统计")
-//    public String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName){
-//
-//        JsonArray result = new JsonArray();
-//
-//        try {
-//
-//            List<PurchaseList> purchaseListList = purchaseListGoodsService.getPurchaselist(null, null, null, sTime, eTime);
-//
-//            for(PurchaseList pl : purchaseListList){
-//
-//                List<PurchaseListGoods> purchaseListGoodsList = purchaseListGoodsService
-//                        .getPurchaseListGoodsByPurchaseListId(pl.getId(), goodsTypeId, codeOrName);
-//
-//                for(PurchaseListGoods pg : purchaseListGoodsList){
-//
-//                    JsonObject obj = new JsonObject();
-//
-//                    obj.addProperty("number", pl.getPurchaseNumber());
-//
-//                    obj.addProperty("date", pl.getPurchaseDate());
-//
-//                    obj.addProperty("supplierName", pl.getSupplier().getName());
-//
-//                    obj.addProperty("code", pg.getCode());
-//
-//                    obj.addProperty("name", pg.getName());
-//
-//                    obj.addProperty("model", pg.getModel());
-//
-//                    obj.addProperty("goodsType", pg.getType().getName());
-//
-//                    obj.addProperty("unit", pg.getUnit());
-//
-//                    obj.addProperty("price", pg.getPrice());
-//
-//                    obj.addProperty("num", pg.getNum());
-//
-//                    obj.addProperty("total", pg.getTotal());
-//
-//                    result.add(obj);
-//
-//                }
-//            }
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "进货商品统计查询"));
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return result.toString();
-//
-//    }
+    @RequestMapping("/count")
+    @RequiresPermissions(value = "商品采购统计")
+    public String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName) {
+        return purchaseListGoodsService.count(sTime, eTime, goodsTypeId, codeOrName);
+    }
 
 }
