@@ -1,22 +1,25 @@
 $(function(){
 	
-	//设置默认查询时间
+	// 设置默认查询时间
 	$('#etime').datebox('setValue',genTodayStr());
 	$('#stime').datebox('setValue',genLastWeekDayStr());
 	
-	//默认加载近7天的报表数据
+	// 默认加载近7天的报表数据
 	$.ajax({
 		url:'/saleListGoods/getSaleDataByDay',
 		type:'post',
 		dataType:'json',
-		data:{'sTime':genLastWeekDayStr(),'eTime':genTodayStr()},
+		data:{
+			'sTime':genLastWeekDayStr(),
+			'eTime':genTodayStr()
+		},
 		success:function(result){
 			var dateArray = [];
 			var profitArray = [];
 			var saleTotalCount = 0;
 			var purchasingTotalCount = 0;
 			var profitCount = 0;
-			for(var i=0;i<result.length;i++){
+			for(var i = 0;i < result.length;i++){
 				dateArray.push(result[i].date);
 				profitArray.push(result[i].profit);
 				$('#dg').datagrid('appendRow',{
@@ -46,7 +49,7 @@ $(function(){
  * @param profitArray 利润数组
  */
 function setEcharts(dateArray,profitArray){
-	//初始化echarts实例
+	// 初始化echarts实例
 	var myChart = echarts.init(document.getElementById('main'));
 	option = {
 			title:{
@@ -63,7 +66,7 @@ function setEcharts(dateArray,profitArray){
 		    grid: {
 		        left: '3%',
 		        right: '4%',
-		        bottom: '3%',
+		        bottom: '0%',
 		        containLabel: true
 		    },
 		    xAxis : [
@@ -113,7 +116,10 @@ function search(){
 		url:'/saleListGoods/getSaleDataByDay',
 		type:'post',
 		dataType:'json',
-		data:{'sTime':sTime,'eTime':eTime},
+		data:{
+			'sTime':sTime,
+			'eTime':eTime
+		},
 		success:function(result){
 			var dateArray = [];
 			var profitArray = [];

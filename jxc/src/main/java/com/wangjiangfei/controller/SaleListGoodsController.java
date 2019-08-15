@@ -104,73 +104,11 @@ public class SaleListGoodsController {
      * @param eTime 结束时间
      * @return
      */
-//    @RequestMapping("/getSaleDataByDay")
-//    @RequiresPermissions(value="按日统计分析")
-//    public String getSaleDataByDay(String sTime, String eTime){
-//
-//        JsonArray result = new JsonArray();
-//
-//        try {
-//
-//            // 获取所有的时间段日期
-//            List<String> dateList = DateUtil.getTimeSlotByDay(sTime, eTime);
-//
-//            // 查询按日统计的数据
-//            List<Object> obList = saleListGoodsService.getSaleDataByDay(sTime, eTime);
-//
-//            // 按日统计的数据，如果该日期没有数据的话，则不会有显示，我们的需求是，如果该日期没有销售数据的话，也应该显示为0，所以需要进行特殊处理
-//            for(String date : dateList){
-//
-//                JsonObject obj = new JsonObject();
-//
-//                boolean flag = false;
-//
-//                for(Object o : obList){ //jpa默认会按sql语法查询的字段的先后顺序来将结果集进行封装成一个数组集合
-//
-//                    Object[] os = (Object[]) o;
-//
-//                    if(os[0].equals(date)){
-//
-//                        obj.addProperty("date", os[0].toString()); //日期
-//
-//                        obj.addProperty("saleTotal", BigDecimalUtil.keepTwoDecimalPlaces((Double)os[1])); //销售总额
-//
-//                        obj.addProperty("purchasingTotal", BigDecimalUtil.keepTwoDecimalPlaces((Double)os[2])); //成本总额
-//
-//                        obj.addProperty("profit",BigDecimalUtil.keepTwoDecimalPlaces((Double)os[1]-(Double)os[2])); //利润
-//
-//                        flag = true;
-//
-//                    }
-//
-//                }
-//
-//                if(!flag){// 如果没有销售数据，那么也需要设置该日的销售数据默认为0
-//
-//                    obj.addProperty("date", date); //日期
-//
-//                    obj.addProperty("saleTotal", 0); //销售总额
-//
-//                    obj.addProperty("purchasingTotal", 0); //成本总额
-//
-//                    obj.addProperty("profit",0); //利润
-//
-//                }
-//
-//                result.add(obj);
-//
-//            }
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "查询按日统计分析数据"));
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return result.toString();
-//    }
+    @RequestMapping("/getSaleDataByDay")
+    @RequiresPermissions(value = "按日统计分析")
+    public String getSaleDataByDay(String sTime, String eTime) {
+        return saleListGoodsService.getSaleDataByDay(sTime, eTime);
+    }
 
     /**
      * 按月统计销售情况
@@ -178,71 +116,9 @@ public class SaleListGoodsController {
      * @param eTime 结束时间
      * @return
      */
-//    @RequestMapping("/getSaleDataByMonth")
-//    @RequiresPermissions(value="按日统计分析")
-//    public String getSaleDataByMonth(String sTime, String eTime){
-//
-//        JsonArray result = new JsonArray();
-//
-//        try {
-//
-//            // 获取所有的时间段日期
-//            List<String> dateList = DateUtil.getTimeSlotByMonth(sTime, eTime);
-//
-//            // 查询按日统计的数据
-//            List<Object> obList = saleListGoodsService.getSaleDataByMonth(sTime, eTime);
-//
-//            // 按日统计的数据，如果该日期没有数据的话，则不会有显示，我们的需求是，如果该日期没有销售数据的话，也应该显示为0，所以需要进行特殊处理
-//            for(String date : dateList){
-//
-//                JsonObject obj = new JsonObject();
-//
-//                boolean flag = false;
-//
-//                for(Object o : obList){ //jpa默认会按sql语法查询的字段的先后顺序来将结果集进行封装成一个数组集合
-//
-//                    Object[] os = (Object[]) o;
-//
-//                    if(os[0].equals(date)){
-//
-//                        obj.addProperty("date", os[0].toString()); //日期
-//
-//                        obj.addProperty("saleTotal", BigDecimalUtil.keepTwoDecimalPlaces((Double)os[1])); //销售总额
-//
-//                        obj.addProperty("purchasingTotal", BigDecimalUtil.keepTwoDecimalPlaces((Double)os[2])); //成本总额
-//
-//                        obj.addProperty("profit",BigDecimalUtil.keepTwoDecimalPlaces((Double)os[1]-(Double)os[2])); //利润
-//
-//                        flag = true;
-//
-//                    }
-//
-//                }
-//
-//                if(!flag){// 如果没有销售数据，那么也需要设置该日的销售数据默认为0
-//
-//                    obj.addProperty("date", date); //日期
-//
-//                    obj.addProperty("saleTotal", 0); //销售总额
-//
-//                    obj.addProperty("purchasingTotal", 0); //成本总额
-//
-//                    obj.addProperty("profit",0); //利润
-//
-//                }
-//
-//                result.add(obj);
-//
-//            }
-//
-//            logService.save(new Log(Log.SELECT_ACTION, "查询按月统计分析数据"));
-//
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//
-//        }
-//
-//        return result.toString();
-//    }
+    @RequestMapping("/getSaleDataByMonth")
+    @RequiresPermissions(value = "按月统计分析")
+    public String getSaleDataByMonth(String sTime, String eTime) {
+        return saleListGoodsService.getSaleDataByMonth(sTime, eTime);
+    }
 }

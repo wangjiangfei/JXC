@@ -33,6 +33,12 @@
         <result column="goods_type_id" property="goodsTypeId" jdbcType="INTEGER" />
     </resultMap>
 
+    <resultMap id="BaseResultMap03" type="com.wangjiangfei.entity.SaleData">
+        <result column="date" property="date" jdbcType="VARCHAR" />
+        <result column="saleTotal" property="saleTotal" jdbcType="DECIMAL" />
+        <result column="purchasingTotal" property="purchasingTotal" jdbcType="DECIMAL" />
+    </resultMap>
+
     <select id="getSaleTotalByGoodsId" resultType="java.lang.Integer">
         SELECT
             SUM(t_sale_list_goods.goods_num)
@@ -193,6 +199,36 @@
                 )
             </if>
         </where>
+    </select>
+
+    <select id="getSaleDataByDay" resultMap="BaseResultMap03">
+        SELECT
+            t2.sale_date AS DATE,
+            SUM( t1.goods_num * t1.price ) AS saleTotal,
+            SUM( t1.goods_num * t3.purchasing_price ) AS purchasingTotal
+        FROM
+            t_sale_list_goods t1
+            LEFT JOIN t_sale_list t2 ON t1.sale_list_id = t2.sale_list_id
+            LEFT JOIN t_goods t3 ON t1.goods_id = t3.goods_id
+        WHERE
+            t2.sale_date BETWEEN #{sTime} AND #{eTime}
+        GROUP BY
+            t2.sale_date
+    </select>
+
+    <select id="getSaleDataByMonth" resultMap="BaseResultMap03">
+        SELECT
+            DATE_FORMAT( t2.sale_date, '%Y-%m' ) AS DATE,
+            SUM( t1.goods_num * t1.price ) AS saleTotal,
+            SUM( t1.goods_num * t3.purchasing_price ) AS purchasingTotal
+        FROM
+            t_sale_list_goods t1
+            LEFT JOIN t_sale_list t2 ON t1.sale_list_id = t2.sale_list_id
+            LEFT JOIN t_goods t3 ON t1.goods_id = t3.goods_id
+        WHERE
+            DATE_FORMAT( t2.sale_date, '%Y-%m' ) BETWEEN #{sTime} AND #{eTime}
+        GROUP BY
+            DATE_FORMAT( t2.sale_date, '%Y-%m' )
     </select>
 
 </mapper>

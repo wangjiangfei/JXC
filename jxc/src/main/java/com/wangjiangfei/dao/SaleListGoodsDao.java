@@ -1,5 +1,6 @@
 package com.wangjiangfei.dao;
 
+import com.wangjiangfei.entity.SaleData;
 import com.wangjiangfei.entity.SaleList;
 import com.wangjiangfei.entity.SaleListGoods;
 import org.apache.ibatis.annotations.Param;
@@ -38,4 +39,8 @@ public interface SaleListGoodsDao {
     List<SaleListGoods> getSaleListGoods(@Param("saleListId") Integer saleListId,
                                          @Param("goodsTypeId") Integer goodsTypeId,
                                          @Param("codeOrName") String codeOrName);
+
+    List<SaleData> getSaleDataByDay(@Param("sTime") String sTime,@Param("eTime") String eTime);
+
+    List<SaleData> getSaleDataByMonth(@Param("sTime") String sTime,@Param("eTime") String eTime);
 }

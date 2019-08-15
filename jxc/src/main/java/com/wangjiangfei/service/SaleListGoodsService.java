@@ -26,4 +26,8 @@ public interface SaleListGoodsService {
     ServiceVO updateState(Integer saleListId);
 
     String count(String sTime, String eTime ,Integer goodsTypeId, String codeOrName);
+
+    String getSaleDataByDay(String sTime, String eTime);
+
+    String getSaleDataByMonth(String sTime, String eTime);
 }
