@@ -20,40 +20,40 @@
 
 登录界面，用户名admin，密码admin123
 
-![](.\images\1.png)
+![](./images/1.png)
 
 当前库存查询，
 
-![](.\images\2.png)
+![](./images/2.png)
 
 进货单据查询，
 
-![](.\images\3.png)
+![](./images/3.png)
 
 退货单据查询，
 
-![](.\images\4.png)
+![](./images/4.png)
 
 销售单据查询，
 
-![](.\images\5.png)
+![](./images/5.png)
 
 客户退货查询，
 
-![](.\images\6.png)
+![](./images/6.png)
 
 报损报溢查询，
 
-![](.\images\7.png)
+![](./images/7.png)
 
-![](.\images\8.png)
+![](./images/8.png)
 
 按日销售统计、按月销售统计，
 
-![](.\images\9.png)
+![](./images/9.png)
 
-![](.\images\10.png)
+![](./images/10.png)
 
 系统日志，
 
-![](.\images\11.png)
+![](./images/11.png)
